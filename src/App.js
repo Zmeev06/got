@@ -13,6 +13,7 @@ import PublicPage from './components/PublicModal/PublicModal';
 import MidjourneyPage from './pages/MidjourneyPage';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Sidebar } from 'react-feather';
 
 
 function App() {
@@ -81,7 +82,7 @@ function App() {
             ]
         }
     ]);
-    
+
     const [chats, setChats] = useState([
 
         {
@@ -122,12 +123,12 @@ function App() {
     return (
 
         <BrowserRouter>
-            {folders && <SideBar folders={folders} chats={chats} />}
+            {folders && <Sidebar folders={folders} chats={chats} />}
 
             <Routes>
                 {/* <Route path="/" element={<ChatPage />} /> */}
                 <Route path="/chat/:chatId" Component={MidjourneyPage} />
-            
+
                 <Route path="/faq" element={<WhatPage />} />
                 <Route path="/settings" element={<RatePage />} />
 
