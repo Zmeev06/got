@@ -8,6 +8,7 @@ import RateAccept from '../../images/icons/accept.svg'
 import { Settings } from "react-feather";
 import { Star } from "react-feather";
 import { Move } from "react-feather";
+import { Link } from 'react-router-dom'
 
 
 function Rate() {
@@ -34,7 +35,7 @@ function Rate() {
                     <div className="rate_block">
                         <div className="rate_item">
                             <div className="rate_item_hov_top">Чаще всего выбирают</div>
-                            <div className="rate_item_title">Тариф PRO за 1 ₽ <br /> <span>1  месяц</span></div>
+                            <div className="rate_item_title">Тариф MINI за 1 ₽ <br /> <span>1  месяц</span></div>
                             <ul className="rate_advan">
                                 <li><img src={RateYes} alt="" />Доступ без VPN</li>
                                 <li><img src={RateYes} alt="" />Не нужен номер телефона <br />  и иностранная карта</li>
@@ -43,7 +44,9 @@ function Rate() {
                                 <li><img src={RateYes} alt="" />25 запросов в день к GPT4</li>
                                 <li><img src={RateClose} alt="" />Доступ к Api GPT и Midjourney</li>
                             </ul>
-                            <a href="#" className="rate_action">Выбрать тариф</a>
+                            <Link to={`https://ziongpt.ai/payments/redirect/mini/<user.id>/`} className="rate_action">
+                                Выбрать тариф
+                            </Link>
                             <div className="warning_mess">
                                 <img src={RateWarning} alt="" />
                                 <span>Первый месяц за 1 рубль далее по 599₽ в месяц</span>
@@ -61,7 +64,9 @@ function Rate() {
                                 <li><img src={RateYes} alt="" />25 запросов в день к GPT4</li>
                                 <li><img src={RateClose} alt="" />Доступ к Api GPT и Midjourney</li>
                             </ul>
-                            <a href="#" className="rate_action">Выбрать тариф</a>
+                            <Link to={`https://ziongpt.ai/payments/redirect/pro/<user.id>/`} className="rate_action">
+                                Выбрать тариф
+                            </Link>
                             <div className="warning_mess">
                                 <img src={RateWarning} alt="" />
                                 <span>Первый месяц за 1 рубль далее по 599₽ в месяц</span>
@@ -69,7 +74,7 @@ function Rate() {
                         </div>
                         <div className="rate_item">
                             <div className="rate_item_hov_top">Чаще всего выбирают</div>
-                            <div className="rate_item_title">Тариф PRO за 1 ₽ <br /> <span>1  месяц</span></div>
+                            <div className="rate_item_title">Тариф ULTIMA за 1 ₽ <br /> <span>1  месяц</span></div>
                             <ul className="rate_advan">
                                 <li><img src={RateYes} alt="" />Доступ без VPN</li>
                                 <li><img src={RateYes} alt="" />Не нужен номер телефона
@@ -79,7 +84,9 @@ function Rate() {
                                 <li><img src={RateYes} alt="" />25 запросов в день к GPT4</li>
                                 <li><img src={RateClose} alt="" />Доступ к Api GPT и Midjourney</li>
                             </ul>
-                            <a href="#" className="rate_action">Выбрать тариф</a>
+                            <Link to={`https://ziongpt.ai/payments/redirect/ultima/<user.id>/`} className="rate_action">
+                                Выбрать тариф
+                            </Link>
                             <div className="warning_mess">
                                 <img src={RateWarning} alt="" />
                                 <span>Первый месяц за 1 рубль далее по 599₽ в месяц</span>

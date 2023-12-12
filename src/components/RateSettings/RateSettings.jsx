@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Google from "../../images/icons/google.png"
 import Vk from "../../images/icons/vk.png"
 import Tg from "../../images/icons/tg.png"
+import { Link } from 'react-router-dom'
 
 const RateSettings = () => {
 
@@ -43,9 +44,21 @@ const RateSettings = () => {
                             <div className="api_settings_networks">
                                 Подключённые соц сети:
                                 <ul>
-                                    <li><a href="#"><img src={Vk} alt="" /></a></li>
-                                    <li><a href="#"><img src={Tg} alt="" /></a></li>
-                                    <li><a href="#"><img src={Google} alt="" /></a></li>
+                                    <li>
+                                        <Link to={`http://127.0.0.1:8000/auth/login/vk-oauth2/`}>
+                                            <img src={Vk} alt="" />
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={``}>
+                                            <img src={Tg} alt="" />
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={`http://127.0.0.1:8000/auth/login/google-oauth2/`}>
+                                            <img src={Google} alt="" />
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                             <div className="subscription_level">

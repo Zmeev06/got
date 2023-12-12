@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 
 const SideBar = ({ folders, chats }) => {
+    console.log(41)
 
     const [foldersArr, setFoldersArr] = useState([]);
     const [chatsArr, setChatsArr] = useState([]);

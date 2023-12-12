@@ -6,6 +6,7 @@ import PublicModal from '../PublicModal/PublicModal';
 
 
 const MessageAdd = ({ setMessages, messages, chatId, newChatName }) => {
+    const [midjFlag, setMidjFlag] = useState(true);
     const [text, setText] = useState('');
     const [setting, setSetting] = useState(false)
     const [modal, setModal] = useState(false)
@@ -21,7 +22,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName }) => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "4c358ff22441bed3c3c55b8e6b7a8ae46bbb1abc",
+                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
             }
         })
 
@@ -101,7 +102,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName }) => {
                     mine: true
                 }, {
                     messageText: '',
-                    avatar: GptUser,
+                    avatar: GptChat,
                     mine: false
                 }]
                 setMessages(iMessages);
@@ -114,12 +115,13 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "4c358ff22441bed3c3c55b8e6b7a8ae46bbb1abc"
+                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
                 },
                 body: JSON.stringify({
                     "session_id": chatId,
                     "prompt": text,
                     "folder": null,
+                
                 })
             });
             if (!response.ok) {
@@ -154,6 +156,67 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName }) => {
 
     }
 
+    function midjourneyTest(){
+        
+        let id;
+
+        fetch('http://mindl.in:8000/api/v1/run-generation/', {
+                method: 'POST',
+    
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                },
+                body: JSON.stringify({
+                    "session_id": "fb29d3ca-edd2-4c00-8902-59432a2bf4c6",
+                    "action": "imagine",
+                    "prompt": "Белый медведь"
+                })
+            }).then(response => response.json())
+            .then(data => {
+                id = data.task_id;
+                console.log(id)
+            })
+     
+        if(midjFlag){
+            setInterval(()=>{
+                fetch('http://mindl.in:8000/api/v1/check-status/', {
+                    method: 'POST',
+        
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                    },
+                    body: JSON.stringify({
+                        "task_id": id
+                    })
+                }).then(response => response.json())
+                .then(data => {
+                    if(data.status == "in_queue" || data.status == "waiting") console.log('В очереди');
+                    if(data.status == "in_process") console.log(`Генерируем ваше изображение ${data.result}`);
+                    if(data.status == "banned"){
+                        setMidjFlag(false)
+                        console.log(`Ваше сообщение было заблокировано. Политика <model.name> не позволяет генерировать подобное. Попробуйте что-нибудь другое`);
+                    } 
+                    if(data.status == "error"){
+                        setMidjFlag(false)
+                        console.log('Во время генерации произошла ошибка. Попробуйте ещё раз, если ошибка повторилась, обратитесь в тех. Поддержку')
+                    } 
+                    if(data.status == "ready"){
+                        setMidjFlag(false)
+                        console.log(data.result)
+                    } 
+                })
+            }, 20000)     
+        }
+    
+        setMidjFlag(true)
+    }
+
+    useEffect(()=>{
+
+        midjourneyTest()
+    }, [])
 
 
 

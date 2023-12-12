@@ -15,6 +15,7 @@ import { useRef } from 'react'
 
 const MidjourneyPage = ({ folders, chats }) => {
     const { chatId } = useParams();
+   
     const scrollBottom = useRef();
 
     const [messages, setMessages] = useState(
@@ -62,7 +63,7 @@ const MidjourneyPage = ({ folders, chats }) => {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "4c358ff22441bed3c3c55b8e6b7a8ae46bbb1abc"
+                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
                 },
                 body: JSON.stringify({
                     "name": e.substring(0, 15)

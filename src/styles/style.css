@@ -37,8 +37,7 @@ html {
     -webkit-box-shadow: var(--ct-box-shadow);
     box-shadow: none;
     z-index: 99;
-    z-index: 99;
-    z-index: 99;
+   
 }
 
 .sidebar_menu_top {
@@ -4926,6 +4925,7 @@ pre {
     .footer_f.chatgp.b_mid {
         max-width: 800px;
     }
+   
 
     .chatgpt_begin {
         margin-bottom: 400px;
@@ -7478,9 +7478,11 @@ textarea {
     .content-page {
         padding: 0;
     }
+    
 
     .content__chat {
         padding-top: 40px;
+        padding-bottom: 120px;
     }
 
     .form_f .input_group .btn_f {
@@ -7543,12 +7545,12 @@ textarea {
 .collapse {
     max-height: 0;
     overflow: hidden;
-    transition: all 0.5s;
+    transition: all 1s ease;
 }
 
 
 .collapse.show {
-    max-height: 10rem;
+    max-height: 24rem;
 }
 
 .actions_sp img {
