@@ -6,7 +6,7 @@ import PublicModal from '../PublicModal/PublicModal';
 
 
 const MessageAdd = ({ setMessages, messages, chatId, newChatName }) => {
-    const [midjFlag, setMidjFlag] = useState(true);
+ 
     const [text, setText] = useState('');
     const [setting, setSetting] = useState(false)
     const [modal, setModal] = useState(false)
@@ -178,8 +178,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName }) => {
                 console.log(id)
             })
      
-        if(midjFlag){
-            setInterval(()=>{
+        let MjInterval = setInterval(()=>{
                 fetch('http://mindl.in:8000/api/v1/check-status/', {
                     method: 'POST',
         
@@ -195,28 +194,26 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName }) => {
                     if(data.status == "in_queue" || data.status == "waiting") console.log('В очереди');
                     if(data.status == "in_process") console.log(`Генерируем ваше изображение ${data.result}`);
                     if(data.status == "banned"){
-                        setMidjFlag(false)
+                        clearInterval(MjInterval)
                         console.log(`Ваше сообщение было заблокировано. Политика <model.name> не позволяет генерировать подобное. Попробуйте что-нибудь другое`);
                     } 
                     if(data.status == "error"){
-                        setMidjFlag(false)
+                        clearInterval(MjInterval)
                         console.log('Во время генерации произошла ошибка. Попробуйте ещё раз, если ошибка повторилась, обратитесь в тех. Поддержку')
                     } 
                     if(data.status == "ready"){
-                        setMidjFlag(false)
+                        clearInterval(MjInterval)
                         console.log(data.result)
                     } 
                 })
             }, 20000)     
-        }
-    
-        setMidjFlag(true)
+        
     }
 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        midjourneyTest()
-    }, [])
+    //     midjourneyTest()
+    // }, [])
 
 
 
