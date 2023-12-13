@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
 
-const NavigationsMidj = () => {
-    const [activeItems, setActiveItems] = useState([false, true, false, false]);
+const NavigationsMidj = ({ activeItems, setActiveItems }) => {
+    // const [activeItems, setActiveItems] = useState([false, true, false, false]);
 
     const handleItemClick = (index) => {
         const newActiveItems = activeItems.map((item, i) => (i === index ? !item : false));

@@ -123,8 +123,8 @@ function App() {
     return (
 
         <BrowserRouter>
-        
-                <SideBar folders={folders} chats={chats}/>
+
+            <SideBar folders={folders} chats={chats} />
             <Routes>
                 {/* <Route path="/" element={<ChatPage />} /> */}
                 <Route path="/chat/:chatId" Component={MidjourneyPage} />

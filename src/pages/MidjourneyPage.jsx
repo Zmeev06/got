@@ -13,24 +13,13 @@ import ModalDelete from '../components/ModelDelete/ModalDelete'
 import { useParams } from 'react-router-dom';
 import { useRef } from 'react'
 
+
 const MidjourneyPage = ({ folders, chats }) => {
     const { chatId } = useParams();
-   
     const scrollBottom = useRef();
-
+    const [activeItems, setActiveItems] = useState([false, true, false, false]);
     const [messages, setMessages] = useState(
-        [
-            // {
-            //     messageText: 'Что такие Маркетплейсы ?',
-            //     avatar: GptUser,
-            //     mine: true
-            // },
-            // {
-            //     messageText: 'Я не могу найти информации о конкретном "Uzum Market". Можете уточнить, о какой стране или регионе идет речь?',
-            //     avatar: GptAva,
-            //     mine: false
-            // }
-        ]
+        []
     )
     const [messagesWidth, setMessagesWidth] = useState(messages.length)
 
@@ -74,31 +63,29 @@ const MidjourneyPage = ({ folders, chats }) => {
     }
 
 
+
     return (
         <div>
-            <div className="content-page ">
+            <div className="content-page">
                 <div className="content">
-
                     <div className="container-back-mid">
-                        {messages.length && (
-                            <ChatBlockHead />
-                        )}
-
-                    </div>
-                    <div className="">
-
+                        {messages.length ? <ChatBlockHead /> : null}
                     </div>
                     <div className="container-back-mid">
-                        {!messages.length && (
-                            <NavigationsMidj />
-                        )}
+                        {!messages.length && <NavigationsMidj activeItems={activeItems} setActiveItems={setActiveItems} />}
                     </div>
 
-                    <div className="container-back-mid">
-                        {!messages.length && (
-                            <Gpt />
-                        )}
-                    </div>
+                    {activeItems[0] && (
+                        <div className="container-back-mid">
+                            {!messages.length && <Gpt />}
+                        </div>
+
+                    )}
+                    {activeItems[1] || activeItems[2] || activeItems[3] ? (
+                        <div className="">
+                            {!messages.length && <MidjourneyTabs />}
+                        </div>
+                    ) : null}
 
                     <ChatBlock setMessages={setMessages} chatId={chatId} newChatName={newChatName} messages={messages} scrollBottom={scrollBottom} />
                     <MessageAdd chatId={chatId} setMessages={setMessages} messages={messages} newChatName={newChatName} />

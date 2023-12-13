@@ -37,7 +37,7 @@ html {
     -webkit-box-shadow: var(--ct-box-shadow);
     box-shadow: none;
     z-index: 99;
-   
+
 }
 
 .sidebar_menu_top {
@@ -4925,7 +4925,7 @@ pre {
     .footer_f.chatgp.b_mid {
         max-width: 800px;
     }
-   
+
 
     .chatgpt_begin {
         margin-bottom: 400px;
@@ -7284,9 +7284,7 @@ pre {
     border: 1px solid rgba(51, 51, 51, 1);
 }
 
-.generator_item_bottom {
-    display: none;
-}
+
 
 .flex-reverse {
     display: flex;
@@ -7478,7 +7476,7 @@ textarea {
     .content-page {
         padding: 0;
     }
-    
+
 
     .content__chat {
         padding-top: 40px;
@@ -7662,4 +7660,14 @@ textarea {
 
 .chatgpt_begin_header li.active svg path {
     fill: #19C37D;
+}
+
+@media (max-width: 1300px) {
+    .generator_block.generator_block_tab_body.desc.show {
+        display: flex;
+    }
+
+    .midjourney_ul.desc {
+        display: flex;
+    }
 }
