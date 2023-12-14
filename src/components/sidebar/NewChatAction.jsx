@@ -10,11 +10,7 @@ const NewChatAction = () => {
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
-            },
-            body: JSON.stringify({
-                "ai_model": "gpt-3.5-turbo",
-            })
-
+            }
         })
             .then(response => response.json())
             .then(data => {
