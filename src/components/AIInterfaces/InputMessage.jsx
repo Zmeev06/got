@@ -5,7 +5,7 @@ import GptChat from '../../images/chat/chatgpt_ic.png';
 import PublicModal from '../PublicModal/PublicModal';
 
 
-const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems }) => {
+const InputMessage = ({ newMessageFunc }) => {
 
     const [text, setText] = useState('');
     const [setting, setSetting] = useState(false)
@@ -13,53 +13,6 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
     const setModalClick = () => {
         setModal(!modal);
     };
-    function handleError(data) {
-        console.log(data.error);
-    }
-    let iMessages = []
-    function fetchMessages() {
-        fetch(`http://mindl.in:8000/api/v1/messages/${chatId}/`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
-            }
-        })
-
-            .then(response => {
-
-                if (!response.ok) {
-
-                    return Promise.reject(response.json());
-                }
-                return response.json()
-            })
-
-            .then(data => {
-                iMessages = data.messages.map(e => [{
-                    messageText: e.text,
-                    avatar: GptUser,
-                    mine: true
-                }, {
-                    messageText: e.answer,
-                    avatar: GptChat,
-                    mine: false
-                }]
-
-                ).flat()
-                setMessages(
-                    iMessages
-                );
-            }, handleError)
-    }
-
-    useEffect(() => {
-        fetchMessages()
-
-    }, [chatId]);
-
-
-
 
     const textareaRef = useRef(null);
     const handleSubmit = (e) => {
@@ -77,93 +30,28 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault(); // Предотвратить перенос строки в поле ввода
-            newChatReq();
+            newMessage();
         }
     };
     const openModalSet = () => {
-        setSetting(!setting)
+        setSetting(!setting);
     }
+    function newMessage() {
+        if (textareaRef.current.value.length > 0) {
 
+            if (text.trim() !== '') {
+                newMessageFunc(text);
+                setText('');
+            }
+
+        }
+    }
     const adjustTextareaHeight = (event) => {
         const textarea = event.target;
         textarea.style.height = 'auto';
         textarea.style.height = (textarea.scrollHeight + 2) + 'px';
     };
-    async function newGptReq() {
-        if (text.trim() !== '') {
-            iMessages = [...messages, {
-                messageText: text,
-                avatar: GptUser,
-                mine: true
-            }, {
-                messageText: '',
-                avatar: GptChat,
-                mine: false
-            }]
-            setMessages(iMessages);
-            setText('');
-        }
 
-
-        var response = await fetch('http://mindl.in:8000/api/v1/run-generation/', {
-
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
-            },
-            body: JSON.stringify({
-                "session_id": chatId,
-                "prompt": text,
-                "folder": null,
-
-            })
-        });
-        if (!response.ok) {
-            handleError(await response.json())
-            return;
-        }
-
-        const reader = response.body.getReader();
-        let chunks = [];
-
-        while (true) {
-            const { done, value } = await reader.read();
-
-            if (done) {
-                break;
-            }
-
-            chunks.push(value);
-
-            const jsonStrings = new TextDecoder('utf-8').decode(value).split('}').filter(Boolean).map(str => str + '}');
-
-            const objects = jsonStrings.map(JSON.parse);
-            objects.forEach(el => {
-                if (el.content != null) {
-                    iMessages.at(-1).messageText += el.content;
-                }
-            });
-            setMessages([...iMessages]);
-        }
-        const text1 = new TextDecoder('utf-8').decode(new Uint8Array(chunks.flat()));
-    }
-    async function newChatReq() {
-
-        if (textareaRef.current.value.length > 0) {
-
-            newChatName(textareaRef.current.value);
-
-            if (activeItems[0]) {
-                await newGptReq();
-            }
-            else {
-                setText('');
-                midjourneyTest()
-            }
-        }
-
-    }
 
     function midjourneyTest() {
 
@@ -177,9 +65,9 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
                 "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
             },
             body: JSON.stringify({
-                "session_id": chatId,
+                "session_id": "fb29d3ca-edd2-4c00-8902-59432a2bf4c6",
                 "action": "imagine",
-                "prompt": text
+                "prompt": "Машина"
             })
         }).then(response => response.json())
             .then(data => {
@@ -219,10 +107,10 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
 
     }
 
-    // useEffect(()=>{
+    useEffect(() => {
 
-    //     midjourneyTest()
-    // }, [])
+        midjourneyTest()
+    }, [])
 
 
 
@@ -292,7 +180,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
                                     onChange={handleChange}
                                 ></textarea>
                                 <div onClick={() => setModalClick()} className="tmp_f chat_con" href="public.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Шаблоны</div>
-                                <button className="btn_f" onClick={async () => await newChatReq()}>
+                                <button className="btn_f" onClick={async () => await newMessage()}>
                                     <img src={SendMessage} alt="" />
                                 </button>
                             </div>
@@ -306,4 +194,4 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
     )
 }
 
-export default MessageAdd
+export default InputMessage;

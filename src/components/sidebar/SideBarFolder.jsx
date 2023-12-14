@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 
 const SideBarFolder = ({ folder, chat }) => {
-    
+
 
     const [deleteFolder, setDeleteFolder] = useState();
 
@@ -20,7 +20,7 @@ const SideBarFolder = ({ folder, chat }) => {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "4c358ff22441bed3c3c55b8e6b7a8ae46bbb1abc"
+                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
                 }
             })
                 .then(data => console.log(data));
@@ -40,7 +40,7 @@ const SideBarFolder = ({ folder, chat }) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "4c358ff22441bed3c3c55b8e6b7a8ae46bbb1abc"
+                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
             },
             body: JSON.stringify({
                 'folder': folder.pk,
@@ -48,10 +48,10 @@ const SideBarFolder = ({ folder, chat }) => {
         })
             .then(response => response.json())
             .then(data => {
-                window.location.href = `/chat/${folder.pk}` 
+                window.location.href = `/chat/${folder.pk}`
             })
 
-        
+
     }
 
     const [inputVal, setInputVal] = useState(folder?.name);
@@ -101,7 +101,7 @@ const SideBarFolder = ({ folder, chat }) => {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "4c358ff22441bed3c3c55b8e6b7a8ae46bbb1abc"
+                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
                 },
                 body: JSON.stringify({
                     'name': inputEdit.current.value,
@@ -126,7 +126,7 @@ const SideBarFolder = ({ folder, chat }) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Cookie': 'csrftoken=TUeTRp5vrjwDPP4BjTjJVuq40EKFNnbG; sessionid=s1yyur1j74ab874vjxxmzo9zz9ia3r9v',
-                "Authorization": "Token " + "4c358ff22441bed3c3c55b8e6b7a8ae46bbb1abc"
+                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
             }
 
         })
@@ -174,17 +174,17 @@ const SideBarFolder = ({ folder, chat }) => {
                     </a>
                     <div className="collapse" id="sidebarEcommerce" ref={collapseChild}>
 
-                        <SideBarSessionList sessions={folder.sessions} createChat={createChat}/>
+                        <SideBarSessionList sessions={folder.sessions} createChat={createChat} />
                     </div>
                 </li> :
-          
+
                 <li>
                     <Link to={`/chat/${chat?.pk}`}>
-                   
+
                         <FolderIcon />
                         {/* <span> {chat?.name} </span> */}
                         <span>{chat?.name}</span>
-                    
+
                     </Link>
                 </li>
 

@@ -18,7 +18,7 @@ import MessageMidjorney from '../components/MessageMidjorney/MessageMidjorney'
 const MidjourneyPage = ({ folders, chats }) => {
     const { chatId } = useParams();
     const scrollBottom = useRef();
-    const [activeItems, setActiveItems] = useState([false, true, false, false]);
+    const [activeItems, setActiveItems] = useState([false, true,]);
     const [messages, setMessages] = useState(
         []
     )
@@ -69,13 +69,12 @@ const MidjourneyPage = ({ folders, chats }) => {
         <div>
             <div className="content-page">
                 <div className="content">
-                    <div className="container-back-mid">
-                        <MessageMidjorney />
-                    </div>
+
 
                     <div className="container-back-mid">
                         {messages.length ? <ChatBlockHead /> : null}
                     </div>
+
                     <div className="container-back-mid">
                         {!messages.length && <NavigationsMidj activeItems={activeItems} setActiveItems={setActiveItems} />}
                     </div>
@@ -86,14 +85,14 @@ const MidjourneyPage = ({ folders, chats }) => {
                         </div>
 
                     )}
-                    {activeItems[1] || activeItems[2] || activeItems[3] ? (
-                        <div className="">
-                            {!messages.length && <MidjourneyTabs />}
+                    {activeItems[1] ? (
+                        <div className="container-back-mid">
+                            {!messages.length && <MessageMidjorney />}
                         </div>
                     ) : null}
 
                     <ChatBlock setMessages={setMessages} chatId={chatId} newChatName={newChatName} messages={messages} scrollBottom={scrollBottom} />
-                    <MessageAdd chatId={chatId} setMessages={setMessages} messages={messages} newChatName={newChatName} />
+                    <MessageAdd activeItems={activeItems} chatId={chatId} setMessages={setMessages} messages={messages} newChatName={newChatName} />
                 </div>
             </div>
 

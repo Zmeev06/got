@@ -9,22 +9,22 @@ const NewChatAction = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "4c358ff22441bed3c3c55b8e6b7a8ae46bbb1abc"
+                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
             }
 
         })
             .then(response => response.json())
             .then(data => {
                 console.log(data)
-                window.location.href = `/chat/${data.pk}` 
+                window.location.href = `/chat/${data.pk}`
             })
 
-        
+
     }
 
     return (
         <Link to={chatUrl && '/'}>
-            <div onClick={()=>createChat()}>
+            <div onClick={() => createChat()}>
                 <button type='button'><span className="plus_sp">+</span> Новый чат</button>
             </div>
         </Link>
