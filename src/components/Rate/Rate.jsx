@@ -11,7 +11,7 @@ import { Move } from "react-feather";
 import { Link } from 'react-router-dom'
 
 
-function Rate() {
+function Rate({auth}) {
     return (
         <div>
             <div className="chat_top_header_mob ap">

@@ -4,7 +4,9 @@ import Vk from "../../images/icons/vk.png"
 import Tg from "../../images/icons/tg.png"
 import { Link } from 'react-router-dom'
 
-const RateSettings = () => {
+const RateSettings = ({auth}) => {
+
+   
 
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
@@ -13,6 +15,32 @@ const RateSettings = () => {
     const [oldPassVisible, setOldPassVisible] = useState(false);
     const [passVisible, setPassVisible] = useState(false);
     const [newPassVisible, setNewPassVisible] = useState(false);
+
+    function changePass(){
+        if(password == newPassword && password.length>=8){
+          
+                fetch('http://mindl.in:8000/auth/me/change_password', {
+                    method: 'POST',
+        
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                    },
+                    body: JSON.stringify({
+                        "current_password": oldPassword,
+                        "new_password": newPassword                   
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                    
+                    })
+        
+
+        
+        }
+    }
 
     return (
         <div>
@@ -39,7 +67,7 @@ const RateSettings = () => {
                         <form className="api_settings_form_left">
                             <label htmlFor="email">
                                 Ваша эл. почта:
-                                <input type="email" name="email" id="email" value="mukhammaqodir4047@gmail.com" placeholder="mukhammaqodir4047@gmail.com" readOnly />
+                                <input type="email" name="email" id="email" value={auth.email} placeholder={auth.email} readOnly />
                             </label>
                             <div className="api_settings_networks">
                                 Подключённые соц сети:
@@ -63,13 +91,23 @@ const RateSettings = () => {
                             </div>
                             <div className="subscription_level">
                                 <p>Уровень подписки:</p>
-                                <a href="#">Уровень подписки FREE</a>
+                                <Link to="/settings" state={{
+                                    plan: true,
+                                }} >
+                                    {`Уровень подписки ${auth.tariff.name}`}
+                                </Link>
+                               
                                 <ul>
                                     <li>- 5 запросов ChatGPT в сутки</li>
                                     <li>- 2 запроса к midjourney в сутки</li>
                                 </ul>
                             </div>
+                            <Link to="/settings" state={{
+                                    plan: true,
+                                }} >
+
                             <button type="submit" className="api_settings_btn">Улучшить тариф</button>
+                                </Link>
                         </form>
                         <form className="api_settings_form_right" method="get" id="form_validate" onSubmit="return validateForm()">
                             <fieldset>
@@ -87,7 +125,7 @@ const RateSettings = () => {
                                 <input type={newPassVisible ? 'text' : 'password'} value={newPassword} name="pass2" id="passwordFieldTwo" onChange={(e) => setNewPassword(e.target.value)} required />
                                 <a href="#" className="password_eye" onClick={() => setNewPassVisible(!newPassVisible)}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></a>
                             </fieldset>
-                            <div className="valid_text">
+                            <div className={oldPassword.length >= 8 && password.length >= 8 && newPassword.length >= 8 ? "valid_text" : "valid_text error"}>
                                 Ваш пароль должен содержать:
                                 <span>
                                     {oldPassword.length >= 8 && password.length >= 8 && newPassword.length >= 8
@@ -103,7 +141,7 @@ const RateSettings = () => {
                                     Не менее 8 символов
                                 </span>
                             </div>
-                            <button type="submit" className="api_settings_btn">Обновить пароль</button>
+                            <button type='button' className="api_settings_btn" onClick={changePass}>Обновить пароль</button>
                         </form>
                     </div>
                 </section>

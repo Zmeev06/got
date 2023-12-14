@@ -7,7 +7,7 @@ import { Settings, Star, Move } from 'react-feather';
 import { useLocation } from 'react-router-dom';
 
 
-const RatePage = () => {
+const RatePage = ({auth}) => {
     const [activeTab, setActiveTab] = useState(0);
 
     const location = useLocation();
@@ -30,9 +30,9 @@ const RatePage = () => {
                         </ul>
                     </div>
 
-                    {activeTab === 0 && <Rate />}
-                    {activeTab === 1 && <RateSettings />}
-                    {activeTab === 2 && <RateApi />}
+                    {activeTab === 0 && <Rate auth={auth}/>}
+                    {activeTab === 1 && <RateSettings auth={auth}/>}
+                    {activeTab === 2 && <RateApi auth={auth}/>}
                 </div>
             </div>
 
@@ -47,9 +47,9 @@ const RatePage = () => {
                             </ul>
                         </div>
 
-                        {activeTab === 0 && <RateApi />}
-                        {activeTab === 1 && <RateSettings />}
-                        {activeTab === 2 && <Rate />}
+                        {activeTab === 0 && <RateApi auth={auth}/>}
+                        {activeTab === 1 && <RateSettings auth={auth}/>}
+                        {activeTab === 2 && <Rate auth={auth}/>}
                     </div>
                 </div>
                 :
@@ -63,9 +63,9 @@ const RatePage = () => {
                             </ul>
                         </div>
 
-                        {activeTab === 0 && <RateSettings />}
-                        {activeTab === 1 && <Rate />}
-                        {activeTab === 2 && <RateApi />}
+                        {activeTab === 0 && <RateSettings auth={auth}/>}
+                        {activeTab === 1 && <Rate auth={auth}/>}
+                        {activeTab === 2 && <RateApi auth={auth}/>}
                     </div>
                 </div>
         }
