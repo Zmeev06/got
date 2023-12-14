@@ -36,6 +36,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
             })
 
             .then(data => {
+                console.log(data)
                 iMessages = data.messages.map(e => [{
                     messageText: e.text,
                     avatar: GptUser,
