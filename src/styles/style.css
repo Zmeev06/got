@@ -7688,3 +7688,15 @@ textarea {
         display: flex;
     }
 }
+
+.midjourney_chat_box {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+}
+
+.midjourney_chat_form .midjourney_chat_box .midjourney_chat_item {
+    width: 70px;
+    height: 70px;
+
+    font-size: 32px;
+}
