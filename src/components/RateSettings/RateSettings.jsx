@@ -19,7 +19,7 @@ const RateSettings = ({auth}) => {
     function changePass(){
         if(password == newPassword && password.length>=8){
           
-                fetch('http://mindl.in:8000/auth/me/change_password', {
+                fetch('http://mindl.in:8000/auth/me/change_password/', {
                     method: 'POST',
         
                     headers: {
@@ -33,7 +33,8 @@ const RateSettings = ({auth}) => {
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data)
+                        if(data.error == "Incorrect password") alert('Старый пароль - неверный');
+                        else alert('Пароль успешно изменен')
                     
                     })
         

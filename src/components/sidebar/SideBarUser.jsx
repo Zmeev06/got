@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DefaultAvatarImg from "../../images/default_avatar.png";
 import { Link } from 'react-router-dom';
 
 const SideBarUser = ({auth}) => {
+
+    const [imgUser, setImgUser] = useState(DefaultAvatarImg)
+
+    function changeUrl(){
+        setImgUser(`https://ziongpt.ai${auth.avatar}`)
+    }
+
+    useEffect(()=>{
+        changeUrl();
+    },[])
  
     return (
         <div className="user_block">
             <div className="user-box text-center">
-                <img src={auth.avatar} alt="user-img" title="Mat Helme" className="rounded-circle avatar-md" />
+                <img src={imgUser} alt="user-img" title="Mat Helme" className="rounded-circle avatar-md" />
                 <div className="user_content">
                     <div className="user_name">
                         <a href="#" className="text-white">{auth.username}</a>

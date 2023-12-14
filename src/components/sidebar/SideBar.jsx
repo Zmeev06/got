@@ -42,7 +42,7 @@ const SideBar = ({ folders, chats, auth }) => {
         }
     }
 
-    console.log(auth)
+
 
     return (
         <div className="left-side-menu">
