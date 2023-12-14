@@ -7,7 +7,7 @@ import SideBarFolderList from "./SideBarFolderList";
 import { useState } from 'react';
 
 
-const SideBar = ({ folders, chats }) => {
+const SideBar = ({ folders, chats, auth }) => {
   
 
     const [foldersArr, setFoldersArr] = useState([]);
@@ -42,6 +42,8 @@ const SideBar = ({ folders, chats }) => {
         }
     }
 
+    console.log(auth)
+
     return (
         <div className="left-side-menu">
             <div className="h-100" data-simplebar="init">
@@ -57,7 +59,7 @@ const SideBar = ({ folders, chats }) => {
                                         <SideBarHeader inputValue={inputValue}/>
                                         <SideBarFolderList folders={zeroFlag ? folders : foldersArr} chats={zeroFlag ? chats : chatsArr} />
                                         <SideBarBottomLinks />
-                                        <SideBarUser />
+                                        <SideBarUser auth={auth}/>
                                     </div>
                                     <div className="clearfix"></div>
                                 </div>

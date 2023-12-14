@@ -1106,6 +1106,9 @@ section form button {
 }
 
 
+.api_settings_form_right .valid_text.error span{
+    color: #B91C1C;
+}
 
 .api_settings_form_left label {
     color: #000;
