@@ -670,7 +670,7 @@ html {
     transition: .3s all ease;
 }
 
-.rate .confirm_rate p.error-check{
+.rate .confirm_rate p.error-check {
     color: #B91C1C;
     font-weight: 600;
 }
@@ -823,7 +823,7 @@ html {
     justify-content: space-between;
 }
 
-.api_block .api_content .api_form a{
+.api_block .api_content .api_form a {
     width: 30%;
 }
 
@@ -1116,7 +1116,7 @@ section form button {
 }
 
 
-.api_settings_form_right .valid_text.error span{
+.api_settings_form_right .valid_text.error span {
     color: #B91C1C;
 }
 
@@ -4423,7 +4423,7 @@ pre {
         align-items: center;
     }
 
-    .api_block .api_content .api_form a{
+    .api_block .api_content .api_form a {
         width: 100%;
     }
 
@@ -7699,4 +7699,12 @@ textarea {
     height: 70px;
 
     font-size: 32px;
+}
+
+.chatgpt header ul li {
+    flex-wrap: wrap;
+}
+
+.chatgpt header ul {
+    width: 1180px;
 }

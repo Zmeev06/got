@@ -18,7 +18,7 @@ import MessageMidjorney from '../components/MessageMidjorney/MessageMidjorney'
 const MidjourneyPage = ({ folders, chats }) => {
     const { chatId } = useParams();
     const scrollBottom = useRef();
-    const [activeItems, setActiveItems] = useState([false, true,]);
+    const [activeItems, setActiveItems] = useState([false, true, false, false, false, false, false,]);
     const [messages, setMessages] = useState(
         []
     )
@@ -79,17 +79,18 @@ const MidjourneyPage = ({ folders, chats }) => {
                         {!messages.length && <NavigationsMidj activeItems={activeItems} setActiveItems={setActiveItems} />}
                     </div>
 
-                    {activeItems[0] && (
+                    {activeItems[0] || activeItems[1] || activeItems[2] ? (
                         <div className="container-back-mid">
                             {!messages.length && <Gpt />}
                         </div>
-
-                    )}
-                    {activeItems[1] ? (
+                    ) : null}
+                    {activeItems[3] || activeItems[4] || activeItems[5] || activeItems[6] ? (
                         <div className="container-back-mid">
                             {!messages.length && <MessageMidjorney />}
                         </div>
                     ) : null}
+
+
 
                     <ChatBlock setMessages={setMessages} chatId={chatId} newChatName={newChatName} messages={messages} scrollBottom={scrollBottom} />
                     <MessageAdd activeItems={activeItems} chatId={chatId} setMessages={setMessages} messages={messages} newChatName={newChatName} />
