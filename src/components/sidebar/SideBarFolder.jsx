@@ -44,11 +44,14 @@ const SideBarFolder = ({ folder, chat }) => {
             },
             body: JSON.stringify({
                 'folder': folder.pk,
+                "ai_model": "gpt-3.5-turbo",
+          
             })
         })
             .then(response => response.json())
             .then(data => {
-                window.location.href = `/chat/${folder.pk}`
+                console.log(data)
+                window.location.href = `/chat/${data.pk}`
             })
 
 

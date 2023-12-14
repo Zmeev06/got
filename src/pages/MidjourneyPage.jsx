@@ -45,7 +45,16 @@ const MidjourneyPage = ({ folders, chats }) => {
 
 
 
-    function newChatName(e) {
+    function newChatName(e, models) {
+        let model;
+        if(models[0] == true) model = 'gpt-3.5-turbo'
+        else if(models[1] == true) model = 'gpt-4'
+        else if(models[2] == true) model = 'gpt-4-1106-preview'
+        else if(models[3] == true) model = 'mj'
+        else if(models[4] == true) model = 'dall-e-2'
+        else if(models[5] == true) model = 'dall-e-3'
+        else if(models[6] == true) model = 'sd'
+
         if (messages.length == 0) {
 
             fetch(`http://mindl.in:8000/api/v1/chatsession/${window.location.href.split('/')[window.location.href.split('/').length - 1]}/`, {
@@ -56,6 +65,7 @@ const MidjourneyPage = ({ folders, chats }) => {
                     "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
                 },
                 body: JSON.stringify({
+                    "ai_model": model,
                     "name": e.substring(0, 15)
                 })
             }).then(response => response.json())
