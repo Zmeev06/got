@@ -539,7 +539,7 @@ html {
 }
 
 .rate .rate_block .rate_item {
-    padding: 48px 28px 27px 28px;
+    padding: 48px 24px 27px 24px;
     border-radius: 10px;
     background: #29282F;
     box-shadow: 4px 4px 20px 0px rgba(0, 0, 0, 0.08);
@@ -594,7 +594,7 @@ html {
 
 .rate .rate_block .rate_item .rate_item_title {
     color: #FFF;
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 700;
     line-height: 42px;
     letter-spacing: -0.72px;
@@ -607,7 +607,7 @@ html {
 
 .rate .rate_block .rate_item .rate_item_title span {
     color: #FFF;
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 600;
     line-height: 38px;
     letter-spacing: -1.28px;
@@ -667,6 +667,12 @@ html {
     line-height: 28px;
     letter-spacing: -0.22px;
     opacity: 0.7;
+    transition: .3s all ease;
+}
+
+.rate .confirm_rate p.error-check{
+    color: #B91C1C;
+    font-weight: 600;
 }
 
 .rate .confirm_rate p a {
@@ -817,6 +823,10 @@ html {
     justify-content: space-between;
 }
 
+.api_block .api_content .api_form a{
+    width: 30%;
+}
+
 .api_block .api_content .api_form .api_btn {
     color: #FFF;
     text-align: center;
@@ -827,7 +837,7 @@ html {
     background: #10A37F;
     padding: 16px 48px;
     border: none;
-    width: calc(25% - 24px);
+    width: 100%;
 }
 
 .api_block .api_content .api_form .api_label {
@@ -838,7 +848,7 @@ html {
     font-size: 24px;
     font-weight: 500;
     line-height: 24px;
-    width: calc(75% - 24px);
+    width: 70%;
 }
 
 .api_block .api_content .api_form .api_label input {
@@ -4285,7 +4295,7 @@ pre {
     }
 
     .api_block .api_content .api_form .api_btn {
-        width: calc(25% - 14px);
+        width: 100%;
     }
 
     .api_content_bottom ul {
@@ -4411,6 +4421,10 @@ pre {
         flex-direction: column;
         gap: 28px 0;
         align-items: center;
+    }
+
+    .api_block .api_content .api_form a{
+        width: 100%;
     }
 
     .api_block .api_content .api_form .api_label {

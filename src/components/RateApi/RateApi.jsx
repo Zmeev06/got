@@ -1,6 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Lock from '../../images/icons/lock.png'
-const RateApi = () => {
+import { Link } from 'react-router-dom';
+const RateApi = ({auth}) => {
+
+    const [token, setToken] = useState('Обновите вашу подписку до уровня PRO+ для получения API Токен')
+
+    useEffect(() => { // получение инфы об апи для пользователя
+        fetch('http://mindl.in:8000/auth/me/update_token/', {
+            method: 'GET',
+
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                
+                if(data.api_token != null) setToken(data.api_token)
+            })
+
+    }, []);
+
+    function getToken(){
+        document.getElementById('api').select();    
+        document.execCommand("copy");   
+    }
+
     return (
 
         <div>
@@ -35,13 +61,18 @@ const RateApi = () => {
                             <label htmlFor="api" className="api_label desc">
                                 Ваш API токен
 
-                                <input type="text" name="api" id="api" placeholder="Обновите вашу подписку до уровня PRO+ для получения API Токен" value="Обновите вашу подписку до уровня PRO+ для получения API Токен" readOnly />
+                                <input type="text" name="api" id="api" placeholder={token} value={token} readOnly />
                             </label>
                             <label htmlFor="api" className="api_label mob">
                                 Ваш API токен
-                                <input type="text" name="api" id="api" placeholder="Обновите подписку PRO+" value="Обновите подписку PRO+" readOnly />
+                                <input type="text" name="api" id="api" placeholder={token} value={token} readOnly />
                             </label>
-                            <button type="submit" className="api_btn">Получить Токен</button>
+                            <Link to={token != 'Обновите вашу подписку до уровня PRO+ для получения API Токен' && "/settings"} state={{
+                                    plan: true,
+                                }} >
+
+                            <button type="button" className="api_btn" onClick={token != 'Обновите вашу подписку до уровня PRO+ для получения API Токен' && getToken}>Получить Токен</button>
+                                </Link>
                         </form>
                         <div className="api_content_bottom">
                             <ul>
@@ -51,13 +82,13 @@ const RateApi = () => {
                                     - 0.2 копейки за каждый запрос</li>
                                 <li><a href="#">Читать документацию</a></li>
                             </ul>
-                            <div className="upgrade_box">
+                            {token == 'Обновите вашу подписку до уровня PRO+ для получения API Токен' && <div className="upgrade_box">
                                 <p>
                                     Обновите вашу подписку до уровня PRO + <br /> чтобы иметь возможность пользоваться API
                                     <a href="#">Обновить до уровня PRO +</a>
                                 </p>
                                 <img src={Lock} alt="" />
-                            </div>
+                            </div>}
                         </div>
                     </div>
                 </section>
