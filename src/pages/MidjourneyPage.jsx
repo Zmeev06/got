@@ -12,6 +12,7 @@ import MidjourneyTabs from '../components/MidjourneyTabs/MidjourneyTabs'
 import ModalDelete from '../components/ModelDelete/ModalDelete'
 import { useParams } from 'react-router-dom';
 import { useRef } from 'react'
+import MessageMidjorney from '../components/MessageMidjorney/MessageMidjorney'
 
 
 const MidjourneyPage = ({ folders, chats }) => {
@@ -68,6 +69,10 @@ const MidjourneyPage = ({ folders, chats }) => {
         <div>
             <div className="content-page">
                 <div className="content">
+                    <div className="container-back-mid">
+                        <MessageMidjorney />
+                    </div>
+
                     <div className="container-back-mid">
                         {messages.length ? <ChatBlockHead /> : null}
                     </div>
