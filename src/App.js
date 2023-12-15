@@ -104,27 +104,27 @@ function App() {
 
     const [auth, setAuth] = useState({
         
-api_balance: 1,
-api_token: null,
-avatar: "/media/profile_avatar/default.png",
-chatgpt_4_monthly_limit: 100,
-chatgpt_daily_limit: 97,
-context_mode: true,
-dalle_2_balance: 100,
-dalle_3_balance: 100,
-date_joined: "2023-12-04T13:15:30.050306+03:00",
-email:"admin@admin.ru",
-email_confirmed:true,
-first_name:"",
-id:"7ca72ff5-14ce-4e29-b2fb-2b38c73e3d97",
-is_active:true,
-is_staff:true,
-is_superuser:true,
-last_login:"2023-12-12T21:33:56.922971+03:00",
-last_name:"",
-midjourney_monthly_limit:43,
-sd_monthly_limit:96,
-username: "admin@admin.ru",
+    api_balance: 1,
+    api_token: null,
+    avatar: "/media/profile_avatar/default.png",
+    chatgpt_4_monthly_limit: 100,
+    chatgpt_daily_limit: 97,
+    context_mode: true,
+    dalle_2_balance: 100,
+    dalle_3_balance: 100,
+    date_joined: "2023-12-04T13:15:30.050306+03:00",
+    email:"admin@admin.ru",
+    email_confirmed:true,
+    first_name:"",
+    id:"7ca72ff5-14ce-4e29-b2fb-2b38c73e3d97",
+    is_active:true,
+    is_staff:true,
+    is_superuser:true,
+    last_login:"2023-12-12T21:33:56.922971+03:00",
+    last_name:"",
+    midjourney_monthly_limit:43,
+    sd_monthly_limit:96,
+    username: "admin@admin.ru",
 tariff:{
     chatgpt_4_monthly_limit:30,
     chatgpt_daily_limit:-1,
@@ -144,13 +144,20 @@ tariff:{
 },
     });
 
+    useEffect(()=>{
+        if(document.cookie.length == 0) document.cookie = `token=5634c40cd049a1f7fae91b257803f6db341daba3`;
+    
+        if(document.cookie == '') window.location.href = 'https://ziongpt.ai/';
+    
+    },[])
+
     useEffect(() => { // получение папок и чатов
         fetch('http://mindl.in:8000/api/v1/sessions/', {
             method: 'GET',
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
         })
             .then(response => response.json())
@@ -168,7 +175,7 @@ tariff:{
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
         })
             .then(response => response.json())
@@ -180,6 +187,7 @@ tariff:{
 
     }, []);
 
+    
 
     useEffect(() => { // получение инфы о пользователе
         fetch('http://mindl.in:8000/auth/me/', {
@@ -187,7 +195,7 @@ tariff:{
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
         })
             .then(response => response.json())

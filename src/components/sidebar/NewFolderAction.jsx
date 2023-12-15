@@ -11,7 +11,7 @@ const NewFolderAction = () => {
             headers: {
                 'Content-Type': 'application/json',
 
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
 
 
@@ -23,7 +23,7 @@ const NewFolderAction = () => {
             headers: {
                 'Content-Type': 'application/json',
                 'Cookie': 'csrftoken=TUeTRp5vrjwDPP4BjTjJVuq40EKFNnbG; sessionid=s1yyur1j74ab874vjxxmzo9zz9ia3r9v',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
 
         })

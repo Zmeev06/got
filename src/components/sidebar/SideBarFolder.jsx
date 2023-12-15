@@ -20,9 +20,9 @@ const SideBarFolder = ({ folder, chat }) => {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                    "Authorization": "Token " + document.cookie.split('=')[1],
                 }
-            })
+        })
                 .then(data => console.log(data));
 
             setTimeout(() => {
@@ -40,7 +40,7 @@ const SideBarFolder = ({ folder, chat }) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                "Authorization": "Token " + document.cookie.split('=')[1],
             },
             body: JSON.stringify({
                 'folder': folder.pk,
@@ -104,7 +104,7 @@ const SideBarFolder = ({ folder, chat }) => {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                    "Authorization": "Token " + document.cookie.split('=')[1],
                 },
                 body: JSON.stringify({
                     'name': inputEdit.current.value,
@@ -129,7 +129,7 @@ const SideBarFolder = ({ folder, chat }) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Cookie': 'csrftoken=TUeTRp5vrjwDPP4BjTjJVuq40EKFNnbG; sessionid=s1yyur1j74ab874vjxxmzo9zz9ia3r9v',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
 
         })

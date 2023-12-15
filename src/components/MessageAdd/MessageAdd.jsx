@@ -22,7 +22,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
         })
 
@@ -112,7 +112,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                "Authorization": "Token " + document.cookie.split('=')[1],
             },
             body: JSON.stringify({
                 "session_id": chatId,
@@ -186,7 +186,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                "Authorization": "Token " + document.cookie.split('=')[1],
             },
             body: JSON.stringify({
                 "session_id": chatId,
@@ -205,7 +205,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
 
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                    "Authorization": "Token " + document.cookie.split('=')[1],
                 },
                 body: JSON.stringify({
                     "task_id": id
