@@ -5,8 +5,8 @@ import GptChat from '../../images/chat/chatgpt_ic.png';
 import PublicModal from '../PublicModal/PublicModal';
 
 
-const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems }) => {
-   
+const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, activeItems }) => {
+
     const [text, setText] = useState('');
     const [setting, setSetting] = useState(false)
     const [modal, setModal] = useState(false)
@@ -103,6 +103,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
             }]
             setMessages(iMessages);
             setText('');
+
         }
 
 
@@ -148,7 +149,11 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
             setMessages([...iMessages]);
         }
         const text1 = new TextDecoder('utf-8').decode(new Uint8Array(chunks.flat()));
+
     }
+
+
+
     async function newChatReq() {
 
         if (textareaRef.current.value.length > 0) {
@@ -159,14 +164,14 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
             if (activeItems[0] || activeItems[1] || activeItems[2]) {
                 await newGptReq();
             }
-            else if(activeItems[3] == true){
-                setTimeout(()=>{
+            else if (activeItems[3] == true) {
+                setTimeout(() => {
                     setText('');
-                midjourneyTest()
+                    midjourneyTest()
                 }, 500)
-                
+
             }
-           
+
         }
 
     }
@@ -174,7 +179,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
     function midjourneyTest() {
 
         let id;
-        
+
 
         fetch('http://mindl.in:8000/api/v1/run-generation/', {
             method: 'POST',
@@ -220,16 +225,14 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
                     if (data.status == "ready") {
                         clearInterval(MjInterval)
                         console.log(data.result)
+                        MidjCallBack(data.result)
                     }
                 })
         }, 20000)
 
     }
 
-    // useEffect(()=>{
 
-    //     midjourneyTest()
-    // }, [])
 
 
 

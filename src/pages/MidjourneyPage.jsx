@@ -22,6 +22,7 @@ const MidjourneyPage = ({ folders, chats }) => {
     const [messages, setMessages] = useState(
         []
     )
+    const [midjData, setMidjData] = useState('')
     const [messagesWidth, setMessagesWidth] = useState(messages.length)
 
 
@@ -30,7 +31,9 @@ const MidjourneyPage = ({ folders, chats }) => {
         if (messages.length != messagesWidth) lastMessageScroll('smooth');
     }, [])
 
-
+    function MidjCallBack(data) {
+        setMidjData(data)
+    }
 
 
     function lastMessageScroll(b) {
@@ -47,13 +50,13 @@ const MidjourneyPage = ({ folders, chats }) => {
 
     function newChatName(e, models) {
         let model;
-        if(models[0] == true) model = 'gpt-3.5-turbo'
-        else if(models[1] == true) model = 'gpt-4'
-        else if(models[2] == true) model = 'gpt-4-1106-preview'
-        else if(models[3] == true) model = 'mj'
-        else if(models[4] == true) model = 'dall-e-2'
-        else if(models[5] == true) model = 'dall-e-3'
-        else if(models[6] == true) model = 'sd'
+        if (models[0] == true) model = 'gpt-3.5-turbo'
+        else if (models[1] == true) model = 'gpt-4'
+        else if (models[2] == true) model = 'gpt-4-1106-preview'
+        else if (models[3] == true) model = 'mj'
+        else if (models[4] == true) model = 'dall-e-2'
+        else if (models[5] == true) model = 'dall-e-3'
+        else if (models[6] == true) model = 'sd'
 
         if (messages.length == 0) {
 
@@ -96,14 +99,14 @@ const MidjourneyPage = ({ folders, chats }) => {
                     ) : null}
                     {activeItems[3] || activeItems[4] || activeItems[5] || activeItems[6] ? (
                         <div className="container-back-mid">
-                            {!messages.length && <MessageMidjorney />}
+                            {!messages.length && <MessageMidjorney midjData={midjData} />}
                         </div>
                     ) : null}
 
 
 
                     <ChatBlock setMessages={setMessages} chatId={chatId} newChatName={newChatName} messages={messages} scrollBottom={scrollBottom} />
-                    <MessageAdd activeItems={activeItems} chatId={chatId} setMessages={setMessages} messages={messages} newChatName={newChatName} />
+                    <MessageAdd MidjCallBack={MidjCallBack} activeItems={activeItems} chatId={chatId} setMessages={setMessages} messages={messages} newChatName={newChatName} />
                 </div>
             </div>
 

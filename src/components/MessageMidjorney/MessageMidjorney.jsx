@@ -1,15 +1,13 @@
 import React from 'react'
 import MidImg from '../../images/midjorney/bears.png'
 
-const MessageMidjorney = () => {
+const MessageMidjorney = (midjData) => {
     return (
         <div>
             <div class="chat_code_chatgpt">
                 <div class="midjourney_chat">
-                    <img class="chat_code_img" src={MidImg} alt="" />
+                    <img class="chat_code_img" src={midjData} alt="" />
                     <div class="midjourney_chat_right">
-
-
 
                         <form class="midjourney_chat_form">
                             <div class="midjourney_chat_label">
