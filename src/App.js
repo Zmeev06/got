@@ -144,10 +144,22 @@ tariff:{
 },
     });
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
     useEffect(()=>{
-        if(document.cookie.length == 0) document.cookie = `token=5634c40cd049a1f7fae91b257803f6db341daba3`;
-    
-        if(document.cookie == '') window.location.href = 'https://ziongpt.ai/';
+        if(!document.cookie.includes("token=")){
+            document.cookie = `token=5634c40cd049a1f7fae91b257803f6db341daba3`;
+            // window.location.href = 'https://ziongpt.ai/';
+        } 
+
+       
+
+          console.log(getCookie("token"))
+       
     
     },[])
 
@@ -157,7 +169,7 @@ tariff:{
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
             .then(response => response.json())
@@ -175,7 +187,7 @@ tariff:{
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
             .then(response => response.json())
@@ -195,7 +207,7 @@ tariff:{
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
             .then(response => response.json())
@@ -210,7 +222,7 @@ tariff:{
 
         <BrowserRouter>
 
-            <SideBar folders={folders} chats={chats} auth={auth}/>
+            <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie}/>
             <Routes>
                 {/* <Route path="/" element={<ChatPage />} /> */}
                 <Route path="/chat/:chatId" Component={MidjourneyPage} />

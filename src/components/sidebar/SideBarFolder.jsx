@@ -14,13 +14,20 @@ const SideBarFolder = ({ folder, chat }) => {
 
     const [deleteFolder, setDeleteFolder] = useState();
 
+    
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
     const onClickFunc = (value) => {
         if (value) {
             fetch(`http://mindl.in:8000/api/v1/folder/${folder.pk}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + document.cookie.split('=')[1],
+                    "Authorization": "Token " + getCookie("token"),
                 }
         })
                 .then(data => console.log(data));
@@ -40,7 +47,7 @@ const SideBarFolder = ({ folder, chat }) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             },
             body: JSON.stringify({
                 'folder': folder.pk,
@@ -104,7 +111,7 @@ const SideBarFolder = ({ folder, chat }) => {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + document.cookie.split('=')[1],
+                    "Authorization": "Token " + getCookie("token"),
                 },
                 body: JSON.stringify({
                     'name': inputEdit.current.value,
@@ -129,7 +136,7 @@ const SideBarFolder = ({ folder, chat }) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Cookie': 'csrftoken=TUeTRp5vrjwDPP4BjTjJVuq40EKFNnbG; sessionid=s1yyur1j74ab874vjxxmzo9zz9ia3r9v',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
 
         })

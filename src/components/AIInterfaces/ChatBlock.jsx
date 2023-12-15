@@ -8,6 +8,12 @@ import PublicModal from '../PublicModal/PublicModal'
 
 const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom }) => {
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
     const [modal, setModal] = useState(false)
     const setModalClick = () => {
         setModal(!modal);
@@ -40,7 +46,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + document.cookie.split('=')[1],
+                    "Authorization": "Token " + getCookie("token"),
                 },
                 body: JSON.stringify({
                     "name": e.substring(0, 15)
@@ -74,7 +80,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + document.cookie.split('=')[1],
+                    "Authorization": "Token " + getCookie("token"),
                 },
                 body: JSON.stringify({
                     "session_id": chatId,
@@ -126,7 +132,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
 

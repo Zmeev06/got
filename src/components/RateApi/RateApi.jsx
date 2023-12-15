@@ -3,6 +3,12 @@ import Lock from '../../images/icons/lock.png'
 import { Link } from 'react-router-dom';
 const RateApi = ({auth}) => {
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
     const [token, setToken] = useState('Обновите вашу подписку до уровня PRO+ для получения API Токен')
 
     useEffect(() => { // получение инфы об апи для пользователя
@@ -11,7 +17,7 @@ const RateApi = ({auth}) => {
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
             .then(response => response.json())

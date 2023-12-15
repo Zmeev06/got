@@ -7,6 +7,12 @@ import PublicModal from '../PublicModal/PublicModal';
 
 const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, activeItems }) => {
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
     const [text, setText] = useState('');
     const [setting, setSetting] = useState(false)
     const [modal, setModal] = useState(false)
@@ -22,7 +28,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
 
@@ -112,7 +118,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             },
             body: JSON.stringify({
                 "session_id": chatId,
@@ -186,7 +192,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             },
             body: JSON.stringify({
                 "session_id": chatId,
@@ -205,7 +211,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
 
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + document.cookie.split('=')[1],
+                    "Authorization": "Token " + getCookie("token"),
                 },
                 body: JSON.stringify({
                     "task_id": id
