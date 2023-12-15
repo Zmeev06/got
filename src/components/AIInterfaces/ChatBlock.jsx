@@ -40,7 +40,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                    "Authorization": "Token " + document.cookie.split('=')[1],
                 },
                 body: JSON.stringify({
                     "name": e.substring(0, 15)
@@ -74,7 +74,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                    "Authorization": "Token " + document.cookie.split('=')[1],
                 },
                 body: JSON.stringify({
                     "session_id": chatId,
@@ -126,7 +126,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
         })
 

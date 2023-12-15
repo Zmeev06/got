@@ -22,7 +22,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                "Authorization": "Token " + document.cookie.split('=')[1],
             }
         })
 
@@ -111,7 +111,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3"
+                "Authorization": "Token " + document.cookie.split('=')[1],
             },
             body: JSON.stringify({
                 "session_id": chatId,
@@ -181,7 +181,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                "Authorization": "Token " + document.cookie.split('=')[1],
             },
             body: JSON.stringify({
                 "session_id": chatId,
@@ -200,7 +200,7 @@ const MessageAdd = ({ setMessages, messages, chatId, newChatName, activeItems })
 
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + "5634c40cd049a1f7fae91b257803f6db341daba3",
+                    "Authorization": "Token " + document.cookie.split('=')[1],
                 },
                 body: JSON.stringify({
                     "task_id": id
