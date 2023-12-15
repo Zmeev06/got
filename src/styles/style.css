@@ -7712,3 +7712,7 @@ textarea {
 .chat_code_img {
     max-width: 500px;
 }
+
+.midjourney_chat {
+    margin-top: 30px;
+}
