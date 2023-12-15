@@ -22,7 +22,7 @@ const MidjourneyPage = ({ folders, chats }) => {
     const [messages, setMessages] = useState(
         []
     )
-    const [midjData, setMidjData] = useState('')
+    const [midjData, setMidjData] = useState(null)
     const [messagesWidth, setMessagesWidth] = useState(messages.length)
 
 
@@ -75,7 +75,7 @@ const MidjourneyPage = ({ folders, chats }) => {
                 .then(data => console.log(data));
         }
     }
-
+    console.log(midjData);
 
 
     return (
@@ -97,6 +97,7 @@ const MidjourneyPage = ({ folders, chats }) => {
                             {!messages.length && <Gpt />}
                         </div>
                     ) : null}
+
                     {activeItems[3] || activeItems[4] || activeItems[5] || activeItems[6] ? (
                         <div className="container-back-mid">
                             {!messages.length && <MessageMidjorney midjData={midjData} />}
