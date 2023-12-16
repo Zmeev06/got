@@ -11,67 +11,67 @@ import { Move } from "react-feather";
 import { Link } from 'react-router-dom'
 
 
-function Rate({auth}) {
+function Rate({ auth }) {
     const [checked, setChecked] = useState(false);
     const [textCheck, setTextCheck] = useState(false)
-    const [tariffs, setTariffs] = useState([{  
-        chatgpt_4_monthly_limit:15,
-        chatgpt_daily_limit:-1,
-        code:"mini",
-        dalle_2_balance:0,
-        dalle_3_balance:0,
-        days:30,
-        description:"Тариф MINI на месяц",
-        id:2,
-        is_active:true,
-        is_extra:false,
-        main_tariff:null,
-        midjourney_monthly_limit:100,
-        name:"MINI",
-        price:450,
-        sd_monthly_limit:50,
+    const [tariffs, setTariffs] = useState([{
+        chatgpt_4_monthly_limit: 15,
+        chatgpt_daily_limit: -1,
+        code: "mini",
+        dalle_2_balance: 0,
+        dalle_3_balance: 0,
+        days: 30,
+        description: "Тариф MINI на месяц",
+        id: 2,
+        is_active: true,
+        is_extra: false,
+        main_tariff: null,
+        midjourney_monthly_limit: 100,
+        name: "MINI",
+        price: 450,
+        sd_monthly_limit: 50,
     }
-    ,
+        ,
     {
-        chatgpt_4_monthly_limit:30,
-        chatgpt_daily_limit:-1,
-        code:"pro",
-        dalle_2_balance:0,
-        dalle_3_balance:0,
-        days:30,
-        description:"Тариф PRO на месяц",
-        id:2,
-        is_active:true,
-        is_extra:false,
-        main_tariff:null,
-        midjourney_monthly_limit:150,
-        name:"PRO",
-        price:450,
-        sd_monthly_limit:50,
+        chatgpt_4_monthly_limit: 30,
+        chatgpt_daily_limit: -1,
+        code: "pro",
+        dalle_2_balance: 0,
+        dalle_3_balance: 0,
+        days: 30,
+        description: "Тариф PRO на месяц",
+        id: 2,
+        is_active: true,
+        is_extra: false,
+        main_tariff: null,
+        midjourney_monthly_limit: 150,
+        name: "PRO",
+        price: 450,
+        sd_monthly_limit: 50,
     },
     {
-        chatgpt_4_monthly_limit:50,
-        chatgpt_daily_limit:-1,
-        code:"ultima",
-        dalle_2_balance:0,
-        dalle_3_balance:0,
-        days:30,
-        description:"Тариф ULTIMA на месяц",
-        id:14,
-        is_active:true,
-        is_extra:false,
-        main_tariff:null,
-        midjourney_monthly_limit:1000,
-        name:"ULTIMA",
-        price:3500,
-        sd_monthly_limit:200
+        chatgpt_4_monthly_limit: 50,
+        chatgpt_daily_limit: -1,
+        code: "ultima",
+        dalle_2_balance: 0,
+        dalle_3_balance: 0,
+        days: 30,
+        description: "Тариф ULTIMA на месяц",
+        id: 14,
+        is_active: true,
+        is_extra: false,
+        main_tariff: null,
+        midjourney_monthly_limit: 1000,
+        name: "ULTIMA",
+        price: 3500,
+        sd_monthly_limit: 200
     }
-])
+    ])
 
     function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
     useEffect(() => { // получение инфы о тарифах
@@ -86,24 +86,24 @@ function Rate({auth}) {
             .then(response => response.json())
             .then(data => {
                 setTariffs(data)
-            
+
             })
 
     }, []);
 
-    function allowPayment(){
-    
-        if(checked) setChecked(false);
-        else{
+    function allowPayment() {
+
+        if (checked) setChecked(false);
+        else {
             setChecked(true);
             setTextCheck(false);
-        } 
+        }
     }
 
-    function errorText(){
-        if( !checked ) setTextCheck(true);
+    function errorText() {
+        if (!checked) setTextCheck(true);
         else setTextCheck(false);
-       
+
     }
 
     return (
@@ -140,19 +140,18 @@ function Rate({auth}) {
                                 <li><img src={RateYes} alt="" />Доступ к DALLE-2 и DALLE-3</li>
                                 <li><img src={RateClose} alt="" />Доступ к Api GPT и Midjourney</li>
                             </ul>
-                            <Link to={checked && `https://ziongpt.ai/payments/redirect/${tariffs[0].code}/${auth.id}/`} className="rate_action" onClick={()=>errorText()}>
+                            {checked && <Link to={`https://ziongpt.ai/payments/redirect/${tariffs[0].code}/${auth.id}/`} className="rate_action" onClick={() => errorText()}>
                                 Выбрать тариф
-                            </Link>
-                            {/* <div className="warning_mess">
-                                <img src={RateWarning} alt="" />
-                                <span>Первый месяц за 1 рубль далее по 599₽ в месяц</span>
-                            </div> */}
+                            </Link>}
+                            {!checked &&
+                                <a className="rate_action">Выбрать тариф</a>
+                            }
                         </div>
                         <div className="rate_item hover">
                             <div className="rate_item_hov_top">Чаще всего выбирают</div>
                             <div className="rate_item_title">{`Тариф ${tariffs[1].name} за ${tariffs[1].price} ₽ `}<br /><span>1  месяц</span></div>
                             <ul className="rate_advan">
-                            <li><img src={RateYes} alt="" />Доступ без VPN</li>
+                                <li><img src={RateYes} alt="" />Доступ без VPN</li>
                                 <li><img src={RateYes} alt="" />Не нужен номер телефона <br />  и иностранная карта</li>
                                 <li><img src={tariffs[1].chatgpt_daily_limit == -1 ? RateYes : RateClose} alt="" />Безлимит GPT 3,5 Turbo</li>
                                 <li><img src={RateYes} alt="" />{tariffs[1].chatgpt_4_monthly_limit} запросов в день к GPT4</li>
@@ -161,19 +160,18 @@ function Rate({auth}) {
                                 <li><img src={RateYes} alt="" />Доступ к DALLE-2 и DALLE-3</li>
                                 <li><img src={RateYes} alt="" />Доступ к Api GPT и Midjourney</li>
                             </ul>
-                            <Link to={checked && `https://ziongpt.ai/payments/redirect/${tariffs[1].code}/${auth.id}/`} className="rate_action" onClick={()=>errorText()}>
+                            {checked && <Link to={`https://ziongpt.ai/payments/redirect/${tariffs[1].code}/${auth.id}/`} className="rate_action" onClick={() => errorText()}>
                                 Выбрать тариф
-                            </Link>
-                            {/* <div className="warning_mess">
-                                <img src={RateWarning} alt="" />
-                                <span>Первый месяц за 1 рубль далее по 599₽ в месяц</span>
-                            </div> */}
+                            </Link>}
+                            {!checked &&
+                                <a className="rate_action">Выбрать тариф</a>
+                            }
                         </div>
                         <div className="rate_item">
                             <div className="rate_item_hov_top">Чаще всего выбирают</div>
                             <div className="rate_item_title">{`Тариф ${tariffs[2].name} за ${tariffs[2].price} ₽ `}<br /> <span>1  месяц</span></div>
                             <ul className="rate_advan">
-                            <li><img src={RateYes} alt="" />Доступ без VPN</li>
+                                <li><img src={RateYes} alt="" />Доступ без VPN</li>
                                 <li><img src={RateYes} alt="" />Не нужен номер телефона <br />  и иностранная карта</li>
                                 <li><img src={tariffs[2].chatgpt_daily_limit == -1 ? RateYes : RateClose} alt="" />Безлимит GPT 3,5 Turbo</li>
                                 <li><img src={RateYes} alt="" />{tariffs[2].chatgpt_4_monthly_limit} запросов в день к GPT4</li>
@@ -182,18 +180,18 @@ function Rate({auth}) {
                                 <li><img src={RateYes} alt="" />Доступ к DALLE-2 и DALLE-3</li>
                                 <li><img src={RateYes} alt="" />Доступ к Api GPT и Midjourney</li>
                             </ul>
-                            <Link to={checked && `https://ziongpt.ai/payments/redirect/${tariffs[2].code}/${auth.id}/`} className="rate_action" onClick={()=>errorText()}>
+                            {checked && <Link to={`https://ziongpt.ai/payments/redirect/${tariffs[2].code}/${auth.id}/`} className="rate_action" onClick={() => errorText()}>
                                 Выбрать тариф
-                            </Link>
-                            {/* <div className="warning_mess">
-                                <img src={RateWarning} alt="" />
-                                <span>Первый месяц за 1 рубль далее по {`${tariffs[1].price}`}₽ в месяц</span>
-                            </div> */}
+                            </Link>}
+                            {!checked &&
+                                <a className="rate_action">Выбрать тариф</a>
+                            }
+
                         </div>
                     </div>
                     <div className="confirm_rate">
                         <label className="generator_check_container" >
-                            <input type="checkbox" className="checkbox" onClick={()=>allowPayment()} />
+                            <input type="checkbox" className="checkbox" onClick={() => allowPayment()} />
 
                             <span className="checkmark"></span>
                         </label>

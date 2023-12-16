@@ -8,7 +8,6 @@ export const chatSlice = createSlice({
     reducers: {
         setNewChat: (state, action) => {
             state.value = action.payload
-            console.log('tet'+state.value)
         },
     },
 })

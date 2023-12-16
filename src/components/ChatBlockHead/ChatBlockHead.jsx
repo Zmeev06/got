@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ChatBlockHead = () => {
+const ChatBlockHead = ({type}) => {
     return (
         <div>
             <div className="chat_top_header desc">
@@ -9,7 +9,7 @@ const ChatBlockHead = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
                             <path d="M7.33268 20.1667L8.24935 13.75H3.66602L11.916 1.83337H13.7493L12.8327 9.16671H18.3327L9.16602 20.1667H7.33268Z" fill="#374151" />
                         </svg>
-                        По умолчанию (GPT-3.5)
+                        {type === 'image' ? 'Midjourney' : 'По умолчанию (GPT-3.5)'}
                     </a>
                 </div>
 

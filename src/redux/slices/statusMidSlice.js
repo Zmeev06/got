@@ -3,13 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 export const statusMidSlice = createSlice({
     name: 'statusMid',
     initialState: {
-        value: '',
+        value: 'ready',
         progress: 0
     },
     reducers: {
         setNewStatus: (state, action) => {
-            state.value = action.payload.split(', ')[0]
-            state.progress = action.payload.split(', ')[1]
+            state.value = action.payload
             console.log(state.value)
         },
     },

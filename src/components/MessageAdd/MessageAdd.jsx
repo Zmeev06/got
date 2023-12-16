@@ -5,7 +5,7 @@ import GptChat from '../../images/chat/chatgpt_ic.png';
 import PublicModal from '../PublicModal/PublicModal';
 import {useClickAway} from "react-use"
 import {setNewStatus} from "../../redux/slices/statusMidSlice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Loader from "../Loader/Loader";
 import toast from "react-hot-toast";
 
@@ -24,6 +24,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
     const settingsModal = useRef(null)
     const ref = useRef(null);
     const dispatch = useDispatch()
+    const status = useSelector(state => state.status)
     const [isLoading, setIsLoading] = useState(false)
     useClickAway(settingsModal, () => {
         setSetting(false)
@@ -169,6 +170,13 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
 
     }
 
+    useEffect(() => {
+        if (status.value === 'ready' || status.value === 'error' || status.value === 'banned') {
+            setIsLoading(false)
+        } else {
+            setIsLoading(true)
+        }
+    }, [status.value])
 
 
     async function newChatReq() {
@@ -211,7 +219,6 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
         }).then(response => response.json())
             .then(data => {
                 id = data.task_id;
-                console.log(id)
             })
 
         let MjInterval = setInterval(() => {
@@ -231,6 +238,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
                         setIsLoading(false)
                         clearInterval(MjInterval)
                         MidjCallBack(data.result)
+                        dispatch(setNewStatus(`${data.status}`))
                     } else if (data.status === "banned") {
                         setIsLoading(false)
                             clearInterval(MjInterval)
@@ -241,11 +249,10 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
                             notify('Во время генерации произошла ошибка. Попробуйте ещё раз, если ошибка повторилась, обратитесь в тех. Поддержку')
                     } else {
                         setIsLoading(true)
-                        dispatch(setNewStatus(`${data.status}, ${data.result}`))
                     }
+                    dispatch(setNewStatus(`${data.status}`))
                 })
-        }, 5000)
-
+        }, 3000)
     }
 
     return (

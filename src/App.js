@@ -153,7 +153,7 @@ function App() {
 
     useEffect(() => {
         if (!document.cookie.includes("token=")) {
-            document.cookie = `token=5634c40cd049a1f7fae91b257803f6db341daba3`;
+            document.cookie = `token=c332dec0aecb802b012212b7fdab4048ae8dcd28`;
             // window.location.href = 'https://ziongpt.ai/';
         }
 
