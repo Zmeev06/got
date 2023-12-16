@@ -7703,9 +7703,7 @@ textarea {
     flex-wrap: wrap;
 }
 
-.chatgpt header ul {
-    width: 1180px;
-}
+
 
 .chat_code_img {
     max-width: 500px;
