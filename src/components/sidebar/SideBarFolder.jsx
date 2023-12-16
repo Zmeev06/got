@@ -7,6 +7,8 @@ import FolderIcon from "../UI/icons/FolderIcon";
 import SideBarSessionList from "./SideBarSessionList";
 import ModalDelete from '../ModelDelete/ModalDelete';
 import { Link } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import {setNewChat} from "../../redux/slices/chatSlice";
 
 
 const SideBarFolder = ({ folder, chat }) => {
@@ -129,7 +131,6 @@ const SideBarFolder = ({ folder, chat }) => {
             setInputVal(prevInputVal)
         }
     }
-
     const getMessages = () => {
         fetch(`http://mindl.in:8000/api/v1/messages/${folder.pk}`, {
             method: 'GET',
@@ -145,7 +146,7 @@ const SideBarFolder = ({ folder, chat }) => {
     }
 
 
-
+    const dispatch = useDispatch()
     return (
 
         // <div key={folder?.pk ?? chat?.id}>
@@ -188,7 +189,7 @@ const SideBarFolder = ({ folder, chat }) => {
                     </div>
                 </li> :
 
-                <li>
+                <li onClick={() => dispatch(setNewChat(chat.pk))}>
                     <Link to={`/chat/${chat?.pk}`}>
 
                         <FolderIcon />

@@ -3,9 +3,14 @@ import SendMessage from '../../images/chat/sendMes.svg'
 import GptUser from '../../images/chat/mi_ic.png';
 import GptChat from '../../images/chat/chatgpt_ic.png';
 import PublicModal from '../PublicModal/PublicModal';
+import {useClickAway} from "react-use"
+import {setNewStatus} from "../../redux/slices/statusMidSlice";
+import {useDispatch} from "react-redux";
+import Loader from "../Loader/Loader";
+import toast from "react-hot-toast";
 
 
-const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, activeItems }) => {
+const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, activeItems, isEmpty }) => {
 
     function getCookie(name) {
         const value = `; ${document.cookie}`;
@@ -16,13 +21,22 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
     const [text, setText] = useState('');
     const [setting, setSetting] = useState(false)
     const [modal, setModal] = useState(false)
+    const settingsModal = useRef(null)
+    const ref = useRef(null);
+    const dispatch = useDispatch()
+    const [isLoading, setIsLoading] = useState(false)
+    useClickAway(settingsModal, () => {
+        setSetting(false)
+    });
     const setModalClick = () => {
         setModal(!modal);
     };
+    const notify = (message) => toast.error(message);
     function handleError(data) {
         console.log(data.error);
     }
     let iMessages = []
+    //gpt
     function fetchMessages() {
         fetch(`http://mindl.in:8000/api/v1/messages/${chatId}/`, {
             method: 'GET',
@@ -64,9 +78,6 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
         fetchMessages()
 
     }, [chatId]);
-
-
-
 
     const textareaRef = useRef(null);
     const handleSubmit = (e) => {
@@ -186,10 +197,8 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
 
         let id;
 
-
         fetch('http://mindl.in:8000/api/v1/run-generation/', {
             method: 'POST',
-
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": "Token " + getCookie("token"),
@@ -218,32 +227,30 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
                 })
             }).then(response => response.json())
                 .then(data => {
-                    if (data.status == "in_queue" || data.status == "waiting") console.log('В очереди');
-                    if (data.status == "in_process") console.log(`Генерируем ваше изображение ${data.result}`);
-                    if (data.status == "banned") {
+                    if (data.status === "ready") {
+                        setIsLoading(false)
                         clearInterval(MjInterval)
-                        console.log(`Ваше сообщение было заблокировано. Политика <model.name> не позволяет генерировать подобное. Попробуйте что-нибудь другое`);
-                    }
-                    if (data.status == "error") {
-                        clearInterval(MjInterval)
-                        console.log('Во время генерации произошла ошибка. Попробуйте ещё раз, если ошибка повторилась, обратитесь в тех. Поддержку')
-                    }
-                    if (data.status == "ready") {
-                        clearInterval(MjInterval)
-                        console.log(data.result)
                         MidjCallBack(data.result)
+                    } else if (data.status === "banned") {
+                        setIsLoading(false)
+                            clearInterval(MjInterval)
+                            notify(`Ваше сообщение было заблокировано. Политика не позволяет генерировать подобное. Попробуйте что-нибудь другое`)
+                    } else if (data.status === "error") {
+                        setIsLoading(false)
+                            clearInterval(MjInterval)
+                            notify('Во время генерации произошла ошибка. Попробуйте ещё раз, если ошибка повторилась, обратитесь в тех. Поддержку')
+                    } else {
+                        setIsLoading(true)
+                        dispatch(setNewStatus(`${data.status}, ${data.result}`))
                     }
                 })
-        }, 20000)
+        }, 5000)
 
     }
 
-
-
-
-
     return (
         <div className=''>
+            {isLoading && <Loader loading={isLoading} />}
 
             <section className="chatgpt chat chat_con" id="bottom">
                 {modal && (
@@ -253,7 +260,7 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
                 <div className="container-chat chat_con container__message">
                     <footer className="footer_f chatgp">
 
-                        <div className={`settings_modal ${setting ? 'show' : ''}`}>
+                        <div className={`settings_modal ${setting ? 'show' : ''}`} ref={settingsModal}>
                             <form>
                                 <label>Анализировать контекст диалога <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                     <path d="M0.5 9C0.5 4.30558 4.30558 0.5 9 0.5C13.6944 0.5 17.5 4.30558 17.5 9C17.5 13.6944 13.6944 17.5 9 17.5C4.30558 17.5 0.5 13.6944 0.5 9Z" fill="white" stroke="#212121" />
@@ -269,7 +276,8 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
                                 </svg></a></label>
                                 <select className="choose" name="choose" id="choose">
                                     <option value="">GPT-3.5</option>
-                                    <option value="">GPT-3.5</option>
+                                    <option value="">GPT-4</option>
+                                    <option value="">GPT-4 Turbo</option>
                                 </select>
                             </form>
 
@@ -299,10 +307,11 @@ const MessageAdd = ({ MidjCallBack, setMessages, messages, chatId, newChatName, 
                                     ref={textareaRef}
                                     className='message__area'
                                     name="tmp"
+                                    disabled={!isEmpty}
                                     id="tmp"
                                     cols="30"
                                     rows="1"
-                                    placeholder="Отправить сообщение"
+                                    placeholder={isEmpty? "Отправить сообщение" : 'Вы не можете выполнить больше одного запроса'}
                                     value={text}
                                     onKeyUp={handleKeyPress}
                                     onChange={handleChange}

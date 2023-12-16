@@ -14,6 +14,7 @@ import MidjourneyPage from './pages/MidjourneyPage';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Sidebar } from 'react-feather';
+import {Toaster} from "react-hot-toast";
 
 
 function App() {
@@ -152,7 +153,7 @@ tariff:{
 
     useEffect(()=>{
         if(!document.cookie.includes("token=")){
-            document.cookie = `token=5634c40cd049a1f7fae91b257803f6db341daba3`;
+            document.cookie = `token=64b8d2aa11caa3648f065f1ee9bb2e48f34595ca`;
             // window.location.href = 'https://ziongpt.ai/';
         } 
 
@@ -176,10 +177,14 @@ tariff:{
             .then(data => {
                 setFolders(data.folders)
                 setChats(data.sessions)
-
             })
 
     }, []);
+
+    useEffect(() => {
+        console.log('folders: '+folders)
+        console.log('chats: '+chats)
+    }, [folders, chats]);
 
     useEffect(() => { // получение папок и чатов
         fetch('http://mindl.in:8000/api/v1/sessions/', {
@@ -219,19 +224,17 @@ tariff:{
     }, []);
 
     return (
-
-        <BrowserRouter>
-
+        <>
             <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie}/>
+            <Toaster />
             <Routes>
                 {/* <Route path="/" element={<ChatPage />} /> */}
                 <Route path="/chat/:chatId" Component={MidjourneyPage} />
 
                 <Route path="/faq" element={<WhatPage />} />
                 <Route path="/settings" element={<RatePage auth={auth}/>} />
-
             </Routes>
-        </BrowserRouter>
+        </>
     );
 }
 

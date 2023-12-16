@@ -21,7 +21,8 @@ const SettingsModal = () => {
                             </svg></a></label>
                             <select className="choose" name="choose" id="choose">
                                 <option value="">GPT-3.5</option>
-                                <option value="">GPT-3.5</option>
+                                <option value="">GPT-4</option>
+                                <option value="">GPT-4 Turbo</option>
                             </select>
                         </form>
                     </div>

@@ -7,7 +7,7 @@ import GptAva from '../../images/chat/chatgpt_ic.png'
 import PublicModal from '../PublicModal/PublicModal'
 
 
-const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom }) => {
+const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom, type }) => {
 
     const [modal, setModal] = useState(false)
     const setModalClick = () => {
@@ -22,7 +22,14 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
                 )}
                 <div className="content__chat">
                     {messages.map((message, index) => {
-                        return <MessageMy setMessages={setMessages} chatId={chatId} newChatName={newChatName} key={index} index={index} messages={messages} messageText={message.messageText} avatar={message.avatar} mine={message.mine} />
+                        if (type !== 'image') {
+                            return <MessageMy setMessages={setMessages} chatId={chatId} newChatName={newChatName}
+                                              key={index} index={index} messages={messages}
+                                              messageText={message.messageText} avatar={message.avatar}
+                                              mine={message.mine}/>
+                        } else {
+                            return null
+                        }
                     })}
                     {/* <MessageMy />
 
