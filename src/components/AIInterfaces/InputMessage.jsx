@@ -3,9 +3,17 @@ import SendMessage from '../../images/chat/sendMes.svg'
 import GptUser from '../../images/chat/mi_ic.png';
 import GptChat from '../../images/chat/chatgpt_ic.png';
 import PublicModal from '../PublicModal/PublicModal';
+import {useDispatch} from "react-redux";
+import {setNewStatus} from "../../redux/slices/statusMidSlice";
 
 
 const InputMessage = ({ newMessageFunc }) => {
+    const dispatch = useDispatch()
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
 
     const [text, setText] = useState('');
     const [setting, setSetting] = useState(false)
@@ -62,7 +70,7 @@ const InputMessage = ({ newMessageFunc }) => {
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             },
             body: JSON.stringify({
                 "session_id": "fb29d3ca-edd2-4c00-8902-59432a2bf4c6",
@@ -81,29 +89,27 @@ const InputMessage = ({ newMessageFunc }) => {
 
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + document.cookie.split('=')[1],
+                    "Authorization": "Token " + getCookie("token"),
                 },
                 body: JSON.stringify({
                     "task_id": id
                 })
             }).then(response => response.json())
                 .then(data => {
-                    if (data.status == "in_queue" || data.status == "waiting") console.log('В очереди');
-                    if (data.status == "in_process") console.log(`Генерируем ваше изображение ${data.result}`);
+                    if (data.status == "in_queue" || data.status == "waiting") dispatch(setNewStatus('В очереди'));
+                    if (data.status == "in_process") dispatch(setNewStatus(`Генерируем ваше изображение ${data.result}`));
                     if (data.status == "banned") {
                         clearInterval(MjInterval)
-                        console.log(`Ваше сообщение было заблокировано. Политика <model.name> не позволяет генерировать подобное. Попробуйте что-нибудь другое`);
+                        dispatch(setNewStatus(`Ваше сообщение было заблокировано. Политика <model.name> не позволяет генерировать подобное. Попробуйте что-нибудь другое`))
                     }
                     if (data.status == "error") {
                         clearInterval(MjInterval)
-                        console.log('Во время генерации произошла ошибка. Попробуйте ещё раз, если ошибка повторилась, обратитесь в тех. Поддержку')
-                    }
+                        dispatch(setNewStatus('Во время генерации произошла ошибка. Попробуйте ещё раз, если ошибка повторилась, обратитесь в тех. Поддержку'))
                     if (data.status == "ready") {
                         clearInterval(MjInterval)
-                        console.log(data.result)
                     }
                 })
-        }, 20000)
+        }, 5000)
 
     }
 

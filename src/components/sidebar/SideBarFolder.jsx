@@ -7,6 +7,8 @@ import FolderIcon from "../UI/icons/FolderIcon";
 import SideBarSessionList from "./SideBarSessionList";
 import ModalDelete from '../ModelDelete/ModalDelete';
 import { Link } from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import {setNewChat} from "../../redux/slices/chatSlice";
 
 
 const SideBarFolder = ({ folder, chat }) => {
@@ -14,13 +16,20 @@ const SideBarFolder = ({ folder, chat }) => {
 
     const [deleteFolder, setDeleteFolder] = useState();
 
+    
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
     const onClickFunc = (value) => {
         if (value) {
             fetch(`http://mindl.in:8000/api/v1/folder/${folder.pk}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + document.cookie.split('=')[1],
+                    "Authorization": "Token " + getCookie("token"),
                 }
         })
                 .then(data => console.log(data));
@@ -40,7 +49,7 @@ const SideBarFolder = ({ folder, chat }) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             },
             body: JSON.stringify({
                 'folder': folder.pk,
@@ -104,7 +113,7 @@ const SideBarFolder = ({ folder, chat }) => {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": "Token " + document.cookie.split('=')[1],
+                    "Authorization": "Token " + getCookie("token"),
                 },
                 body: JSON.stringify({
                     'name': inputEdit.current.value,
@@ -122,14 +131,13 @@ const SideBarFolder = ({ folder, chat }) => {
             setInputVal(prevInputVal)
         }
     }
-
     const getMessages = () => {
         fetch(`http://mindl.in:8000/api/v1/messages/${folder.pk}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Cookie': 'csrftoken=TUeTRp5vrjwDPP4BjTjJVuq40EKFNnbG; sessionid=s1yyur1j74ab874vjxxmzo9zz9ia3r9v',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
 
         })
@@ -138,7 +146,7 @@ const SideBarFolder = ({ folder, chat }) => {
     }
 
 
-
+    const dispatch = useDispatch()
     return (
 
         // <div key={folder?.pk ?? chat?.id}>
@@ -181,7 +189,7 @@ const SideBarFolder = ({ folder, chat }) => {
                     </div>
                 </li> :
 
-                <li>
+                <li onClick={() => dispatch(setNewChat(chat.pk))}>
                     <Link to={`/chat/${chat?.pk}`}>
 
                         <FolderIcon />

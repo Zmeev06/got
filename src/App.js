@@ -14,6 +14,7 @@ import MidjourneyPage from './pages/MidjourneyPage';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Sidebar } from 'react-feather';
+import {Toaster} from "react-hot-toast";
 
 
 function App() {
@@ -144,10 +145,22 @@ tariff:{
 },
     });
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
     useEffect(()=>{
-        if(document.cookie.length == 0) document.cookie = `token=5634c40cd049a1f7fae91b257803f6db341daba3`;
-    
-        if(document.cookie == '') window.location.href = 'https://ziongpt.ai/';
+        if(!document.cookie.includes("token=")){
+            document.cookie = `token=64b8d2aa11caa3648f065f1ee9bb2e48f34595ca`;
+            // window.location.href = 'https://ziongpt.ai/';
+        } 
+
+       
+
+          console.log(getCookie("token"))
+       
     
     },[])
 
@@ -157,17 +170,21 @@ tariff:{
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
             .then(response => response.json())
             .then(data => {
                 setFolders(data.folders)
                 setChats(data.sessions)
-
             })
 
     }, []);
+
+    useEffect(() => {
+        console.log('folders: '+folders)
+        console.log('chats: '+chats)
+    }, [folders, chats]);
 
     useEffect(() => { // получение папок и чатов
         fetch('http://mindl.in:8000/api/v1/sessions/', {
@@ -175,7 +192,7 @@ tariff:{
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
             .then(response => response.json())
@@ -195,7 +212,7 @@ tariff:{
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
             .then(response => response.json())
@@ -207,19 +224,17 @@ tariff:{
     }, []);
 
     return (
-
-        <BrowserRouter>
-
-            <SideBar folders={folders} chats={chats} auth={auth}/>
+        <>
+            <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie}/>
+            <Toaster />
             <Routes>
                 {/* <Route path="/" element={<ChatPage />} /> */}
                 <Route path="/chat/:chatId" Component={MidjourneyPage} />
 
                 <Route path="/faq" element={<WhatPage />} />
                 <Route path="/settings" element={<RatePage auth={auth}/>} />
-
             </Routes>
-        </BrowserRouter>
+        </>
     );
 }
 

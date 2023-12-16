@@ -68,6 +68,11 @@ function Rate({auth}) {
     }
 ])
 
+    function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    }
 
     useEffect(() => { // получение инфы о тарифах
         fetch('http://mindl.in:8000/api/v1/tariffs/', {
@@ -75,7 +80,7 @@ function Rate({auth}) {
 
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             }
         })
             .then(response => response.json())

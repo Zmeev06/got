@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {useDispatch} from "react-redux";
+import {setNewChat} from "../../redux/slices/chatSlice";
 
 const NewChatAction = () => {
-    const [chatUrl, setChatUrl] = useState(null)
+    const [chatUrl, setChatUrl] = useState(null);
+    const dispatch = useDispatch()
+    const [newChatUrl, setNewChatUrl] = useState('')
+    const navigate = useNavigate()
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
 
     const createChat = () => {
         fetch(`http://mindl.in:8000/api/v1/chatsession/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "Authorization": "Token " + document.cookie.split('=')[1],
+                "Authorization": "Token " + getCookie("token"),
             },
             body: JSON.stringify({
                 "ai_model": "gpt-3.5-turbo",
@@ -18,11 +28,9 @@ const NewChatAction = () => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                window.location.href = `/chat/${data.pk}`
+                dispatch(setNewChat(data.pk))
+                navigate(`/chat/${data.pk}`)
             })
-
-
     }
 
     return (

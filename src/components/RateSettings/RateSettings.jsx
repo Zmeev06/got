@@ -16,6 +16,12 @@ const RateSettings = ({auth}) => {
     const [passVisible, setPassVisible] = useState(false);
     const [newPassVisible, setNewPassVisible] = useState(false);
 
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
     function changePass(){
         if(password == newPassword && password.length>=8){
           
@@ -24,7 +30,7 @@ const RateSettings = ({auth}) => {
         
                     headers: {
                         'Content-Type': 'application/json',
-                        "Authorization": "Token " + document.cookie.split('=')[1],
+                        "Authorization": "Token " + getCookie("token"),
                     },
                     body: JSON.stringify({
                         "current_password": oldPassword,
