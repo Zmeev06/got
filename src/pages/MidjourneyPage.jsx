@@ -4,11 +4,12 @@ import NavigationsMidj from '../components/NavigationsMidj/NavigationsMidj'
 import ChatBlock from '../components/ChatBlock/ChatBlock'
 import MessageAdd from '../components/MessageAdd/MessageAdd'
 import ChatBlockHead from '../components/ChatBlockHead/ChatBlockHead'
-import { useParams } from 'react-router-dom';
 import { useRef } from 'react'
 import MessageMidjorney from '../components/MessageMidjorney/MessageMidjorney'
 import axios from "axios";
 import {useSelector} from "react-redux";
+import { useParams } from "react-router-dom";
+import {usePrevious} from "../hooks/usePrevious";
 
 
 const MidjourneyPage = ({ folders, chats }) => {
@@ -18,13 +19,11 @@ const MidjourneyPage = ({ folders, chats }) => {
     const [messages, setMessages] = useState([])
     const [midjData, setMidjData] = useState(null)
     const [messagesWidth, setMessagesWidth] = useState(messages.length)
-    const [myMessages, setMyMessages] = useState([])
+    const [myMessages, setMyMessages] = useState({type:'text', messages: []})
     const [messageType, setMessageType] = useState('text')
     const [isEmpty, setIsEmpty] = useState(true)
-
-    const currentChat = useSelector((state) => state.chat)
     const status = useSelector(state => state.status)
-    const [isLoading, setIsLoading] = useState(false)
+    const [stop, setStop] = useState(false)
 
     useEffect(() => {
         lastMessageScroll('smooth');
@@ -42,8 +41,7 @@ const MidjourneyPage = ({ folders, chats }) => {
     }
 
 
-    let getMessages;
-    getMessages = (id) => {
+    const getMessages = (id) => {
         axios.get(`http://mindl.in:8000/api/v1/messages/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -53,7 +51,7 @@ const MidjourneyPage = ({ folders, chats }) => {
 
             .then(res => {
                 setMyMessages(res.data)
-                if(res.data.messages && res.data.type === 'image') {
+                if(res.data.messages.length !== 0 && res.data.type === 'image') {
                     setMessageType('image')
                     setIsEmpty(false)
                 } else {
@@ -65,25 +63,13 @@ const MidjourneyPage = ({ folders, chats }) => {
 
 
 
-
+    const oldChatId = usePrevious(chatId)
     useEffect(() => {
-        if(currentChat.value) {
-            getMessages(currentChat.value)
-        }
-        if (!myMessages) {
-            let chatInterval = setInterval(() => {
-                if(currentChat.value) {
-                    getMessages(currentChat.value)
-                    console.log(myMessages)
-                    if(myMessages) {
-                        clearInterval(chatInterval)
-                    }
-                }
-            }, 3000)
 
+        if(chatId) {
+            getMessages(chatId)
         }
-    }, [currentChat.value])
-
+    }, [chatId, status.value])
     function lastMessageScroll(b) {
 
         if (!scrollBottom.current) return;
@@ -126,7 +112,7 @@ const MidjourneyPage = ({ folders, chats }) => {
             <div className="content-page">
                 <div className="content">
                     <div className="container-back-mid">
-                        {messages.length ? <ChatBlockHead /> : null}
+                        {messages.length ? <ChatBlockHead type={messageType} /> : null}
                     </div>
 
                     <div className="container-back-mid">
@@ -141,10 +127,7 @@ const MidjourneyPage = ({ folders, chats }) => {
                     ) : null}
 
                         <div className="container-back-mid">
-                            {myMessages ? <MessageMidjorney midjData={myMessages} /> : <p>{status.value === 'in_queue' || 'waiting' ? 'В очереди'
-                                :status.value === 'in_progress' ? `Генерируем ваше изображение...`
-                                    :status.value === 'banned' ? 'Ваше сообщение было заблокировано. Политика не позволяет генерировать подобное. Попробуйте что-нибудь другое'
-                                        : 'Во время генерации произошла ошибка. Попробуйте ещё раз, если ошибка повторилась, обратитесь в тех. Поддержку'  }</p>}
+                            {myMessages && <MessageMidjorney midjData={myMessages} MidjCallBack={MidjCallBack} />}
 
                         </div>
 

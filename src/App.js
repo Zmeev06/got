@@ -153,7 +153,7 @@ tariff:{
 
     useEffect(()=>{
         if(!document.cookie.includes("token=")){
-            document.cookie = `token=64b8d2aa11caa3648f065f1ee9bb2e48f34595ca`;
+            document.cookie = `token=f0c5422d060e70e7265e103b0e013a1f3d7b6c17`;
             // window.location.href = 'https://ziongpt.ai/';
         } 
 
