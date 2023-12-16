@@ -14,7 +14,7 @@ import MidjourneyPage from './pages/MidjourneyPage';
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Sidebar } from 'react-feather';
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 
 function App() {
@@ -104,65 +104,65 @@ function App() {
     ]);
 
     const [auth, setAuth] = useState({
-        
-    api_balance: 1,
-    api_token: null,
-    avatar: "/media/profile_avatar/default.png",
-    chatgpt_4_monthly_limit: 100,
-    chatgpt_daily_limit: 97,
-    context_mode: true,
-    dalle_2_balance: 100,
-    dalle_3_balance: 100,
-    date_joined: "2023-12-04T13:15:30.050306+03:00",
-    email:"admin@admin.ru",
-    email_confirmed:true,
-    first_name:"",
-    id:"7ca72ff5-14ce-4e29-b2fb-2b38c73e3d97",
-    is_active:true,
-    is_staff:true,
-    is_superuser:true,
-    last_login:"2023-12-12T21:33:56.922971+03:00",
-    last_name:"",
-    midjourney_monthly_limit:43,
-    sd_monthly_limit:96,
-    username: "admin@admin.ru",
-tariff:{
-    chatgpt_4_monthly_limit:30,
-    chatgpt_daily_limit:-1,
-    code:"pro",
-    dalle_2_balance:0,
-    dalle_3_balance:0,
-    days:30,
-    description:"Тариф PRO на месяц",
-    id:2,
-    is_active:true,
-    is_extra:false,
-    main_tariff:null,
-    midjourney_monthly_limit:150,
-    name:"PRO",
-    price:450,
-    sd_monthly_limit:50
-},
+
+        api_balance: 1,
+        api_token: null,
+        avatar: "/media/profile_avatar/default.png",
+        chatgpt_4_monthly_limit: 100,
+        chatgpt_daily_limit: 97,
+        context_mode: true,
+        dalle_2_balance: 100,
+        dalle_3_balance: 100,
+        date_joined: "2023-12-04T13:15:30.050306+03:00",
+        email: "admin@admin.ru",
+        email_confirmed: true,
+        first_name: "",
+        id: "7ca72ff5-14ce-4e29-b2fb-2b38c73e3d97",
+        is_active: true,
+        is_staff: true,
+        is_superuser: true,
+        last_login: "2023-12-12T21:33:56.922971+03:00",
+        last_name: "",
+        midjourney_monthly_limit: 43,
+        sd_monthly_limit: 96,
+        username: "admin@admin.ru",
+        tariff: {
+            chatgpt_4_monthly_limit: 30,
+            chatgpt_daily_limit: -1,
+            code: "pro",
+            dalle_2_balance: 0,
+            dalle_3_balance: 0,
+            days: 30,
+            description: "Тариф PRO на месяц",
+            id: 2,
+            is_active: true,
+            is_extra: false,
+            main_tariff: null,
+            midjourney_monthly_limit: 150,
+            name: "PRO",
+            price: 450,
+            sd_monthly_limit: 50
+        },
     });
 
     function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(';').shift();
-      }
+    }
 
-    useEffect(()=>{
-        if(!document.cookie.includes("token=")){
-            document.cookie = `token=64b8d2aa11caa3648f065f1ee9bb2e48f34595ca`;
+    useEffect(() => {
+        if (!document.cookie.includes("token=")) {
+            document.cookie = `token=5634c40cd049a1f7fae91b257803f6db341daba3`;
             // window.location.href = 'https://ziongpt.ai/';
-        } 
+        }
 
-       
 
-          console.log(getCookie("token"))
-       
-    
-    },[])
+
+        console.log(getCookie("token"))
+
+
+    }, [])
 
     useEffect(() => { // получение папок и чатов
         fetch('http://mindl.in:8000/api/v1/sessions/', {
@@ -182,8 +182,8 @@ tariff:{
     }, []);
 
     useEffect(() => {
-        console.log('folders: '+folders)
-        console.log('chats: '+chats)
+        console.log('folders: ' + folders)
+        console.log('chats: ' + chats)
     }, [folders, chats]);
 
     useEffect(() => { // получение папок и чатов
@@ -204,7 +204,7 @@ tariff:{
 
     }, []);
 
-    
+
 
     useEffect(() => { // получение инфы о пользователе
         fetch('http://mindl.in:8000/auth/me/', {
@@ -218,21 +218,21 @@ tariff:{
             .then(response => response.json())
             .then(data => {
                 setAuth(data)
-            
+
             })
 
     }, []);
 
     return (
         <>
-            <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie}/>
+            <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie} />
             <Toaster />
             <Routes>
                 {/* <Route path="/" element={<ChatPage />} /> */}
                 <Route path="/chat/:chatId" Component={MidjourneyPage} />
 
                 <Route path="/faq" element={<WhatPage />} />
-                <Route path="/settings" element={<RatePage auth={auth}/>} />
+                <Route path="/settings" element={<RatePage auth={auth} />} />
             </Routes>
         </>
     );
