@@ -22,6 +22,7 @@ const SettingsModal = () => {
                             <select className="choose" name="choose" id="choose">
                                 <option value="">GPT-3.5</option>
                                 <option value="">GPT-3.5</option>
+                                <option value="">GPT-4.5</option>
                             </select>
                         </form>
                     </div>
