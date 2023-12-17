@@ -7,12 +7,13 @@ import ChatBlockHead from '../components/ChatBlockHead/ChatBlockHead';
 import { useRef } from 'react';
 import MessageMidjorney from '../components/MessageMidjorney/MessageMidjorney';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { usePrevious } from '../hooks/usePrevious';
 import MessageMy from '../components/MessageMy/MessageMy';
 import gptUser from '../images/chat/mi_ic.png';
 import gptBot from '../images/chat/chatgpt_ic.png';
+import { setNewStatus } from '../redux/slices/statusMidSlice';
 
 const MidjourneyPage = ({ folders, chats }) => {
   const { chatId } = useParams();
@@ -28,6 +29,8 @@ const MidjourneyPage = ({ folders, chats }) => {
   const [stop, setStop] = useState(false);
   const [firstMessage, setFirstMessage] = useState('');
   const [statusMessage, setStatusMessage] = useState('В очереди');
+  const [chatType, setChatType] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     lastMessageScroll('smooth');
@@ -59,12 +62,17 @@ const MidjourneyPage = ({ folders, chats }) => {
           setMessageType('image');
           setIsEmpty(false);
           setFirstMessage(res.data.messages[0].prompt);
+          setChatType(res.data.messages[0].ai_model);
         } else {
           setMessageType('text');
           setIsEmpty(true);
         }
       });
   };
+
+  useEffect(() => {
+    dispatch(setNewStatus('ready'));
+  }, [chatId]);
 
   useEffect(() => {
     if (status.value === 'ready') {
@@ -151,7 +159,7 @@ const MidjourneyPage = ({ folders, chats }) => {
           ) : null}
 
           <div className="container-back-mid">
-            {firstMessage && (
+            {firstMessage && chatType === 'mj' && (
               <MessageMy
                 setMessages={setFirstMessage}
                 chatId={chatId}
