@@ -159,7 +159,7 @@ const MidjourneyPage = ({ folders, chats }) => {
           ) : null}
 
           <div className="container-back-mid">
-            {firstMessage && chatType === 'mj' && (
+            {firstMessage && (chatType === 'mj' || myMessages.type === 'image') && (
               <MessageMy
                 setMessages={setFirstMessage}
                 chatId={chatId}
