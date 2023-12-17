@@ -7688,6 +7688,7 @@ textarea {
 }
 
 .midjourney_chat_box {
+    width: 100%;
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
 }
@@ -7711,4 +7712,27 @@ textarea {
 
 .midjourney_chat {
     margin-top: 30px;
+}
+
+.chat_chatgpt_block {
+    padding: 30px 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-back-mid {
+    max-width: 900px;
+}
+
+.chatgpt header ul li {
+    justify-content: center;
+    align-items: center;
+}
+
+.chatgpt header ul {
+    padding: 3px 5px;
+}
+
+.chatgpt header p {
+    margin-bottom: 40px;
 }
