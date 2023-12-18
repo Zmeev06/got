@@ -21,7 +21,7 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
     let id;
     axios
       .post(
-        'http://mindl.in:8000/api/v1/run-generation/',
+        'https://ziongpt.ai/api/v1/run-generation/',
         {
           session_id: chatId,
           message_id: message.pk,
@@ -31,7 +31,7 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Token ' + document.cookie.split('=')[1]
+            Authorization: 'Token ' + getCookie('token')
           }
         }
       )
@@ -40,7 +40,7 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
       });
 
     let MjInterval = setInterval(() => {
-      fetch('http://mindl.in:8000/api/v1/check-status/', {
+      fetch('https://ziongpt.ai/api/v1/check-status/', {
         method: 'POST',
 
         headers: {

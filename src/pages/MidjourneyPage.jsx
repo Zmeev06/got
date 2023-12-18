@@ -49,7 +49,7 @@ const MidjourneyPage = ({ folders, chats }) => {
 
   const getMessages = (id) => {
     axios
-      .get(`http://mindl.in:8000/api/v1/messages/${id}`, {
+      .get(`https://ziongpt.ai/api/v1/messages/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Token ' + getCookie('token')
@@ -118,14 +118,14 @@ const MidjourneyPage = ({ folders, chats }) => {
     setFirstMessage(e);
     if (messages.length == 0) {
       fetch(
-        `http://mindl.in:8000/api/v1/chatsession/${
+        `https://ziongpt.ai/api/v1/chatsession/${
           window.location.href.split('/')[window.location.href.split('/').length - 1]
         }/`,
         {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Token ' + document.cookie.split('=')[1]
+            Authorization: 'Token ' + getCookie('token')
           },
           body: JSON.stringify({
             ai_model: model,

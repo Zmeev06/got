@@ -2203,8 +2203,8 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
 
 #side-menu {
     overflow: auto;
-    min-height: 387px;
-    max-height: 387px;
+    min-height: 345px;
+    max-height: 345px;
 }
 
 #side-menu li {
@@ -3777,7 +3777,7 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
 }
 
 .sidebar_menu_top_actions {
-    padding-top: 105px;
+    padding-top: 75px;
 }
 
 .line_sp {
@@ -3798,6 +3798,9 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     padding: 12px 24px;
     display: block;
     text-align: center;
+}
+.user_block .user_box_bottom button.user_box_bottom_action{
+    width: 100%;
 }
 
 .user-box .free_btn {

@@ -41,7 +41,7 @@ const MessageMy = ({
   };
   let iMessages = [];
   function fetchMessages() {
-    fetch(`http://mindl.in:8000/api/v1/messages/${chatId}/`, {
+    fetch(`https://ziongpt.ai/api/v1/messages/${chatId}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const MessageMy = ({
         setText('');
       }
 
-      var response = await fetch('http://mindl.in:8000/api/v1/run-generation/', {
+      var response = await fetch('https://ziongpt.ai/api/v1/run-generation/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const MessageMy = ({
   const handleTextareaBlur = () => {
     setButtonsVisible(false);
   };
-  console.log(text);
+  // console.log(text);
   return (
     <div key={index}>
       <div className={mine ? 'chat_user' : 'chat_chatgpt  mob_h chat_p'}>

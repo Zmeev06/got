@@ -75,7 +75,7 @@ function Rate({ auth }) {
     }
 
     useEffect(() => { // получение инфы о тарифах
-        fetch('http://mindl.in:8000/api/v1/tariffs/', {
+        fetch('https://ziongpt.ai/api/v1/tariffs/', {
             method: 'GET',
 
             headers: {

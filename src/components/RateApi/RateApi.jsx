@@ -12,7 +12,7 @@ const RateApi = ({auth}) => {
     const [token, setToken] = useState('Обновите вашу подписку до уровня PRO+ для получения API Токен')
 
     useEffect(() => { // получение инфы об апи для пользователя
-        fetch('http://mindl.in:8000/auth/me/update_token/', {
+        fetch('https://ziongpt.ai/auth/me/update_token/', {
             method: 'GET',
 
             headers: {

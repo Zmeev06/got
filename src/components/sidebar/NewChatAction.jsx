@@ -15,7 +15,7 @@ const NewChatAction = () => {
       }
 
     const createChat = () => {
-        fetch(`http://mindl.in:8000/api/v1/chatsession/`, {
+        fetch(`https://ziongpt.ai/api/v1/chatsession/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

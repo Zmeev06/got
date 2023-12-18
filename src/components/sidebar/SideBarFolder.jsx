@@ -25,7 +25,7 @@ const SideBarFolder = ({ folder, chat }) => {
 
     const onClickFunc = (value) => {
         if (value) {
-            fetch(`http://mindl.in:8000/api/v1/folder/${folder.pk}`, {
+            fetch(`https://ziongpt.ai/api/v1/folder/${folder.pk}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const SideBarFolder = ({ folder, chat }) => {
     }
 
     const createChat = () => {
-        fetch(`http://mindl.in:8000/api/v1/chatsession/`, {
+        fetch(`https://ziongpt.ai/api/v1/chatsession/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const SideBarFolder = ({ folder, chat }) => {
             collapseIcon.current.className = "actions_sp three display-none";
             mainIcons.current.className = "actions_sp main";
             console.log(inputEdit.current.value)
-            fetch(`http://mindl.in:8000/api/v1/folder/${folder.pk}/`, {
+            fetch(`https://ziongpt.ai/api/v1/folder/${folder.pk}/`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ const SideBarFolder = ({ folder, chat }) => {
         }
     }
     const getMessages = () => {
-        fetch(`http://mindl.in:8000/api/v1/messages/${folder.pk}`, {
+        fetch(`https://ziongpt.ai/api/v1/messages/${folder.pk}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -41,7 +41,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
     function newChatName(e) {
         if (messages.length == 0) {
 
-            fetch(`http://mindl.in:8000/api/v1/chatsession/${window.location.href.split('/')[window.location.href.split('/').length - 1]}/`, {
+            fetch(`https://ziongpt.ai/api/v1/chatsession/${window.location.href.split('/')[window.location.href.split('/').length - 1]}/`, {
 
                 method: 'PATCH',
                 headers: {
@@ -75,7 +75,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
             }
 
 
-            var response = await fetch('http://mindl.in:8000/api/v1/run-generation/', {
+            var response = await fetch('https://ziongpt.ai/api/v1/run-generation/', {
 
                 method: 'POST',
                 headers: {
@@ -128,7 +128,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom })
     }, [chatId]);
 
     function fetchMessages() {
-        fetch(`http://mindl.in:8000/api/v1/messages/${chatId}/`, {
+        fetch(`https://ziongpt.ai/api/v1/messages/${chatId}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

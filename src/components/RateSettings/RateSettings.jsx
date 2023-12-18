@@ -25,7 +25,7 @@ const RateSettings = ({auth}) => {
     function changePass(){
         if(password == newPassword && password.length>=8){
           
-                fetch('http://mindl.in:8000/auth/me/change_password/', {
+                fetch('https://ziongpt.ai/auth/me/change_password/', {
                     method: 'POST',
         
                     headers: {

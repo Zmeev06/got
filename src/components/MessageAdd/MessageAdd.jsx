@@ -44,7 +44,7 @@ const MessageAdd = ({
   let iMessages = [];
   //gpt
   function fetchMessages() {
-    fetch(`http://mindl.in:8000/api/v1/messages/${chatId}/`, {
+    fetch(`https://ziongpt.ai/api/v1/messages/${chatId}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ const MessageAdd = ({
       setText('');
     }
 
-    var response = await fetch('http://mindl.in:8000/api/v1/run-generation/', {
+    var response = await fetch('https://ziongpt.ai/api/v1/run-generation/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -192,7 +192,7 @@ const MessageAdd = ({
   function midjourneyTest() {
     let id;
 
-    fetch('http://mindl.in:8000/api/v1/run-generation/', {
+    fetch('https://ziongpt.ai/api/v1/run-generation/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -210,7 +210,7 @@ const MessageAdd = ({
       });
 
     let MjInterval = setInterval(() => {
-      fetch('http://mindl.in:8000/api/v1/check-status/', {
+      fetch('https://ziongpt.ai/api/v1/check-status/', {
         method: 'POST',
 
         headers: {

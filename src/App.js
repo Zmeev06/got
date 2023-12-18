@@ -98,46 +98,48 @@ function App() {
         }
     ]);
 
-    const [auth, setAuth] = useState({
-        api_balance: 1,
-        api_token: null,
-        avatar: '/media/profile_avatar/default.png',
-        chatgpt_4_monthly_limit: 100,
-        chatgpt_daily_limit: 97,
-        context_mode: true,
-        dalle_2_balance: 100,
-        dalle_3_balance: 100,
-        date_joined: '2023-12-04T13:15:30.050306+03:00',
-        email: 'admin@admin.ru',
-        email_confirmed: true,
-        first_name: '',
-        id: '7ca72ff5-14ce-4e29-b2fb-2b38c73e3d97',
-        is_active: true,
-        is_staff: true,
-        is_superuser: true,
-        last_login: '2023-12-12T21:33:56.922971+03:00',
-        last_name: '',
-        midjourney_monthly_limit: 43,
-        sd_monthly_limit: 96,
-        username: 'admin@admin.ru',
-        tariff: {
-            chatgpt_4_monthly_limit: 30,
-            chatgpt_daily_limit: -1,
-            code: 'pro',
-            dalle_2_balance: 0,
-            dalle_3_balance: 0,
-            days: 30,
-            description: 'Тариф PRO на месяц',
-            id: 2,
-            is_active: true,
-            is_extra: false,
-            main_tariff: null,
-            midjourney_monthly_limit: 150,
-            name: 'PRO',
-            price: 450,
-            sd_monthly_limit: 50
-        }
-    });
+    const [auth, setAuth] = useState(
+        // {
+        // api_balance: 1,
+        // api_token: null,
+        // avatar: '/media/profile_avatar/default.png',
+        // chatgpt_4_monthly_limit: 100,
+        // chatgpt_daily_limit: 97,
+        // context_mode: true,
+        // dalle_2_balance: 100,
+        // dalle_3_balance: 100,
+        // date_joined: '2023-12-04T13:15:30.050306+03:00',
+        // email: 'admin@admin.ru',
+        // email_confirmed: true,
+        // first_name: '',
+        // id: '7ca72ff5-14ce-4e29-b2fb-2b38c73e3d97',
+        // is_active: true,
+        // is_staff: true,
+        // is_superuser: true,
+        // last_login: '2023-12-12T21:33:56.922971+03:00',
+        // last_name: '',
+        // midjourney_monthly_limit: 43,
+        // sd_monthly_limit: 96,
+        // username: 'admin@admin.ru',
+        // tariff: {
+        //     chatgpt_4_monthly_limit: 30,
+        //     chatgpt_daily_limit: -1,
+        //     code: 'pro',
+        //     dalle_2_balance: 0,
+        //     dalle_3_balance: 0,
+        //     days: 30,
+        //     description: 'Тариф PRO на месяц',
+        //     id: 2,
+        //     is_active: true,
+        //     is_extra: false,
+        //     main_tariff: null,
+        //     midjourney_monthly_limit: 150,
+        //     name: 'PRO',
+        //     price: 450,
+        //     sd_monthly_limit: 50
+        // }
+        // }
+    );
 
     function getCookie(name) {
         const value = `; ${document.cookie}`;
@@ -147,14 +149,16 @@ function App() {
 
     useEffect(() => {
         if (!document.cookie.includes('token=')) {
-            //   document.cookie = `token=df73c9270cab37110845c9c2f1ac74ad7ecf2697`;
-            window.location.href = 'https://ziongpt.ai/';
+            
+            //   document.cookie = `token=7a7d6113f70d54a6c304705ba5db9c4e5e6937d5`;
+            window.location.href = 'https://ziongpt.ai';
         }
+        console.log(getCookie('token'))
     }, []);
 
     useEffect(() => {
         // получение папок и чатов
-        fetch('http://mindl.in:8000/api/v1/sessions/', {
+        fetch('https://ziongpt.ai/api/v1/sessions/', {
             method: 'GET',
 
             headers: {
@@ -169,15 +173,18 @@ function App() {
             });
     }, []);
 
+    
+
     useEffect(() => {
         // получение папок и чатов
-        fetch('http://mindl.in:8000/api/v1/sessions/', {
+        fetch('https://ziongpt.ai/api/v1/sessions/', {
             method: 'GET',
 
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Token ' + getCookie('token')
             }
+           
         })
             .then((response) => response.json())
             .then((data) => {
@@ -188,7 +195,7 @@ function App() {
 
     useEffect(() => {
         // получение инфы о пользователе
-        fetch('http://mindl.in:8000/auth/me/', {
+        fetch('https://ziongpt.ai/auth/me/', {
             method: 'GET',
 
             headers: {
@@ -199,12 +206,15 @@ function App() {
             .then((response) => response.json())
             .then((data) => {
                 setAuth(data);
+                
             });
-    }, []);
+        }, []);
+
+ 
 
     return (
         <>
-            <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie} />
+            {auth && <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie} />}
             <Toaster />
             <Routes>
                 {/* <Route path="/" element={<ChatPage />} /> */}
