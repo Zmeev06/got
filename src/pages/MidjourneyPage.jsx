@@ -106,6 +106,11 @@ const MidjourneyPage = ({ folders, chats }) => {
     });
   }
 
+  function changeActiveItems(arr){
+    
+    setActiveItems(arr)
+  }
+
   function newChatName(e, models) {
     let model;
     if (models[0] == true) model = 'gpt-3.5-turbo';
@@ -228,6 +233,7 @@ const MidjourneyPage = ({ folders, chats }) => {
             setMessages={setMessages}
             messages={messages}
             newChatName={newChatName}
+            changeActiveItems={changeActiveItems}
           />
         </div>
       </div>

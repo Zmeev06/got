@@ -16,6 +16,7 @@ const MessageAdd = ({
   chatId,
   newChatName,
   activeItems,
+  changeActiveItems,
   isEmpty
 }) => {
   function getCookie(name) {
@@ -84,7 +85,7 @@ const MessageAdd = ({
   const textareaRef = useRef(null);
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
     }
@@ -97,8 +98,12 @@ const MessageAdd = ({
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault(); // Предотвратить перенос строки в поле ввода
+      textareaRef.current.style.height = '60px';
+
       newChatReq();
+      if(!document.getElementById('ques_input') == null)  document.getElementById('ques_input').style.height = '46px'
     }
+     
   };
   const openModalSet = () => {
     setSetting(!setting);
@@ -244,6 +249,15 @@ const MessageAdd = ({
     }, 3000);
   }
 
+  const chooseRef = useRef();
+
+  function chooseGpt(){
+    if(chooseRef.current.value == 'GPT-3.5') changeActiveItems([true, false, false, false, false, false, false])
+    else if(chooseRef.current.value == 'GPT-4') changeActiveItems([false, true, false, false, false, false, false])
+    else if(chooseRef.current.value == 'GPT-4 Turbo') changeActiveItems([false, false, true, false, false, false, false])
+
+  }
+
   return (
     <div className="">
       <section className="chatgpt chat chat_con" id="bottom">
@@ -301,10 +315,10 @@ const MessageAdd = ({
                     </svg>
                   </a>
                 </label>
-                <select className="choose" name="choose" id="choose">
-                  <option value="">GPT-3.5</option>
-                  <option value="">GPT-4</option>
-                  <option value="">GPT-4 Turbo</option>
+                <select className="choose" name="choose" id="choose" onClick={()=>chooseGpt()} ref={chooseRef}>
+                  <option value="GPT-3.5">GPT-3.5</option>
+                  <option value="GPT-4">GPT-4</option>
+                  <option value="GPT-4 Turbo">GPT-4 Turbo</option>
                 </select>
               </form>
             </div>
@@ -378,7 +392,7 @@ const MessageAdd = ({
                   value={text}
                   onKeyUp={handleKeyPress}
                   onChange={handleChange}></textarea>
-                <div onClick={() => setModalClick()} className="tmp_f chat_con" href="public.html">
+                {/* <div onClick={() => setModalClick()} className="tmp_f chat_con" href="public.html">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -397,7 +411,7 @@ const MessageAdd = ({
                     <polyline points="10 9 9 9 8 9"></polyline>
                   </svg>{' '}
                   Шаблоны
-                </div>
+                </div> */}
                 <button className="btn_f" onClick={async () => await newChatReq()}>
                   <img src={SendMessage} alt="" />
                 </button>

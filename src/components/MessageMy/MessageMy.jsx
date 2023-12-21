@@ -37,6 +37,17 @@ const MessageMy = ({
     if (textarea) {
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight + 'px';
+   
+
+      let counter = 0;
+      for(let i of textareaRef.current.value){
+        if(i=='\n') counter++;
+      }
+
+      if(textareaRef.current.value.length <= 60 && counter<=1){
+        textarea.style.height = '46px';
+      }  
+     
     }
   };
   let iMessages = [];
@@ -158,7 +169,7 @@ const MessageMy = ({
       <div className={mine ? 'chat_user' : 'chat_chatgpt  mob_h chat_p'}>
         <div className="container-chat chat_con">
           <div className={mine ? 'chat_chatgpt_block' : 'chat_chatgpt_block'}>
-            <a href="#">
+            <a >
               <img src={avatar} alt="" />
             </a>
             {mine ? (
@@ -174,7 +185,8 @@ const MessageMy = ({
                   value={text}
                   onChange={handleChange}
                   onFocus={handleTextareaFocus}
-                  onBlur={handleTextareaBlur}></textarea>
+                  onBlur={handleTextareaBlur}
+                  ></textarea>
                 <div className="ques_btns">
                   <button type="button" className="save_btn" onClick={handleSave}>
                     Сохранить и отправить

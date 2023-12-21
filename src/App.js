@@ -150,8 +150,8 @@ function App() {
     useEffect(() => {
         if (!document.cookie.includes('token=')) {
             
-            //   document.cookie = `token=7a7d6113f70d54a6c304705ba5db9c4e5e6937d5`;
-            window.location.href = 'https://ziongpt.ai';
+              document.cookie = `token=d44f311eb51795494ba576fd933213c6888e8097`;
+            // window.location.href = 'https://ziongpt.ai';
         }
         console.log(getCookie('token'))
     }, []);

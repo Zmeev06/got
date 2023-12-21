@@ -15,6 +15,7 @@ const SideBarFolder = ({ folder, chat }) => {
 
 
     const [deleteFolder, setDeleteFolder] = useState();
+    const [deleteFolder2, setDeleteFolder2] = useState();
 
     
     function getCookie(name) {
@@ -44,6 +45,27 @@ const SideBarFolder = ({ folder, chat }) => {
         }
     }
 
+    const onClickFunc2 = (value) => {
+        if (value) {
+            fetch(`https://ziongpt.ai/api/v1/chatsession/${chat.pk}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Token " + getCookie("token"),
+                }
+        })
+                .then(data => console.log(data));
+
+            setTimeout(() => {
+                window.location.reload(false);
+            }, 500)
+        }
+        else {
+
+            setDeleteFolder2(value)
+        }
+    }
+
     const createChat = () => {
         fetch(`https://ziongpt.ai/api/v1/chatsession/`, {
             method: 'POST',
@@ -69,12 +91,17 @@ const SideBarFolder = ({ folder, chat }) => {
     const [inputVal, setInputVal] = useState(folder?.name);
     const [prevInputVal, setPrevInputVal] = useState();
 
+    const [chatVal, setChatVal] = useState(chat?.name);
+    const [prevChatVal, setPrevChatVal] = useState();
+
 
     const collapseParent = useRef();
     const collapseChild = useRef();
     const collapseIcon = useRef();
     const mainIcons = useRef();
     const inputEdit = useRef();
+    const chatsEdit = useRef();
+    const chatSpan = useRef();
 
 
 
@@ -102,13 +129,25 @@ const SideBarFolder = ({ folder, chat }) => {
         mainIcons.current.className = "actions_sp main display-none"
     }
 
+    function editChats(){
+        chatsEdit.current.className = "main_input chats"
+        chatSpan.current.className = "display-none"
+
+        setPrevChatVal(chatVal)
+        chatsEdit.current.disabled = false;
+        chatsEdit.current.focus();
+        collapseIcon.current.className = "actions_sp three"
+        mainIcons.current.className = "actions_sp main display-none"
+    }
+
     function stopEdit(flag) {
+    
         if (flag) {
             inputEdit.current.disabled = true;
             inputEdit.current.blur();
             collapseIcon.current.className = "actions_sp three display-none";
             mainIcons.current.className = "actions_sp main";
-            console.log(inputEdit.current.value)
+        
             fetch(`https://ziongpt.ai/api/v1/folder/${folder.pk}/`, {
                 method: 'PATCH',
                 headers: {
@@ -122,6 +161,8 @@ const SideBarFolder = ({ folder, chat }) => {
             })
                 .then(response => response.json())
                 .then(data => console.log(data))
+
+                
         }
         else {
             inputEdit.current.disabled = true;
@@ -130,9 +171,49 @@ const SideBarFolder = ({ folder, chat }) => {
             mainIcons.current.className = "actions_sp main"
             setInputVal(prevInputVal)
         }
+
     }
+
+    function stopChatsEdit(flag){
+        if (flag) {
+            chatsEdit.current.disabled = true;
+            chatsEdit.current.blur();
+            collapseIcon.current.className = "actions_sp three display-none";
+            mainIcons.current.className = "actions_sp main";
+          
+            fetch(`https://ziongpt.ai/api/v1/chatsession/${chat.pk}/`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Token " + getCookie("token"),
+                },
+                body: JSON.stringify({
+                    'name': chatsEdit.current.value,
+                })
+
+            })
+                .then(response => response.json())
+                .then(data => console.log(data))
+
+            setChatVal(chatsEdit.current.value)
+        }
+        else {
+            chatsEdit.current.disabled = true;
+            chatsEdit.current.blur();
+            collapseIcon.current.className = "actions_sp three display-none"
+            mainIcons.current.className = "actions_sp main"
+            setChatVal(prevChatVal)
+        }
+
+        
+        chatsEdit.current.className = "main_input chats display-none"
+        chatSpan.current.className = ""
+    }
+
+
+
     const getMessages = () => {
-        fetch(`https://ziongpt.ai/api/v1/messages/${folder.pk}`, {
+        fetch(`https://ziongpt.ai/api/v1/messages/${chat.pk}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -152,6 +233,7 @@ const SideBarFolder = ({ folder, chat }) => {
         // <div key={folder?.pk ?? chat?.id}>
         <>
             {deleteFolder && <ModalDelete onChange={onClickFunc} />}
+            {deleteFolder2 && <ModalDelete onChange={onClickFunc2} />}
             {folder ?
 
                 <li>
@@ -174,7 +256,7 @@ const SideBarFolder = ({ folder, chat }) => {
                         </div>
                         {/*редакт*/}
                         <div className="actions_sp main" ref={mainIcons}>
-                            <img src={PaletteIcImg} alt="" />
+                            {/* <img src={PaletteIcImg} alt="" /> */}
                             <img src={BorderColorIcImg} alt="" onClick={() => allowEdit()} />
                             <img src={DeleteIcImg} alt="" onClick={() => setDeleteFolder(true)} />
                         </div>
@@ -185,18 +267,35 @@ const SideBarFolder = ({ folder, chat }) => {
                     </a>
                     <div className="collapse" id="sidebarEcommerce" ref={collapseChild}>
 
-                        <SideBarSessionList sessions={folder.sessions} createChat={createChat} />
+                        <SideBarSessionList sessions={folder.sessions} createChat={createChat}/>
                     </div>
                 </li> :
 
-                <li onClick={() => dispatch(setNewChat(chat.pk))}>
+                <li onClick={() => dispatch(setNewChat(chat.pk))} className='chats__items'>
                     <Link to={`/chat/${chat?.pk}`}>
 
                         <FolderIcon />
-                        {/* <span> {chat?.name} </span> */}
-                        <span>{chat?.name}</span>
-
+                        <input type="text" className='main_input chats display-none' value={chatVal} disabled ref={chatsEdit} onChange={(e) => setChatVal(e.target.value)} />
+                        <span ref={chatSpan}>{chatVal}</span>
                     </Link>
+                    
+                        <div className="actions_sp three display-none" ref={collapseIcon}>
+                            <svg onClick={() => stopChatsEdit(true)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <svg onClick={() => stopChatsEdit(false)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
+                        <div className="actions_sp chats" ref={mainIcons}>
+                            {/* <img src={PaletteIcImg} alt="" /> */}
+                            <img src={BorderColorIcImg} alt="" onClick={() => editChats()} />
+                            <img src={DeleteIcImg} alt="" onClick={() => setDeleteFolder2(true)} />
+                        </div>
+
+                    
+                 
                 </li>
 
             }

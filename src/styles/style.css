@@ -2072,6 +2072,14 @@ section form button {
     /* caret-color: #2A2B32; */
 }
 
+.main_input.chats{
+    font-size: 14px;
+    letter-spacing: unset;
+    font-family: "Manrope", sans-serif;
+    line-height: unset;
+}
+
+
 .left-side-menu.three .main_input {
     border-radius: 2px;
     border: 1px solid #10A37F;
@@ -2155,6 +2163,14 @@ section form button {
     background: #2A2B32;
     position: relative;
 }
+.chats__items.active,
+.chats__items:hover {
+    border-color: #2A2B32;
+    background: #2A2B32;
+    position: relative;
+}
+
+
 
 body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>a {
     border-color: #2A2B32;
@@ -2194,6 +2210,17 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     /* opacity: 1; */
     display: flex;
 }
+#sidebar-menu>ul>li:hover .actions_sp,
+#sidebar-menu>ul>li:focus .actions_sp {
+    /* opacity: 1; */
+    display: flex;
+}
+
+.chats__items.spec:hover .actions_sp,
+.chats__items.spec:focus .actions_sp {
+    /* opacity: 1; */
+    display: none !important;
+}
 
 
 
@@ -2220,6 +2247,11 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     gap: 0 8px;
     /* opacity: 0; */
     transition: all ease 0.5s;
+}
+
+.actions_sp.chats{
+    top: 15px;
+    z-index: 555;
 }
 
 /* .input_icons{
@@ -7483,9 +7515,12 @@ textarea {
     margin-bottom: 10px;
 }
 
-.chat_chatgpt_block a img {
-    margin-top: 10px;
+
+
+.chat_user .chat_chatgpt_block a img {
+    margin-top: -10px;
 }
+
 
 .content__chat {
     padding-bottom: 80px;
@@ -7738,4 +7773,36 @@ textarea {
 
 .chatgpt header p {
     margin-bottom: 40px;
+}
+.chats__items svg {
+    width: 16px;
+    height: 16px;
+    margin-left: 3px;
+    margin-right: 10px;
+}
+.chats__items{
+    position: relative;
+}
+.chats__items span{
+    padding: 5px 7px;
+    
+}
+.chats__items {
+    
+    color: #fff;
+   
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
+}
+
+#side-menu{
+    border-bottom: 1px solid #4d4d4f;
+  
+ 
+}
+
+.side-links{
+    position: fixed;
+    bottom: 225px;
+    width: 325px;
 }

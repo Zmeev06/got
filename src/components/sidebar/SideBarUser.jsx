@@ -19,6 +19,13 @@ const SideBarUser = ({ auth }) => {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+useEffect(()=>{
+  
+    if(auth.tariff.name == "PRO" || auth.tariff.name == "ULTIMA"){
+      console.log(document.querySelector('.side-links'))
+      document.querySelector('.side-links').style.bottom = '164px'
+    }
+  },[])
 
  console.log(auth)
 
