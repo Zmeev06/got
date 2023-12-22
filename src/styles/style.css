@@ -7808,3 +7808,7 @@ textarea {
     bottom: 225px;
     width: 325px;
 }
+
+.mjNavItem {
+    cursor: pointer;
+}
