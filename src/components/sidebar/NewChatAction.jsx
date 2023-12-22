@@ -1,13 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {  useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import {setNewChat} from "../../redux/slices/chatSlice";
+import { increment } from '../../redux/slices/counterSlice';
 
 const NewChatAction = () => {
     const [chatUrl, setChatUrl] = useState(null);
     const dispatch = useDispatch()
     const [newChatUrl, setNewChatUrl] = useState('')
     const navigate = useNavigate()
+
+
     function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
@@ -29,9 +32,12 @@ const NewChatAction = () => {
             .then(response => response.json())
             .then(data => {
                 dispatch(setNewChat(data.pk))
+                dispatch(increment())
                 navigate(`/chat/${data.pk}`)
             })
+
     }
+
 
     return (
         <Link to={chatUrl && '/'}>

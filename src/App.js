@@ -17,8 +17,10 @@ import { Sidebar } from 'react-feather';
 import { Toaster } from 'react-hot-toast';
 import { NewChatPage } from './pages/NewChatPage';
 import { Layout } from './components/Layout/Layout';
+import { useSelector } from 'react-redux';
 
 function App() {
+    const counter = useSelector((state) => state.counter)
     const [folders, setFolders] = useState([
         {
             pk: 1,
@@ -175,6 +177,23 @@ function App() {
             });
     }, []);
 
+    useEffect(() => {
+        // получение папок и чатов
+        fetch('https://ziongpt.ai/api/v1/sessions/', {
+            method: 'GET',
+
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Token ' + getCookie('token')
+            }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+              setFolders(data.folders);
+              setChats(data.sessions);
+          });
+    }, [counter.value]);
+
 
     useEffect(() => {
         // получение инфы о пользователе
@@ -202,9 +221,9 @@ function App() {
                 <Route path='/' element={<Layout getCookie={getCookie} auth={auth} folders={folders} chats={chats} />}>
                     <Route path="/chat" element={<NewChatPage />} />
                     <Route path="/chat/:chatId" Component={MidjourneyPage} />
-
                     <Route path="/faq" element={<WhatPage />} />
                     <Route path="/settings" element={<RatePage auth={auth} />} />
+                    <Route path='*' element={<NewChatPage />} />
                 </Route>
             </Routes>
         </>

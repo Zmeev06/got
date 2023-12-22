@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export const NewChatPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  
+
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
