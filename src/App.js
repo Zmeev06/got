@@ -15,6 +15,8 @@ import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Sidebar } from 'react-feather';
 import { Toaster } from 'react-hot-toast';
+import { NewChatPage } from './pages/NewChatPage';
+import { Layout } from './components/Layout/Layout';
 
 function App() {
     const [folders, setFolders] = useState([
@@ -173,25 +175,6 @@ function App() {
             });
     }, []);
 
-    
-
-    useEffect(() => {
-        // получение папок и чатов
-        fetch('https://ziongpt.ai/api/v1/sessions/', {
-            method: 'GET',
-
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Token ' + getCookie('token')
-            }
-           
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setFolders(data.folders);
-                setChats(data.sessions);
-            });
-    }, []);
 
     useEffect(() => {
         // получение инфы о пользователе
@@ -214,14 +197,15 @@ function App() {
 
     return (
         <>
-            {auth && <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie} />}
             <Toaster />
             <Routes>
-                {/* <Route path="/" element={<ChatPage />} /> */}
-                <Route path="/chat/:chatId" Component={MidjourneyPage} />
+                <Route path='/' element={<Layout getCookie={getCookie} auth={auth} folders={folders} chats={chats} />}>
+                    <Route path="/chat" element={<NewChatPage />} />
+                    <Route path="/chat/:chatId" Component={MidjourneyPage} />
 
-                <Route path="/faq" element={<WhatPage />} />
-                <Route path="/settings" element={<RatePage auth={auth} />} />
+                    <Route path="/faq" element={<WhatPage />} />
+                    <Route path="/settings" element={<RatePage auth={auth} />} />
+                </Route>
             </Routes>
         </>
     );
