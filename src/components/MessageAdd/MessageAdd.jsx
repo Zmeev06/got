@@ -398,7 +398,7 @@ const MessageAdd = ({
                     isEmpty ? 'Отправить сообщение' : 'Вы не можете выполнить больше одного запроса'
                   }
                   value={text}
-                  onKeyUp={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   onChange={handleChange}></textarea>
                 {/* <div onClick={() => setModalClick()} className="tmp_f chat_con" href="public.html">
                   <svg
