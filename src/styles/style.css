@@ -185,6 +185,7 @@ html {
     align-items: center;
     gap: 0 12px;
     height: 65px;
+    cursor: pointer;
 }
 
 .rate_tab ul li:hover {
@@ -1404,6 +1405,7 @@ section form button {
     /* margin-bottom: 18px; */
     margin-top: 24px;
     background-color: #fff;
+    position: relative;
 }
 
 .footer_f .text_f {

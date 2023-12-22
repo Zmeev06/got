@@ -8,6 +8,7 @@ import { setNewStatus } from '../../redux/slices/statusMidSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../Loader/Loader';
 import toast from 'react-hot-toast';
+import TokenModal from '../tokenModal/TokenModal';
 
 const MessageAdd = ({
   MidjCallBack,
@@ -259,7 +260,8 @@ const MessageAdd = ({
   }
 
   return (
-    <div className="">
+    <div className="" style={{position: 'relative'}}>
+     
       <section className="chatgpt chat chat_con" id="bottom">
         {modal && <PublicModal setModalClick={setModalClick} />}
 
@@ -267,6 +269,7 @@ const MessageAdd = ({
           <footer className="footer_f chatgp">
             <div className={`settings_modal ${setting ? 'show' : ''}`} ref={settingsModal}>
               <form>
+              
                 <label>
                   Анализировать контекст диалога{' '}
                   <a href="#">
@@ -361,6 +364,7 @@ const MessageAdd = ({
               </a>
             </div>
             <form onSubmit={handleSubmit} className="form_f">
+            <TokenModal/>
               <div className="input_group">
                 <a className="settings_f" onClick={openModalSet} href="#">
                   <svg
