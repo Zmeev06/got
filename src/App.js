@@ -151,7 +151,7 @@ function App() {
         if (!document.cookie.includes('token=')) {
             
               document.cookie = `token=d44f311eb51795494ba576fd933213c6888e8097`;
-            // window.location.href = 'https://ziongpt.ai';
+            // window.location.href = 'https://ziongpt.ai/auth/logout';
         }
         console.log(getCookie('token'))
     }, []);
