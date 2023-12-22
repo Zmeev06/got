@@ -57,10 +57,12 @@ const NavigationsMidj = ({ activeItems, setActiveItems }) => {
                             StableDiffusion
                         </li> */}
                     </ul>
-                    <p>
+                    {activeItems[0] ? <p>
                         ЧатGPT
                         <span>плюс</span>
-                    </p>
+                    </p> : <p>
+                        Midjourney
+                    </p>}
                 </header>
             </div>
         </div>
