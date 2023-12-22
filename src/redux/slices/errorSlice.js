@@ -14,6 +14,6 @@ export const errorSlice = createSlice({
 
 export const { setErrorStatus } = errorSlice.actions
 
-export const selectChat = (state) => state.error.value
+export const selectError = (state) => state.error.value
 
 export default errorSlice.reducer

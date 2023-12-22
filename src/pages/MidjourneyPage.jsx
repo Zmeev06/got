@@ -14,6 +14,8 @@ import MessageMy from '../components/MessageMy/MessageMy';
 import gptUser from '../images/chat/mi_ic.png';
 import gptBot from '../images/chat/chatgpt_ic.png';
 import { setNewStatus } from '../redux/slices/statusMidSlice';
+import TokenModal from '../components/tokenModal/TokenModal';
+import { setErrorStatus } from '../redux/slices/errorSlice';
 
 const MidjourneyPage = ({ folders, chats }) => {
   const { chatId } = useParams();
@@ -31,6 +33,7 @@ const MidjourneyPage = ({ folders, chats }) => {
   const [statusMessage, setStatusMessage] = useState('В очереди');
   const [chatType, setChatType] = useState();
   const dispatch = useDispatch();
+  const fetchStatus = useSelector(state => state.error)
 
   useEffect(() => {
     lastMessageScroll('smooth');
@@ -145,6 +148,7 @@ const MidjourneyPage = ({ folders, chats }) => {
         });
     }
   }
+
   return (
     <div>
       <div className="content-page">
@@ -184,6 +188,7 @@ const MidjourneyPage = ({ folders, chats }) => {
                 type={myMessages.type}
               />
             ))}
+            {fetchStatus.value === 426 ? <TokenModal /> : null}
             {status.value === 'in_queue' ? (
               <MessageMy
                 setMessages={setStatusMessage}

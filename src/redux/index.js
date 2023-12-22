@@ -7,6 +7,6 @@ export const store = configureStore({
     reducer: {
         chat: chatReducer,
         status: statusMidReducer,
-        error: errorReducer()
+        error: errorReducer
     },
 })

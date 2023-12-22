@@ -1,7 +1,6 @@
 .tokenModal{
-    position: absolute;
-    bottom: 67px;
-    z-index: 5;    
+    margin-top: 20px;
+    z-index: 5;
     border-radius: 4px;
     opacity: 0.8;
     background: #F4DADA;
