@@ -8,6 +8,7 @@ import { setNewStatus } from '../../redux/slices/statusMidSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../Loader/Loader';
 import toast from 'react-hot-toast';
+import { setErrorStatus } from '../../redux/slices/errorSlice';
 
 const MessageAdd = ({
   MidjCallBack,
@@ -209,9 +210,14 @@ const MessageAdd = ({
         prompt: text
       })
     })
-      .then((response) => response.json())
+      .then((response) => {
+        dispatch(setErrorStatus(response.status))
+        return  response.json()
+        })
+
       .then((data) => {
         id = data.task_id;
+
       });
 
     let MjInterval = setInterval(() => {
