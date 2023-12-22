@@ -79,6 +79,8 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
     setActiveBtn(variant)
     setTimeout(() => {
       setActiveBtn('')
+      const chat = document.querySelector('#chat')
+      chat.scrollIntoView({behavior: 'smooth'})
     }, 300)
     if(status.value !== 'ready') {
       notifyGeneration()

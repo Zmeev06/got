@@ -15,7 +15,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom, t
     };
 
     return (
-        <div >
+        <div id='chat'>
             <div className="">
                 {modal && (
                     <PublicModal setModalClick={setModalClick} />
