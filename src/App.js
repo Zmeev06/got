@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
-import './styles/bootstrap.min.css';
-import './styles/app.min.css';
-import './styles/icons.min.css';
-import './styles/swiper-bundle.min.css';
+import './styles/bootstrap.min.css'
+import './styles/app.min.css'
+import './styles/icons.min.css'
+import './styles/swiper-bundle.min.css'
 import './styles/style.css';
 
-import SideBar from './components/sidebar/SideBar';
 import WhatPage from './pages/WhatPage';
 import RatePage from './pages/RatePage';
-import PublicPage from './components/PublicModal/PublicModal';
 import MidjourneyPage from './pages/MidjourneyPage';
 import { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Sidebar } from 'react-feather';
+import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { NewChatPage } from './pages/NewChatPage';
 import { Layout } from './components/Layout/Layout';
@@ -154,7 +150,7 @@ function App() {
     useEffect(() => {
         if (!document.cookie.includes('token=')) {
             
-              document.cookie = `token=d44f311eb51795494ba576fd933213c6888e8097`;
+              document.cookie = `token=05cd4f10cb12291defc190843f580dce676dcc23`;
             // window.location.href = 'https://ziongpt.ai/auth/logout';
         }
         console.log(getCookie('token'))

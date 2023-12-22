@@ -1,8 +1,9 @@
 
 import * as React from 'react';
-import { setNewChat } from '../redux/slices/chatSlice';
+import { setNewChat } from '../../redux/slices/chatSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import styles from './styles.module.scss'
 
 export const NewChatPage = () => {
   const dispatch = useDispatch()
@@ -33,8 +34,8 @@ export const NewChatPage = () => {
       })
   }
   return (
-    <div className="mainNewChatPage">
-      <div className="newChatButton" onClick={() => createChat()}>
+    <div className={styles.mainNewChatPage}>
+      <div className={styles.newChatButton} onClick={() => createChat()}>
         <p>Создать новый чат</p>
       </div>
     </div>

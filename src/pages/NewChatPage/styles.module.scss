@@ -1,0 +1,23 @@
+.mainNewChatPage {
+  width: 100%;
+  height: 100%;
+  margin-left: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.newChatButton {
+  width: fit-content;
+  padding: 20px 40px;
+  color: #FFFFFF;
+  background-color: #0a7941;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: .3s;
+  border: 1px solid #0a7941;
+  &:hover {
+    color: #0a7941;
+    background-color: #FFFFFF;
+  }
+}

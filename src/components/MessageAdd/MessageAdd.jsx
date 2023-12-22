@@ -5,8 +5,7 @@ import GptChat from '../../images/chat/chatgpt_ic.png';
 import PublicModal from '../PublicModal/PublicModal';
 import { useClickAway } from 'react-use';
 import { setNewStatus } from '../../redux/slices/statusMidSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../Loader/Loader';
+import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { setErrorStatus } from '../../redux/slices/errorSlice';
 
@@ -30,9 +29,7 @@ const MessageAdd = ({
   const [setting, setSetting] = useState(false);
   const [modal, setModal] = useState(false);
   const settingsModal = useRef(null);
-  const ref = useRef(null);
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.status);
   useClickAway(settingsModal, () => {
     setSetting(false);
   });
@@ -83,7 +80,7 @@ const MessageAdd = ({
 
   useEffect(() => {
     fetchMessages();
-  }, [chatId]);
+  }, [chatId, fetchMessages]);
 
   const textareaRef = useRef(null);
   const handleSubmit = (e) => {
@@ -179,7 +176,7 @@ const MessageAdd = ({
       });
       setMessages([...iMessages]);
     }
-    const text1 = new TextDecoder('utf-8').decode(new Uint8Array(chunks.flat()));
+    // const text1 = new TextDecoder('utf-8').decode(new Uint8Array(chunks.flat()));
   }
 
   async function newChatReq() {
@@ -188,7 +185,7 @@ const MessageAdd = ({
 
       if (activeItems[0] || activeItems[1] || activeItems[2]) {
         await newGptReq();
-      } else if (activeItems[3] == true) {
+      } else if (activeItems[3] === true) {
         setTimeout(() => {
           setText('');
           midjourneyTest();
@@ -260,9 +257,9 @@ const MessageAdd = ({
   const chooseRef = useRef();
 
   function chooseGpt(){
-    if(chooseRef.current.value == 'GPT-3.5') changeActiveItems([true, false, false, false, false, false, false])
-    else if(chooseRef.current.value == 'GPT-4') changeActiveItems([false, true, false, false, false, false, false])
-    else if(chooseRef.current.value == 'GPT-4 Turbo') changeActiveItems([false, false, true, false, false, false, false])
+    if(chooseRef.current.value === 'GPT-3.5') changeActiveItems([true, false, false, false, false, false, false])
+    else if(chooseRef.current.value === 'GPT-4') changeActiveItems([false, true, false, false, false, false, false])
+    else if(chooseRef.current.value === 'GPT-4 Turbo') changeActiveItems([false, false, true, false, false, false, false])
 
   }
 
@@ -277,7 +274,7 @@ const MessageAdd = ({
               <form>
                 <label>
                   Анализировать контекст диалога{' '}
-                  <a href="#">
+                  <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
@@ -294,7 +291,7 @@ const MessageAdd = ({
                         fill="#212121"
                       />
                     </svg>
-                  </a>
+                  </div>
                 </label>
                 <div className="btns">
                   <button className="yes_btn hover">Да</button>
@@ -304,7 +301,7 @@ const MessageAdd = ({
                 </div>
                 <label>
                   Нейросеть{' '}
-                  <a href="#">
+                  <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="18"
@@ -321,7 +318,7 @@ const MessageAdd = ({
                         fill="#212121"
                       />
                     </svg>
-                  </a>
+                  </div>
                 </label>
                 <select className="choose" name="choose" id="choose" onClick={()=>chooseGpt()} ref={chooseRef}>
                   <option value="GPT-3.5">GPT-3.5</option>
@@ -336,7 +333,7 @@ const MessageAdd = ({
                 <p></p>
                 <span data-feather="x"></span>
               </span>
-              <a href="#" className="regenerate chat">
+              <div className="regenerate chat">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="12"
@@ -366,11 +363,11 @@ const MessageAdd = ({
                   />
                 </svg>
                 Регенерировать
-              </a>
+              </div>
             </div>
             <form onSubmit={handleSubmit} className="form_f">
               <div className="input_group">
-                <a className="settings_f" onClick={openModalSet} href="#">
+                <div className="settings_f" onClick={openModalSet}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -385,7 +382,7 @@ const MessageAdd = ({
                     <circle cx="12" cy="12" r="3"></circle>
                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                   </svg>
-                </a>
+                </div>
                 <textarea
                   ref={textareaRef}
                   className="message__area"
@@ -431,9 +428,9 @@ const MessageAdd = ({
             </p>
           </footer>
         </div>
-        <a href="#" className="bottom_ic chat_con">
+        <div className="bottom_ic chat_con">
           ?
-        </a>
+        </div>
       </section>
     </div>
   );

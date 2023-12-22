@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import Gpt from '../components/Gpt/Gpt';
-import NavigationsMidj from '../components/NavigationsMidj/NavigationsMidj';
-import ChatBlock from '../components/ChatBlock/ChatBlock';
-import MessageAdd from '../components/MessageAdd/MessageAdd';
-import ChatBlockHead from '../components/ChatBlockHead/ChatBlockHead';
+import Gpt from '../../components/Gpt/Gpt';
+import NavigationsMidj from '../../components/NavigationsMidj/NavigationsMidj';
+import ChatBlock from '../../components/ChatBlock/ChatBlock';
+import MessageAdd from '../../components/MessageAdd/MessageAdd';
+import ChatBlockHead from '../../components/ChatBlockHead/ChatBlockHead';
 import { useRef } from 'react';
-import MessageMidjorney from '../components/MessageMidjorney/MessageMidjorney';
+import MessageMidjorney from '../../components/MessageMidjorney/MessageMidjorney';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { usePrevious } from '../hooks/usePrevious';
-import MessageMy from '../components/MessageMy/MessageMy';
-import gptUser from '../images/chat/mi_ic.png';
-import gptBot from '../images/chat/chatgpt_ic.png';
-import { setNewStatus } from '../redux/slices/statusMidSlice';
-import TokenModal from '../components/tokenModal/TokenModal';
-import { setErrorStatus } from '../redux/slices/errorSlice';
+import MessageMy from '../../components/MessageMy/MessageMy';
+import gptUser from '../../images/chat/mi_ic.png';
+import gptBot from '../../images/chat/chatgpt_ic.png';
+import { setNewStatus } from '../../redux/slices/statusMidSlice';
+import TokenModal from '../../components/tokenModal/TokenModal';
+import styles from './styles.module.scss'
 
 const MidjourneyPage = ({ folders, chats }) => {
   const { chatId } = useParams();
@@ -153,21 +152,21 @@ const MidjourneyPage = ({ folders, chats }) => {
     <div>
       <div className="content-page">
         <div className="content">
-          <div className="container-back-mid">
+          <div className={styles.containerBackMid}>
             {messages.length ? <ChatBlockHead type={messageType} /> : null}
           </div>
 
-          <div className="container-back-mid">
+          <div className={styles.containerBackMid}>
             {!messages.length && (
               <NavigationsMidj activeItems={activeItems} setActiveItems={setActiveItems} />
             )}
           </div>
 
           {activeItems[0] || activeItems[1] || activeItems[2] ? (
-            <div className="container-back-mid">{!messages.length && <Gpt />}</div>
+            <div className={styles.containerBackMid}>{!messages.length && <Gpt />}</div>
           ) : null}
 
-          <div className="container-back-mid">
+          <div className={styles.containerBackMid}>
             {firstMessage && (chatType === 'mj' || myMessages.type === 'image') && (
               <MessageMy
                 setMessages={setFirstMessage}

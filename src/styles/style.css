@@ -120,22 +120,6 @@ html {
     letter-spacing: -0.34px;
 }
 
-.container-back {
-    max-width: 1280px;
-    margin: 0 auto;
-}
-
-.container-back .public_tab {
-    margin-bottom: 24px;
-    border-bottom: 1px solid #9fa0a7;
-}
-
-.container-back .public_tab ul {
-    display: flex;
-    align-items: center;
-    list-style: none;
-}
-
 .container-back .public_tab ul li a {
     color: #9fa0a7;
     font-size: 18px;
@@ -416,12 +400,7 @@ html {
     letter-spacing: -0.36px;
 }
 
-.what_is_content {
-    display: flex;
-    flex-direction: column;
-    gap: 36px 0;
-    margin-bottom: 72px;
-}
+
 
 .what_is_content .what_is_content_item {
     display: flex;
@@ -1308,11 +1287,6 @@ section form button {
 } */
 .api_lock_block {
     margin-top: 72px;
-}
-
-.container-back-mid {
-    margin: 0 auto;
-    width: 900px;
 }
 
 .chatgpt {
@@ -4583,10 +4557,6 @@ pre {
         padding: 36px 0;
     }
 
-    .what_is_content {
-        margin-bottom: 36px;
-    }
-
     .container-back .public_tab.rate_tab ul li a {
         padding: 19px 86px 17px 86px;
     }
@@ -5151,9 +5121,7 @@ pre {
         margin: 0 -15px;
     }
 
-    .public_tab.rate_tab {
-        padding-top: 44px;
-    }
+
 
     .midjourney_ul.mob {
         margin-top: 62px;
@@ -6103,10 +6071,6 @@ pre {
         left: 90px;
     }
 
-    .public_tab.rate_tab {
-        padding-top: 0;
-    }
-
     .chat_top_header_mob.ap {
         margin: 0px;
     }
@@ -6739,10 +6703,6 @@ pre {
         letter-spacing: -0.16px;
     }
 
-    .what_is_content {
-        gap: 24px 0;
-    }
-
     .what_is_content .what_is_content_item {
         gap: 12px 0;
     }
@@ -7308,22 +7268,8 @@ pre {
 
 .public__body_content a {}
 
-.public_tab {
-    overflow-x: auto;
-}
 
-@media (max-width:1550px) {
-    .public_tab::-webkit-scrollbar-thumb {
-        background: gray;
-        border-radius: 20px;
-        max-height: 5px;
-    }
 
-    .public_tab::-webkit-scrollbar {
-        background: #00000000;
-        max-height: 10px;
-    }
-}
 
 .public__body-text {
     font-size: 18px;
@@ -7614,9 +7560,6 @@ textarea {
     cursor: pointer;
 }
 
-.container-back-mid {
-    color: white;
-}
 
 .modal-dialog {}
 
@@ -7772,9 +7715,6 @@ textarea {
     justify-content: center;
 }
 
-.container-back-mid {
-    max-width: 900px;
-}
 
 .chatgpt header ul li {
     justify-content: center;
@@ -7825,27 +7765,5 @@ textarea {
     cursor: pointer;
 }
 
-.mainNewChatPage {
-    width: 100%;
-    height: 100%;
-    margin-left: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.newChatButton {
-    width: fit-content;
-    padding: 20px 40px;
-    color: #FFFFFF;
-    background-color: #0a7941;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: .3s;
-    border: 1px solid #0a7941;
-}
 
-.newChatButton:hover {
-    color: #0a7941;
-    background-color: #FFFFFF;
-}

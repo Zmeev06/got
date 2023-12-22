@@ -10,7 +10,7 @@ const MessageGpt = () => {
             <div className="chat_chatgpt mob_h chat_p">
                 <div className="container-chat chat_con">
                     <div className="chat_chatgpt_block">
-                        <a href="#"><img src={GptAva} alt="" /></a>
+                        <div><img src={GptAva} alt="" /></div>
 
                         <div className="chat_text">
                             {itemData.content}

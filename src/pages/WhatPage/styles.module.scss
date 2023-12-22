@@ -1,0 +1,42 @@
+.chatTopHeaderMob {
+  display: none;
+  @media (max-width: 1028px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    width: 100%;
+    background: #343541;
+    padding: 10px 30px;
+    z-index: 100;
+    margin: 0 -15px;
+  }
+}
+
+.container-back {
+  @media (max-width: 1028px) {
+    padding-top: 44px;
+  }
+
+}
+
+.whatMenu {
+  margin: 0 -15px;
+}
+
+.whatIsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 36px 0;
+  margin-bottom: 72px;
+  @media (max-width: 1400px) {
+    margin-bottom: 36px;
+  }
+  @media (max-width: 576px) {
+    gap: 24px 0;
+  }
+}
+
+.breadcrums {
+  padding-top: 20px;
+}

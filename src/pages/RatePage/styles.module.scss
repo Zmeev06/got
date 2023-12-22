@@ -1,0 +1,51 @@
+.publicTab.rateTab {
+  padding-top: 44px;
+  @media (max-width: 576px) {
+      padding-top: 0;
+  }
+
+}
+
+.publicTab {
+  overflow-x: auto;
+  background-color: #fff;
+  @media (max-width:1550px) {
+    &::-webkit-scrollbar-thumb {
+      background: gray;
+      border-radius: 20px;
+      max-height: 5px;
+    }
+    &::-webkit-scrollbar {
+      background: #00000000;
+      max-height: 10px;
+    }
+  }
+}
+
+.containerBack {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.containerBack .publicTab {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #9fa0a7;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  width: 72vw;
+  justify-content: space-between;
+  color: #9fa0a7;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.36px;
+  transition: all ease 0.4s;
+  padding: 17px 69px 16px 69px;
+  gap: 0 8px;
+  height: 61px;
+}
+
