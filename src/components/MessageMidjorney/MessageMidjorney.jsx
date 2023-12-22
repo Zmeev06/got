@@ -4,14 +4,16 @@ import styles from './style.module.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { setNewStatus } from '../../redux/slices/statusMidSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
 const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
   const { chatId } = useParams();
   const dispatch = useDispatch();
   const notify = (message) => toast.error(message);
-
+  const status = useSelector(state => state.status)
+  const [activeBtn, setActiveBtn] = useState('')
+  const notifyGeneration = (message) => toast.error('Дождитесь окончания генерации');
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -73,6 +75,18 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
     }, 3000);
   };
 
+  const buttonClickHandler = (variant) => {
+    setActiveBtn(variant)
+    setTimeout(() => {
+      setActiveBtn('')
+    }, 300)
+    if(status.value !== 'ready') {
+      notifyGeneration()
+    } else {
+      getImage(variant)
+    }
+  }
+
   return (
     <div>
       <div Name="chat_code_chatgpt">
@@ -92,30 +106,30 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
                                 <input type="text" name="a2" id="a_two" value="A2" />
                                 <input type="text" name="a3" id="a_three" value="A3" />
                                 <input type="text" name="a4" id="a_four" value="A4" /> */}
-                      <div className="midjourney_chat_item" onClick={() => getImage('variation-1')}>
+                      <a className={`midjourney_chat_item ${activeBtn === 'variation-1' ? 'midjourney_chat_item_active' : ''}`} onClick={() => buttonClickHandler('variation-1')}>
                         V1
-                      </div>
-                      <div className="midjourney_chat_item" onClick={() => getImage('variation-2')}>
+                      </a>
+                      <a className={`midjourney_chat_item ${activeBtn === 'variation-2' ? 'midjourney_chat_item_active' : ''}`} onClick={() => buttonClickHandler('variation-2')}>
                         V2
-                      </div>
-                      <div className="midjourney_chat_item" onClick={() => getImage('variation-3')}>
+                      </a>
+                      <a className={`midjourney_chat_item ${activeBtn === 'variation-3' ? 'midjourney_chat_item_active' : ''}`} onClick={() => buttonClickHandler('variation-3')}>
                         V3
-                      </div>
-                      <div className="midjourney_chat_item" onClick={() => getImage('variation-4')}>
+                      </a>
+                      <a className={`midjourney_chat_item ${activeBtn === 'variation-4' ? 'midjourney_chat_item_active' : ''}`} onClick={() => buttonClickHandler('variation-4')}>
                         V4
-                      </div>
-                      <div className="midjourney_chat_item" onClick={() => getImage('upsample-1')}>
+                      </a>
+                      <a className={`midjourney_chat_item ${activeBtn === 'upsample-1' ? 'midjourney_chat_item_active' : ''}`} onClick={() => buttonClickHandler('upsample-1')}>
                         U1
-                      </div>
-                      <div className="midjourney_chat_item" onClick={() => getImage('upsample-2')}>
+                      </a>
+                      <a className={`midjourney_chat_item ${activeBtn === 'upsample-2' ? 'midjourney_chat_item_active' : ''}`} onClick={() => buttonClickHandler('upsample-2')}>
                         U2
-                      </div>
-                      <div className="midjourney_chat_item" onClick={() => getImage('upsample-3')}>
+                      </a>
+                      <a className={`midjourney_chat_item ${activeBtn === 'upsample-3' ? 'midjourney_chat_item_active' : ''}`} onClick={() => buttonClickHandler('upsample-3')}>
                         U3
-                      </div>
-                      <div className="midjourney_chat_item" onClick={() => getImage('upsample-4')}>
+                      </a>
+                      <a className={`midjourney_chat_item ${activeBtn === 'upsample-4' ? 'midjourney_chat_item_active' : ''}`} onClick={() => buttonClickHandler('upsample-4')}>
                         U4
-                      </div>
+                      </a>
                     </div>
                   </>
                 )}

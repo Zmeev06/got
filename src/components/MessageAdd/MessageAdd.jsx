@@ -44,7 +44,6 @@ const MessageAdd = ({
   };
   const notify = (message) => toast.error(message);
   function handleError(data) {
-    console.log(data.error);
   }
   let iMessages = [];
   //gpt

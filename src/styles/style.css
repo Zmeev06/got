@@ -7736,7 +7736,6 @@ textarea {
 .midjourney_chat_form .midjourney_chat_box .midjourney_chat_item {
     width: 70px;
     height: 70px;
-
     font-size: 32px;
 }
 
@@ -7751,7 +7750,16 @@ textarea {
 }
 
 .midjourney_chat {
-    margin-top: 30px;
+    margin: 30px 0;
+}
+
+.midjourney_chat_item {
+    cursor: pointer;
+}
+
+.midjourney_chat_item_active {
+    background: #FFFFFF !important;
+    color: #10A37F !important;
 }
 
 .chat_chatgpt_block {
