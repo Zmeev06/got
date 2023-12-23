@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PaletteIcImg from "../../images/palette_ic.svg";
-import BorderColorIcImg from "../../images/border_color_ic.svg";
-import DeleteIcImg from "../../images/delete_ic.svg";
-import FolderArrowIcon from "../UI/icons/FolderArrowIcon";
-import FolderIcon from "../UI/icons/FolderIcon";
-import SideBarSessionList from "./SideBarSessionList";
-import ModalDelete from '../ModelDelete/ModalDelete';
+import PaletteIcImg from "../../../images/palette_ic.svg";
+import BorderColorIcImg from "../../../images/border_color_ic.svg";
+import DeleteIcImg from "../../../images/delete_ic.svg";
+import FolderArrowIcon from "../../UI/icons/FolderArrowIcon";
+import FolderIcon from "../../UI/icons/FolderIcon";
+import SideBarSessionList from "../SideBarSessionList";
+import ModalDelete from '../../ModelDelete/ModalDelete';
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {setNewChat} from "../../redux/slices/chatSlice";
+import {setNewChat} from "../../../redux/slices/chatSlice";
+import styles from './styles.module.scss'
 
 
 const SideBarFolder = ({ folder, chat }) => {
@@ -238,14 +239,14 @@ const SideBarFolder = ({ folder, chat }) => {
 
                 <li>
 
-                    <a className="active" ref={collapseParent}>
+                    <a ref={collapseParent}>
 
                         <FolderIcon />
-                        <span className="input_sp">
-                            <input type="text" name="main_input" id="main_input" className="main_input" value={inputVal} disabled ref={inputEdit} onChange={(e) => setInputVal(e.target.value)} />
+                        <span>
+                            <input type="text" name="main_input" id="main_input" className={styles.mainInput} value={inputVal} disabled ref={inputEdit} onChange={(e) => setInputVal(e.target.value)} />
                         </span>
 
-                        <div className="actions_sp three display-none" ref={collapseIcon}>
+                        <div className={`${styles.actions} ${styles.three}`} ref={collapseIcon}>
                             <svg onClick={() => stopEdit(true)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
@@ -255,31 +256,29 @@ const SideBarFolder = ({ folder, chat }) => {
                             </svg>
                         </div>
                         {/*редакт*/}
-                        <div className="actions_sp main" ref={mainIcons}>
+                        <div className={styles.actions} ref={mainIcons}>
                             {/* <img src={PaletteIcImg} alt="" /> */}
                             <img src={BorderColorIcImg} alt="" onClick={() => allowEdit()} />
                             <img src={DeleteIcImg} alt="" onClick={() => setDeleteFolder(true)} />
                         </div>
                         {/*развернуть*/}
-                        <div className="folder-arrow" onClick={() => handleClick()} >
+                        <div onClick={() => handleClick()} >
                             <FolderArrowIcon />
                         </div>
                     </a>
                     <div className="collapse" id="sidebarEcommerce" ref={collapseChild}>
-
                         <SideBarSessionList sessions={folder.sessions} createChat={createChat}/>
                     </div>
                 </li> :
 
-                <li onClick={() => dispatch(setNewChat(chat.pk))} className='chats__items'>
+                <li onClick={() => dispatch(setNewChat(chat.pk))} className={styles.chatsItems}>
                     <Link to={`/chat/${chat?.pk}`}>
-
                         <FolderIcon />
-                        <input type="text" className='main_input chats display-none' value={chatVal} disabled ref={chatsEdit} onChange={(e) => setChatVal(e.target.value)} />
+                        <input type="text" className={styles.mainInput} value={chatVal} disabled ref={chatsEdit} onChange={(e) => setChatVal(e.target.value)} />
                         <span ref={chatSpan}>{chatVal}</span>
                     </Link>
                     
-                        <div className="actions_sp three display-none" ref={collapseIcon}>
+                        <div className={`${styles.actions} ${styles.three}`} ref={collapseIcon}>
                             <svg onClick={() => stopChatsEdit(true)} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check">
                                 <polyline points="20 6 9 17 4 12"></polyline>
                             </svg>
@@ -288,7 +287,7 @@ const SideBarFolder = ({ folder, chat }) => {
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
                             </svg>
                         </div>
-                        <div className="actions_sp chats" ref={mainIcons}>
+                        <div className={`${styles.actions} ${styles.chats}`} ref={mainIcons}>
                             {/* <img src={PaletteIcImg} alt="" /> */}
                             <img src={BorderColorIcImg} alt="" onClick={() => editChats()} />
                             <img src={DeleteIcImg} alt="" onClick={() => setDeleteFolder2(true)} />

@@ -1,9 +1,10 @@
 import React from 'react';
-import LogoTopImg from "../../images/logo-top.svg";
+import LogoTopImg from "../../../images/logo-top.svg";
+import styles from './style.module.scss'
 
 const Logo = () => {
     return (
-        <div className='sidebar_menu_top_logo'>
+        <div className={styles.sidebarMenuTopLogo}>
             <img src={LogoTopImg} alt='' />
         </div>
     );

@@ -150,7 +150,7 @@ function App() {
     useEffect(() => {
         if (!document.cookie.includes('token=')) {
             
-              document.cookie = `token=05cd4f10cb12291defc190843f580dce676dcc23`;
+              document.cookie = `token=8dcb0139bd08c82373842a4360c44514e5923334`;
             // window.location.href = 'https://ziongpt.ai/auth/logout';
         }
         console.log(getCookie('token'))

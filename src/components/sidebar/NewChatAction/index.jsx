@@ -1,8 +1,9 @@
 import React, {  useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch} from "react-redux";
-import {setNewChat} from "../../redux/slices/chatSlice";
-import { increment } from '../../redux/slices/counterSlice';
+import {setNewChat} from "../../../redux/slices/chatSlice";
+import { increment } from '../../../redux/slices/counterSlice';
+import styles from './style.module.scss'
 
 const NewChatAction = () => {
     const [chatUrl, setChatUrl] = useState(null);
@@ -42,7 +43,7 @@ const NewChatAction = () => {
     return (
         <Link to={chatUrl && '/'}>
             <div onClick={() => createChat()}>
-                <button type='button'><span className="plus_sp">+</span> Новый чат</button>
+                <button type='button'><span className={styles.plusSp}>+</span> Новый чат</button>
             </div>
         </Link>
     );

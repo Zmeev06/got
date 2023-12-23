@@ -1,0 +1,224 @@
+.leftSideMenu {
+  width: 330px;
+  background: #202123;
+  bottom: 0;
+  padding: 10px 0 0 0;
+  position: fixed;
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+  top: 0;
+  -webkit-box-shadow: var(--ct-box-shadow);
+  box-shadow: none;
+  z-index: 99;
+  @media (max-width: 1028px) {
+    display: none;
+  }
+}
+
+.simplebarWrapper {
+  overflow: hidden;
+  width: inherit;
+  height: inherit;
+  max-width: inherit;
+  max-height: inherit;
+  margin: 0;
+}
+
+.simplebarHeightAutoObserverWrapper {
+  -webkit-box-sizing: inherit !important;
+  box-sizing: inherit !important;
+  height: 100%;
+  width: 100%;
+  max-width: 1px;
+  position: relative;
+  float: left;
+  max-height: 1px;
+  overflow: hidden;
+  z-index: -1;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  -webkit-box-flex: inherit;
+  -ms-flex-positive: inherit;
+  flex-grow: inherit;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+}
+
+.simplebarHeightAutoObserver {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+  display: block;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1000%;
+  width: 1000%;
+  min-height: 1px;
+  min-width: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.simplebarMask {
+  direction: inherit;
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: auto !important;
+  height: auto !important;
+  z-index: 0;
+}
+
+.simplebarOffset {
+  direction: inherit !important;
+  -webkit-box-sizing: inherit !important;
+  box-sizing: inherit !important;
+  resize: none !important;
+  padding: 0;
+  margin: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.simplebarContentWrapper {
+  direction: inherit;
+  -webkit-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+  position: relative;
+  display: block;
+  height: 100%;
+  width: auto;
+  visibility: visible;
+  overflow: auto;
+  max-width: 100%;
+  max-height: 100%;
+  scrollbar-width: none;
+  padding: 0 !important;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.content {
+  height: 100%;
+}
+
+.simplebarContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    background-color: #202123;
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background: #DFDFE0;
+    width: 5px;
+    height: 5px;
+  }
+  &:after{
+    content: " ";
+    display: table;
+  }
+  &:before {
+    content: " ";
+    display: table;
+  }
+}
+
+.sidebarMenu>ul>li ul {
+  position: relative;
+}
+
+.sidebarMenu>ul>li ul::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background-color: #40414F;
+  left: 30px;
+  top: 0px;
+}
+
+.sidebarMenu>ul>li>a {
+  margin: 0 12px;
+  position: relative;
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: all ease 0.5s;
+}
+
+.sidebarMenu>ul>li>a.active,
+.sidebarMenu>ul>li>a:hover {
+  border-color: #2A2B32;
+  background: #2A2B32;
+  position: relative;
+}
+
+.simplebarPlaceholder {
+  max-height: 100%;
+  max-width: 100%;
+  pointer-events: none;
+  height: 983px;
+  width: auto;
+}
+
+.simplebarScrollbar {
+  position: absolute;
+  right: 2px;
+  width: 4px;
+  min-height: 10px;
+  &:before {
+    position: absolute;
+    content: "";
+    background: #a2adb7;
+    border-radius: 7px;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    -webkit-transition: opacity 0.2s linear;
+    transition: opacity 0.2s linear;
+  }
+}
+
+.simplebarTrackHorizontal {
+  left: 0;
+  height: 11px;
+  visibility: hidden;
+}
+.simplebarTrackHorizontal .simplebarScrollbar:before {
+  height: 100%;
+  left: 2px;
+  right: 2px;
+}
+
+.simplebarTrackVertical {
+  top: 0;
+  width: 11px;
+}
+.simplebarTrackVertical .simplebarScrollbar:before {
+  top: 2px;
+  bottom: 2px;
+}
+
+.xMenuMob {
+  display: none;
+}

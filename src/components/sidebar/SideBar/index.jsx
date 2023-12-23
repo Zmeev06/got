@@ -1,10 +1,11 @@
 import React from 'react';
-import CloseMenuMobImg from '../../images/close_menu_mob.png';
-import SideBarHeader from "./SideBarHeader";
-import SideBarBottomLinks from "./SideBarBottomLinks";
-import SideBarUser from "./SideBarUser";
-import SideBarFolderList from "./SideBarFolderList";
+import CloseMenuMobImg from '../../../images/close_menu_mob.png';
+import SideBarHeader from "../SideBarHeader";
+import SideBarBottomLinks from "../SideBarBottomLinks";
+import SideBarUser from "../SideBarUser";
+import SideBarFolderList from "../SideBarFolderList";
 import { useState } from 'react';
+import styles from './styles.module.scss'
 
 
 const SideBar = ({ folders, chats, auth }) => {
@@ -45,37 +46,36 @@ const SideBar = ({ folders, chats, auth }) => {
 
 
     return (
-        <div className="left-side-menu">
-            <div className="h-100" data-simplebar="init">
-                <div className="simplebar-wrapper" style={{ margin: "0px" }}>
-                    <div className="simplebar-height-auto-observer-wrapper">
-                        <div className="simplebar-height-auto-observer"></div>
+        <div className={`left-side-menu ${styles.leftSideMenu}`}>
+            <div className={styles.content} data-simplebar="init">
+                <div className={styles.simplebarWrapper}>
+                    <div className={styles.simplebarHeightAutoObserverWrapper}>
+                        <div className={styles.simplebarHeightAutoObserver}></div>
                     </div>
-                    <div className="simplebar-mask">
-                        <div className="simplebar-offset" style={{ right: '0px', bottom: '0px' }}>
-                            <div className="simplebar-content-wrapper" tabIndex="0" role="region" aria-label="scrollable content" style={{ height: '100%', overflow: 'hidden scroll' }}>
-                                <div className="simplebar-content" style={{ padding: '0' }}>
-                                    <div id="sidebar-menu">
+                    <div className={styles.simplebarMask}>
+                        <div className={styles.simplebarOffset}>
+                            <div className={styles.simplebarContentWrapper} tabIndex="0" role="region" aria-label="scrollable content" style={{ height: '100%', overflow: 'hidden scroll' }}>
+                                <div className={styles.simplebarContent} style={{ padding: '0' }}>
+                                    <div className={styles.sidebarMenu}>
                                         <SideBarHeader inputValue={inputValue}/>
                                         <SideBarFolderList folders={zeroFlag ? folders : foldersArr} chats={zeroFlag ? chats : chatsArr} />
                                         <SideBarBottomLinks />
                                         <SideBarUser auth={auth}/>
                                     </div>
-                                    <div className="clearfix"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="simplebar-placeholder" style={{ width: 'auto', height: '983px' }}></div>
+                    <div className={styles.simplebarPlaceholder}></div>
                 </div>
-                <div className="simplebar-track simplebar-horizontal" style={{ visibility: 'hidden' }}>
-                    <div className="simplebar-scrollbar" style={{ width: '0px', display: 'none' }}></div>
+                <div className={styles.simplebarTrackHorizontal}>
+                    <div className={styles.simplebarScrollbar} style={{ width: '0px', display: 'none' }}></div>
                 </div>
-                <div className="simplebar-track simplebar-vertical" style={{ visibility: 'visible' }}>
-                    <div className="simplebar-scrollbar" style={{ height: '603px', display: 'block', transform: 'translate3d(0px, 0px, 0px)' }}></div>
+                <div className={styles.simplebarTrackVertical} style={{ visibility: 'visible' }}>
+                    <div className={styles.simplebarScrollbar} style={{ height: '603px', display: 'block', transform: 'translate3d(0px, 0px, 0px)' }}></div>
                 </div>
             </div>
-            <span className="x_menu_mob">
+            <span className={styles.xMenuMob}>
                 <img src={CloseMenuMobImg} alt="" />
             </span>
         </div>

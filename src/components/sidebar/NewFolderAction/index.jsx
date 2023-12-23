@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import NewFolderIcon from "../UI/icons/NewFolderIcon";
+import NewFolderIcon from "../../UI/icons/NewFolderIcon";
 
 const NewFolderAction = () => {
     function getCookie(name) {
@@ -41,7 +41,7 @@ const NewFolderAction = () => {
     return (
 
 
-        <div className='folder_sp' onClick={() => newFolder()}>
+        <div onClick={() => newFolder()}>
             <NewFolderIcon />
         </div>
 
