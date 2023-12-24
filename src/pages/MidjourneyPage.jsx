@@ -241,7 +241,9 @@ const MidjourneyPage = ({ folders, chats }) => {
             changeActiveItems={changeActiveItems}
           />
         </div>
+
       </div>
+
     </div>
   );
 };

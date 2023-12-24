@@ -19,11 +19,16 @@ html {
 }
 
 .content-page {
-    margin-left: 500px;
     overflow: hidden;
     padding: 0 15px 65px 15px;
     margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
 }
+
 
 .left-side-menu {
     width: 330px;
@@ -1312,7 +1317,8 @@ section form button {
 
 .container-back-mid {
     margin: 0 auto;
-    width: 900px;
+    width: 90%;
+
 }
 
 .chatgpt {
@@ -1522,9 +1528,6 @@ section form button {
     width: 229px;
 }
 
-.content-page.midjourney {
-    margin-left: 468px;
-}
 
 .midjourney_ul li a:hover,
 .midjourney_ul li a.active {
@@ -1886,14 +1889,10 @@ section form button {
 
 
 .content-page.chat {
-    margin-left: 330px;
     padding-left: 0;
     padding-right: 0;
 }
 
-.content-page.chat.midj {
-    margin-left: 330px;
-}
 
 .container-chat {
     max-width: 800px;
@@ -2758,6 +2757,7 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
 .midjourney_chat {
     display: flex;
     gap: 0 46px;
+    width: 970px;
 }
 
 .midjourney_chat_form {
@@ -2918,18 +2918,12 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
 }
 
 .footer_f.chatgp {
-    position: fixed;
-    bottom: 18px;
     /* background-color: #fff; */
-    max-width: 800px;
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
     z-index: 7;
+    left: 0;
 }
-
-.footer_f.chatgp.b_mid {
-    max-width: 710px;
-}
-
 
 .modal {
     top: 0;
@@ -3990,9 +3984,6 @@ pre {
     display: none;
 }
 
-.content-page.ap_lock {
-    margin-left: 400px;
-}
 
 .midjourney_ul.ap_lock {
     margin-top: 86px;
@@ -4288,14 +4279,7 @@ pre {
         width: 100%;
     }
 
-    .content-page.ap_lock {
-        margin-left: 370px;
-    }
 
-    .content-page,
-    .content-page.midjourney {
-        margin-left: 360px;
-    }
 
     /* .left-side-menu{
         width: 292px;
@@ -4450,9 +4434,6 @@ pre {
         left: 50px;
     }
 
-    .content-page.ap_lock {
-        margin-left: 330px;
-    }
 
     .api_block .api_content .api_form {
         flex-direction: column;
@@ -4537,11 +4518,6 @@ pre {
         width: 660px;
     }
 
-    .content-page,
-    .content-page.midjourney {
-        margin-left: 340px;
-    }
-
     .api_content_bottom {
         flex-direction: column;
         gap: 48px 0;
@@ -4565,13 +4541,7 @@ pre {
         width: 100%;
     }
 
-    .content-page.api_settings {
-        margin-left: 320px;
-    }
 
-    .content-page.faq {
-        margin-left: 300px;
-    }
 
     .faq_block {
         padding-bottom: 70px;
@@ -4875,10 +4845,6 @@ pre {
     /* .content-page.midjourney{
         margin-left: 400px;
     } */
-    .content-page,
-    .content-page.midjourney {
-        margin-left: 330px;
-    }
 
     .api_settings_content {
         flex-direction: column;
@@ -7577,6 +7543,12 @@ textarea {
 
 .content {
     min-height: 93vh;
+    height: calc(100vh - 122px);
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .public__modal {
@@ -7702,16 +7674,6 @@ textarea {
     z-index: 33;
 }
 
-.footer_f::before {
-    z-index: 2;
-    position: absolute;
-    bottom: 0;
-    left: -500px;
-    width: calc(100% + 1000px);
-    height: 100%;
-    content: "";
-    background: white;
-}
 
 .chatgpt_begin_header li svg path {
     fill: #6C7275;
@@ -7732,9 +7694,10 @@ textarea {
 }
 
 .midjourney_chat_box {
-    width: 100%;
+    width: fit-content;
     display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(4, 85px) !important;
+    margin: 0 auto;
 }
 
 .midjourney_chat_form .midjourney_chat_box .midjourney_chat_item {
@@ -7772,9 +7735,6 @@ textarea {
     justify-content: center;
 }
 
-.container-back-mid {
-    max-width: 900px;
-}
 
 .chatgpt header ul li {
     justify-content: center;

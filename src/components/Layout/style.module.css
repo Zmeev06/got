@@ -3,4 +3,14 @@
     width: 100vw;
     height: 100vh;
     position: relative;
+
+}
+
+.sidebarMy {
+    min-width: 330px;
+}
+
+.content {
+    width: 100%;
+    position: relative;
 }

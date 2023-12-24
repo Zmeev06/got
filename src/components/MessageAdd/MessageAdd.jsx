@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../Loader/Loader';
 import toast from 'react-hot-toast';
 import { setErrorStatus } from '../../redux/slices/errorSlice';
+import styles from './styles.module.scss'
 
 const MessageAdd = ({
   MidjCallBack,
@@ -267,11 +268,9 @@ const MessageAdd = ({
   }
 
   return (
-    <div className="">
-      <section className="chatgpt chat chat_con" id="bottom">
+      <section className={styles.footerContent} id="bottom">
         {modal && <PublicModal setModalClick={setModalClick} />}
 
-        <div className="container-chat chat_con container__message">
           <footer className="footer_f chatgp">
             <div className={`settings_modal ${setting ? 'show' : ''}`} ref={settingsModal}>
               <form>
@@ -430,12 +429,10 @@ const MessageAdd = ({
               ChatGPT от 3 августа
             </p>
           </footer>
-        </div>
         <a href="#" className="bottom_ic chat_con">
           ?
         </a>
       </section>
-    </div>
   );
 };
 

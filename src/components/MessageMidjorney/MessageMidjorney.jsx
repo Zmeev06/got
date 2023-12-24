@@ -90,7 +90,7 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
   }
 
   return (
-    <div>
+    <div className={styles.main}>
       <div Name="chat_code_chatgpt">
         {type === 'image' && message && (
           <div className="midjourney_chat">

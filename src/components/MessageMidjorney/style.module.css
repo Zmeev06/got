@@ -2,3 +2,8 @@
     background: #10A37F !important;
     color: #FFFFFF !important;
 }
+
+.main {
+    width: fit-content;
+    margin: 0 auto;
+}
