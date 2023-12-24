@@ -5,6 +5,7 @@ import MessageMy from '../MessageMy/MessageMy'
 import MessageAdd from '../MessageAdd/MessageAdd'
 import GptAva from '../../images/chat/chatgpt_ic.png'
 import PublicModal from '../PublicModal/PublicModal'
+import styles from './style.module.scss'
 
 
 const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom, type }) => {
@@ -15,7 +16,7 @@ const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom, t
     };
 
     return (
-        <div id='chat'>
+        <div id='chat' className={styles.chatBlock}>
             <div className="">
                 {modal && (
                     <PublicModal setModalClick={setModalClick} />
