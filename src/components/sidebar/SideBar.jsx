@@ -1,7 +1,7 @@
 import React from 'react';
 import CloseMenuMobImg from '../../images/close_menu_mob.png';
 import SideBarHeader from "./SideBarHeader";
-import SideBarBottomLinks from "./SidebarBottomLinks";
+import SideBarBottomLinks from "./SideBarBottomLinks";
 import SideBarUser from "./SideBarUser";
 import SideBarFolderList from "./SideBarFolderList";
 import { useState } from 'react';
@@ -58,11 +58,8 @@ const SideBar = ({ folders, chats, auth }) => {
                                     <div id="sidebar-menu">
                                         <SideBarHeader inputValue={inputValue}/>
                                         <SideBarFolderList folders={zeroFlag ? folders : foldersArr} chats={zeroFlag ? chats : chatsArr} />
-                                        <div>
-                                            <SideBarBottomLinks />
-                                            <SideBarUser auth={auth}/>
-                                        </div>
-
+                                        <SideBarBottomLinks />
+                                        <SideBarUser auth={auth}/>
                                     </div>
                                     <div className="clearfix"></div>
                                 </div>
