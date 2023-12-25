@@ -2183,8 +2183,6 @@ section form button {
     position: relative;
 }
 
-
-
 body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>a {
     border-color: #2A2B32;
     background: #2A2B32;
