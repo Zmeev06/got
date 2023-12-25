@@ -1824,10 +1824,13 @@ section form button {
 .chatgpt_begin {
     display: flex;
     gap: 18px 19px;
+    margin: 0 auto;
     margin-top: 38px;
     /* margin-bottom: 128px; */
     /* margin-bottom: 400px; */
     flex-wrap: wrap;
+    width: 80%;
+    max-width: 1200px;
 }
 
 .chatgpt_begin.mob {
@@ -3790,7 +3793,7 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     flex-direction: column;
     gap: 8px 0;
     bottom: 0;
-    width: 280px;
+    width: fit-content;
 }
 
 #side-menu {
