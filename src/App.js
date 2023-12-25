@@ -151,14 +151,14 @@ function App() {
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
-    useEffect(() => {
-        if (!document.cookie.includes('token=')) {
+    // useEffect(() => {
+    //     if (!document.cookie.includes('token=')) {
             
-              document.cookie = `token=b1f01aa8184e58639f45b15df06a474c486d717c`;
-            // window.location.href = 'https://ziongpt.ai/auth/logout';
-        }
-        console.log(getCookie('token'))
-    }, []);
+    //           document.cookie = `token=b1f01aa8184e58639f45b15df06a474c486d717c`;
+    //         // window.location.href = 'https://ziongpt.ai/auth/logout';
+    //     }
+    //     console.log(getCookie('token'))
+    // }, []);
 
     useEffect(() => {
         // получение папок и чатов

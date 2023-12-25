@@ -104,17 +104,16 @@ const SideBarFolder = ({ folder, chat }) => {
     const chatsEdit = useRef();
     const chatSpan = useRef();
 
-
-
+    const [showFolder, setShowFolder] = useState(false)
 
 
     function handleClick() {
-        if (collapseChild.current.className != "collapse show") {
+        if (collapseChild.current.className !== "collapse show") {
             collapseChild.current.className = "collapse show"
             collapseParent.current.className = "active collapsed"
         }
         else {
-            collapseParent.current.className = "active"
+            collapseParent.current.className = ""
             setTimeout(() => {
                 collapseChild.current.className = "collapse"
             }, [])
@@ -227,7 +226,7 @@ const SideBarFolder = ({ folder, chat }) => {
         /*/убрать авторизацию нужно бэку/*/
     }
 
-console.log(chat ? chatId.chatId === chat.pk : 'gg')
+console.log(folder)
     const dispatch = useDispatch()
     return (
 
@@ -238,7 +237,7 @@ console.log(chat ? chatId.chatId === chat.pk : 'gg')
             {folder ?
 
                 <li>
-                    <a  ref={collapseParent}>
+                    <a ref={collapseParent}>
                         <FolderIcon />
                         <span className="input_sp">
                             <input type="text" name="main_input" id="main_input" className="main_input" value={inputVal} disabled ref={inputEdit} onChange={(e) => setInputVal(e.target.value)} />
