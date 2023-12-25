@@ -6,8 +6,9 @@ import axios from 'axios';
 import { setNewStatus } from '../../redux/slices/statusMidSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import gptBot from '../../images/chat/chatgpt_ic.png'
 
-const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
+const MessageMidjorney = ({ message, midjData, MidjCallBack, type, index }) => {
   const { chatId } = useParams();
   const dispatch = useDispatch();
   const notify = (message) => toast.error(message);
@@ -90,10 +91,14 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
   }
 
   return (
-    <div className={styles.main}>
+    <div className={styles.root} style={{
+      background: index % 2 !== 0 ? '#F7F7F8' : 'transparrent'
+    }}>
+    <div className={styles.main} >
       <div Name="chat_code_chatgpt">
         {type === 'image' && message && (
           <div className="midjourney_chat">
+            <img src={gptBot} alt="" className={styles.img}/>
             <img className="chat_code_img" src={message.result} alt="" />
             <div className="midjourney_chat_right">
               <form className="midjourney_chat_form">
@@ -148,6 +153,7 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type }) => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };

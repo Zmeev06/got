@@ -9,13 +9,12 @@ import MessageMidjorney from '../components/MessageMidjorney/MessageMidjorney';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { usePrevious } from '../hooks/usePrevious';
 import MessageMy from '../components/MessageMy/MessageMy';
 import gptUser from '../images/chat/mi_ic.png';
 import gptBot from '../images/chat/chatgpt_ic.png';
 import { setNewStatus } from '../redux/slices/statusMidSlice';
 import TokenModal from '../components/tokenModal/TokenModal';
-import { setErrorStatus } from '../redux/slices/errorSlice';
+
 
 const MidjourneyPage = ({ folders, chats }) => {
   const { chatId } = useParams();
@@ -186,6 +185,8 @@ const MidjourneyPage = ({ folders, chats }) => {
                 midjData={myMessages}
                 MidjCallBack={MidjCallBack}
                 type={myMessages.type}
+                index={index}
+                key={index}
               />
             ))}
             {fetchStatus.value === 426 ? <TokenModal /> : null}

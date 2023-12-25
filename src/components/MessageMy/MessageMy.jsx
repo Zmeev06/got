@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import GptUser from '../../images/chat/mi_ic.png';
 import ChatEdit from '../../images/chat/chatEdit.svg';
+import styles from './style.module.scss'
 
 const MessageMy = ({
   setMessages,
@@ -165,7 +166,7 @@ const MessageMy = ({
   };
   // console.log(text);
   return (
-    <div key={index}>
+    <div key={index} className={styles.main}>
       <div className={mine ? 'chat_user' : 'chat_chatgpt  mob_h chat_p'}>
         <div className="container-chat chat_con">
           <div className={mine ? 'chat_chatgpt_block' : 'chat_chatgpt_block'}>

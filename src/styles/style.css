@@ -2365,17 +2365,12 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     background-color: #1E1E1E;
 }
 
-
-
-
-
-
 .chat_chatgpt_block {
     display: flex;
     gap: 0 24px;
     padding-top: 24px;
     padding-bottom: 37px;
-    width: 70%;
+    width: 91%;
     margin: 0 auto;
 }
 
@@ -3787,7 +3782,7 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     border-radius: 6px;
     background: #343541;
     box-shadow: 0px 20px 24px 0px rgba(0, 0, 0, 0.02);
-    margin: 24px;
+    margin: 0 auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
