@@ -104,7 +104,7 @@ const SideBarFolder = ({ folder, chat }) => {
     const chatsEdit = useRef();
     const chatSpan = useRef();
 
-    const [showFolder, setShowFolder] = useState(false)
+
 
 
     function handleClick() {
@@ -118,7 +118,6 @@ const SideBarFolder = ({ folder, chat }) => {
                 collapseChild.current.className = "collapse"
             }, [])
         }
-
     }
 
     function allowEdit() {

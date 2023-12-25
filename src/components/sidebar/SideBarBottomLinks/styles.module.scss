@@ -3,4 +3,11 @@
   align-items: center;
   gap: 19px;
   font-size: 18px;
+  padding: 10px;
+  transition: .3s;
+  &:hover {
+    background: #2A2B32;;
+    border-radius: 6px;
+    color: #FFF;
+  }
 }
