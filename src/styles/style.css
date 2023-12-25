@@ -2171,8 +2171,7 @@ section form button {
     color: #fff;
 }
 
-#sidebar-menu>ul>li>a.active,
-#sidebar-menu>ul>li>a:hover {
+#sidebar-menu>ul>li>a.active{
     border-color: #2A2B32;
     background: #2A2B32;
     position: relative;
