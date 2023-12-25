@@ -2231,7 +2231,6 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
 #side-menu {
     overflow: auto;
     min-height: 345px;
-    max-height: 345px;
 }
 
 #side-menu li {
@@ -3779,7 +3778,6 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     display: flex;
     flex-direction: column;
     gap: 8px 0;
-    position: fixed;
     bottom: 0;
     width: 280px;
 }
@@ -7738,16 +7736,18 @@ textarea {
     font-size: 14px;
 }
 
-#side-menu{
-    border-bottom: 1px solid #4d4d4f;
-  
- 
-}
-
 .side-links{
-    position: fixed;
-    bottom: 225px;
     width: 325px;
+    list-style: none;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    padding: 12px 20px;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
 }
 
 .mjNavItem {

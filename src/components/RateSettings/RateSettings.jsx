@@ -90,7 +90,7 @@ const RateSettings = ({auth}) => {
                                 <p>Уровень подписки:</p>
                                 <Link to="/settings" state={{
                                     plan: true,
-                                }} >
+                                }} > 
                                     {`Уровень подписки ${auth.tariff.name}`}
                                 </Link>
                                

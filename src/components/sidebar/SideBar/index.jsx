@@ -1,10 +1,11 @@
 import React from 'react';
-import CloseMenuMobImg from '../../images/close_menu_mob.png';
-import SideBarHeader from "./SideBarHeader";
-import SideBarBottomLinks from "./SideBarBottomLinks";
-import SideBarUser from "./SideBarUser";
-import SideBarFolderList from "./SideBarFolderList";
+import CloseMenuMobImg from '../../../images/close_menu_mob.png';
+import SideBarHeader from "../SideBarHeader";
+import SideBarBottomLinks from "../SideBarBottomLinks";
+import SideBarUser from "../SideBarUser";
+import SideBarFolderList from "../SideBarFolderList";
 import { useState } from 'react';
+import styles from './styles.module.scss'
 
 
 const SideBar = ({ folders, chats, auth }) => {
@@ -19,7 +20,7 @@ const SideBar = ({ folders, chats, auth }) => {
         setChatsArr([]);
      
         folders.filter(element => {
-            const name = element.name.toLowerCase();  
+            const name = element.name.toLowerCase();
             if(name.includes(searchChar.toLowerCase())){
                 setFoldersArr(current => [...current, element])
             } 
@@ -55,12 +56,17 @@ const SideBar = ({ folders, chats, auth }) => {
                         <div className="simplebar-offset" style={{ right: '0px', bottom: '0px' }}>
                             <div className="simplebar-content-wrapper" tabIndex="0" role="region" aria-label="scrollable content" style={{ height: '100%', overflow: 'hidden scroll' }}>
                                 <div className="simplebar-content" style={{ padding: '0' }}>
-                                    <div id="sidebar-menu">
-                                        <SideBarHeader inputValue={inputValue}/>
-                                        <SideBarFolderList folders={zeroFlag ? folders : foldersArr} chats={zeroFlag ? chats : chatsArr} />
-                                        <SideBarBottomLinks />
-                                        <SideBarUser auth={auth}/>
-                                    </div>
+                                            <div id="sidebar-menu">
+                                                    <SideBarHeader inputValue={inputValue} />
+                                                    <SideBarFolderList folders={zeroFlag ? folders : foldersArr}
+                                                                       chats={zeroFlag ? chats : chatsArr} />
+                                                    <div className={styles.sidebarBottom}>
+                                                        <SideBarBottomLinks />
+                                                        <SideBarUser auth={auth} />
+                                                    </div>
+
+                                            </div>
+
                                     <div className="clearfix"></div>
                                 </div>
                             </div>
@@ -69,7 +75,7 @@ const SideBar = ({ folders, chats, auth }) => {
                     <div className="simplebar-placeholder" style={{ width: 'auto', height: '983px' }}></div>
                 </div>
                 <div className="simplebar-track simplebar-horizontal" style={{ visibility: 'hidden' }}>
-                    <div className="simplebar-scrollbar" style={{ width: '0px', display: 'none' }}></div>
+                <div className="simplebar-scrollbar" style={{ width: '0px', display: 'none' }}></div>
                 </div>
                 <div className="simplebar-track simplebar-vertical" style={{ visibility: 'visible' }}>
                     <div className="simplebar-scrollbar" style={{ height: '603px', display: 'block', transform: 'translate3d(0px, 0px, 0px)' }}></div>

@@ -1747,29 +1747,13 @@ body {
     width: 100%;
 }
 
+#sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#sidebar-menu > ul {
+#sidebar-menu >  ul {
     list-style: none;
     padding: 0;
 }
@@ -1784,8 +1768,8 @@ body {
     font-family: "Manrope", sans-serif;
     font-size: 14px;
 }
-#sidebar-menu > ul > li > a:active,
-#sidebar-menu > ul > li > a:focus,
+#sidebar-menu >  ul > li > a:active,
+#sidebar-menu >  ul > li > a:focus,
 #sidebar-menu > ul > li > a:hover {
     /* color: var(--ct-menu-item-hover); */
     color: #fff;
