@@ -524,6 +524,8 @@ html {
 
 .rate {
     padding: 48px 0;
+    width: 90%;
+    margin: 0 auto;
     /* padding-bottom: 0; */
 }
 
@@ -608,7 +610,7 @@ html {
     flex-direction: column;
     align-items: center;
     gap: 8px 0;
-    margin-bottom: 48px;
+    margin-bottom: 36px;
 }
 
 .rate .rate_block .rate_item .rate_item_title span {
@@ -622,8 +624,20 @@ html {
 .rate .rate_block .rate_item .rate_advan {
     display: flex;
     flex-direction: column;
-    gap: 24px 0;
+    gap: 20px 0;
     margin-bottom: 36px;
+}
+
+.content_rate {
+    height: fit-content !important;
+}
+
+.rate_advan {
+    margin-bottom: 26px;
+}
+
+.content-page_rate {
+    height: fit-content !important;
 }
 
 .rate .rate_block .rate_item .rate_advan li {

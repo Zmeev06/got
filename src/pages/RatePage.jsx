@@ -20,8 +20,8 @@ const RatePage = ({ auth }) => {
     return (<>
         {location?.state?.plan ?
 
-            <div className="content-page ">
-                <div className="content">
+            <div className="content-page content-page_rate">
+                <div className="content content_rate">
                     <div className="public_tab rate_tab container-back">
                         <ul>
                             <TabButton id={1} isActive={activeTab === 1} setActiveTab={setActiveTab} DataFeather={Settings} >Настройки</TabButton>
