@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PaletteIcImg from "../../images/palette_ic.svg";
-import BorderColorIcImg from "../../images/border_color_ic.svg";
-import DeleteIcImg from "../../images/delete_ic.svg";
-import FolderArrowIcon from "../UI/icons/FolderArrowIcon";
-import FolderIcon from "../UI/icons/FolderIcon";
-import SideBarSessionList from "./SideBarSessionList";
-import ModalDelete from '../ModelDelete/ModalDelete';
-import { Link } from 'react-router-dom';
+import PaletteIcImg from "../../../images/palette_ic.svg";
+import BorderColorIcImg from "../../../images/border_color_ic.svg";
+import DeleteIcImg from "../../../images/delete_ic.svg";
+import FolderArrowIcon from "../../UI/icons/FolderArrowIcon";
+import FolderIcon from "../../UI/icons/FolderIcon";
+import SideBarSessionList from "../SideBarSessionList";
+import ModalDelete from '../../ModelDelete/ModalDelete';
+import { Link, useParams } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {setNewChat} from "../../redux/slices/chatSlice";
+import {setNewChat} from "../../../redux/slices/chatSlice";
+import styles from './style.module.scss'
 
 
 const SideBarFolder = ({ folder, chat }) => {
@@ -16,7 +17,7 @@ const SideBarFolder = ({ folder, chat }) => {
 
     const [deleteFolder, setDeleteFolder] = useState();
     const [deleteFolder2, setDeleteFolder2] = useState();
-
+    const chatId = useParams()
     
     function getCookie(name) {
         const value = `; ${document.cookie}`;
@@ -226,7 +227,7 @@ const SideBarFolder = ({ folder, chat }) => {
         /*/убрать авторизацию нужно бэку/*/
     }
 
-
+console.log(chat ? chatId.chatId === chat.pk : 'gg')
     const dispatch = useDispatch()
     return (
 
@@ -237,9 +238,7 @@ const SideBarFolder = ({ folder, chat }) => {
             {folder ?
 
                 <li>
-
-                    <a className="active" ref={collapseParent}>
-
+                    <a  ref={collapseParent}>
                         <FolderIcon />
                         <span className="input_sp">
                             <input type="text" name="main_input" id="main_input" className="main_input" value={inputVal} disabled ref={inputEdit} onChange={(e) => setInputVal(e.target.value)} />
@@ -272,7 +271,7 @@ const SideBarFolder = ({ folder, chat }) => {
                 </li> :
 
                 <li onClick={() => dispatch(setNewChat(chat.pk))} className='chats__items'>
-                    <Link to={`/chat/${chat?.pk}`}>
+                    <Link to={`/chat/${chat?.pk}`} className={chat ? chatId.chatId === chat.pk ? styles.activeLink : '' : ''}>
 
                         <FolderIcon />
                         <input type="text" className='main_input chats display-none' value={chatVal} disabled ref={chatsEdit} onChange={(e) => setChatVal(e.target.value)} />
