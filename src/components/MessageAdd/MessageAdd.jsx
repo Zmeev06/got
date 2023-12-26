@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { setErrorStatus } from '../../redux/slices/errorSlice';
 import styles from './styles.module.scss'
+import { increment } from '../../redux/slices/counterSlice';
 
 const MessageAdd = ({
   MidjCallBack,
@@ -174,12 +175,14 @@ const MessageAdd = ({
 
       const objects = jsonStrings.map(JSON.parse);
       objects.forEach((el) => {
-        if (el.content != null) {
+        if (el.content !== null) {
           iMessages.at(-1).messageText += el.content;
         }
       });
+      
       setMessages([...iMessages]);
     }
+    dispatch(increment())
     const text1 = new TextDecoder('utf-8').decode(new Uint8Array(chunks.flat()));
   }
 
@@ -206,6 +209,7 @@ const MessageAdd = ({
     let id;
     setMessageType('image')
     setMessages([text])
+
     fetch('https://ziongpt.ai/api/v1/run-generation/', {
       method: 'POST',
       headers: {
@@ -225,13 +229,12 @@ const MessageAdd = ({
 
       .then((data) => {
         id = data.task_id;
-        
+        dispatch(increment())
       });
 
     let MjInterval = setInterval(() => {
       fetch('https://ziongpt.ai/api/v1/check-status/', {
         method: 'POST',
-
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Token ' + getCookie('token')

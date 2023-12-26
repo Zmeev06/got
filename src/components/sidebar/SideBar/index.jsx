@@ -36,7 +36,7 @@ const SideBar = ({ folders, chats, auth }) => {
       
     
     const inputValue = (e) => {
-        if(e.length == 0) setZeroFlag(true);
+        if(e.length === 0) setZeroFlag(true);
         else{
             setZeroFlag(false)
             filterData(e)

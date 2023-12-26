@@ -105,6 +105,9 @@ const SideBarFolder = ({ folder, chat }) => {
     const chatSpan = useRef();
 
 
+    useEffect(() => {
+        setChatVal(chat?.name)
+    }, [chat])
 
 
     function handleClick() {
@@ -225,7 +228,7 @@ const SideBarFolder = ({ folder, chat }) => {
         /*/убрать авторизацию нужно бэку/*/
     }
 
-console.log(folder)
+
     const dispatch = useDispatch()
     return (
 
