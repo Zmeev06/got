@@ -65,6 +65,8 @@ const MidjourneyPage = ({ folders, chats }) => {
           setIsEmpty(false);
           setFirstMessage(res.data.messages[0].prompt);
           setChatType(res.data.messages[0].ai_model);
+        } else if (res.data.messages.length !== 0 && res.data.type === 'text') {
+          setMessageType('text')
         } else {
           setIsEmpty(true);
         }
