@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import DefaultAvatarImg from '../../images/default_avatar.png';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const SideBarUser = ({ auth }) => {
   const [imgUser, setImgUser] = useState(DefaultAvatarImg);
-
+  const user = useSelector(state => state.user)
   function changeUrl() {
     setImgUser(`https://ziongpt.ai${auth.avatar}`);
   }
@@ -27,12 +28,11 @@ useEffect(()=>{
     }
   },[])
 
- console.log(auth)
 
   return (
     <div className="user_block">
       <div className="user-box text-center">
-        <img src={imgUser} alt="user-img" title="Mat Helme" className="rounded-circle avatar-md" />
+        <img src={`https://ziongpt.ai${user.avatar}`} alt="user-img" title="Mat Helme" className="rounded-circle avatar-md" />
         <div className="user_content">
           <div className="user_name">
             <Link to={'/settings'} className="text-white">

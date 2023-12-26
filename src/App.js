@@ -17,10 +17,12 @@ import { Sidebar } from 'react-feather';
 import { Toaster } from 'react-hot-toast';
 import { NewChatPage } from './pages/NewChatPage';
 import { Layout } from './components/Layout/Layout';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTg, setUserAvatar } from './redux/slices/userSlice';
 
 function App() {
     const counter = useSelector((state) => state.counter)
+    const dispatch = useDispatch()
     const [folders, setFolders] = useState([
         {
             pk: 1,
@@ -208,7 +210,8 @@ function App() {
             .then((response) => response.json())
             .then((data) => {
                 setAuth(data);
-                
+                dispatch(setUserAvatar(data.avatar))
+                dispatch(setTg(data.telegram_associated))
             });
         }, []);
 

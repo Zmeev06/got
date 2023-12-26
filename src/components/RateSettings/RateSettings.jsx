@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import Google from "../../images/icons/google.png"
-import Vk from "../../images/icons/vk.png"
 import Tg from "../../images/icons/tg.png"
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import styles from './styles.module.scss'
 
 const RateSettings = ({auth}) => {
-
-   
-
+    const user = useSelector(state => state.user)
     const [oldPassword, setOldPassword] = useState('');
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
+    const [tgAuthRes, setTgAuthRes] = useState()
     const [oldPassVisible, setOldPassVisible] = useState(false);
     const [passVisible, setPassVisible] = useState(false);
     const [newPassVisible, setNewPassVisible] = useState(false);
@@ -41,13 +41,23 @@ const RateSettings = ({auth}) => {
                     .then(data => {
                         if(data.error == "Incorrect password") alert('Старый пароль - неверный');
                         else alert('Пароль успешно изменен')
-                    
                     })
-        
-
-        
         }
     }
+
+    const tgAuth = (e) => {
+        axios
+          .post(`/login`, {
+            hash: e.hash,
+          })
+          .then(function (response) {
+            //@ts-ignore
+            return setTgAuthRes(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      };
 
     return (
         <div>
@@ -76,16 +86,27 @@ const RateSettings = ({auth}) => {
                                 Ваша эл. почта:
                                 <input type="email" name="email" id="email" value={auth.email} placeholder={auth.email} readOnly />
                             </label>
-                            <div className="api_settings_networks">
+                            {user.tg ? <div className="api_settings_networks">
                                 Подключённые соц сети:
                                 <ul>
                                     <li>
-                                        <Link to={``}>
-                                            <img src={Tg} alt="" />
-                                        </Link>
+                                        <img src={Tg} alt="" />
                                     </li>
                                 </ul>
-                            </div>
+                            </div> : <div className="api_settings_networks">
+                                Подключённые соц сети:
+                                <ul>
+                                <li className={styles.tgBlock} onClick={() =>
+                    // @ts-ignore
+                    window.Telegram.Login.auth({ bot_id: 6743055068 }, tgAuth)
+                  }>
+                                            <p>Подключить Telegram</p>
+                                            <img src={Tg} alt="" />
+                                    </li>
+                                    
+                                </ul>
+                            </div>}
+                            
                             <div className="subscription_level">
                                 <p>Уровень подписки:</p>
                                 <Link to="/settings" state={{
