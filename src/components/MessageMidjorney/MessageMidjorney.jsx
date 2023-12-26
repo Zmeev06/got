@@ -92,7 +92,7 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type, index }) => {
 
   return (
     <div className={styles.root} style={{
-      background: index % 2 !== 0 ? '#F7F7F8' : 'transparrent'
+      background: index % 2 === 0 ? '#F7F7F8' : 'transparrent'
     }}>
     <div className={styles.main} >
       <div Name="chat_code_chatgpt">

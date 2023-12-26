@@ -94,7 +94,6 @@ const RateSettings = ({auth}) => {
                                     </li>
                                 </ul>
                             </div> : <div className="api_settings_networks">
-                                Подключённые соц сети:
                                 <ul>
                                 <li className={styles.tgBlock} onClick={() =>
                     // @ts-ignore

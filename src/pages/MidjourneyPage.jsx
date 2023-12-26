@@ -33,6 +33,7 @@ const MidjourneyPage = ({ folders, chats }) => {
   const [chatType, setChatType] = useState();
   const dispatch = useDispatch();
   const fetchStatus = useSelector(state => state.error)
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
     lastMessageScroll('smooth');
@@ -173,6 +174,7 @@ const MidjourneyPage = ({ folders, chats }) => {
 
           <div className="container-back-mid">
             {firstMessage && (chatType === 'mj' || myMessages.type === 'image') && (
+
               <MessageMy
                 setMessages={setFirstMessage}
                 chatId={chatId}
@@ -180,7 +182,8 @@ const MidjourneyPage = ({ folders, chats }) => {
                 index={0}
                 messages={[]}
                 messageText={firstMessage}
-                avatar={gptUser}
+                mine
+                avatar={`https://ziongpt.ai${user.avatar}`}
               />
             )}
 
@@ -212,7 +215,7 @@ const MidjourneyPage = ({ folders, chats }) => {
                 newChatName={newChatName}
                 index={0}
                 messages={[]}
-                messageText={'Генерация...'}
+                messageText={'Генерация'}
                 avatar={gptBot}
               />
             ) : status.value === 'error' ? (

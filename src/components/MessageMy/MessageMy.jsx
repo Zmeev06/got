@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import GptUser from '../../images/chat/mi_ic.png';
-import ChatEdit from '../../images/chat/chatEdit.svg';
 import styles from './style.module.scss'
+import PulseLoader from "react-spinners/PulseLoader";
 
 const MessageMy = ({
   setMessages,
@@ -171,7 +171,7 @@ const MessageMy = ({
         <div className="container-chat chat_con">
           <div className={mine ? 'chat_chatgpt_block' : 'chat_chatgpt_block'}>
             <a >
-              <img src={avatar} alt="" />
+              <img src={avatar} alt="" className={styles.avatar} />
             </a>
             {mine ? (
               <form className={`user_ques_form ${buttonsVisible ? 'active' : ''}`}>
@@ -198,7 +198,13 @@ const MessageMy = ({
                 </div>
               </form>
             ) : (
-              <div className="chat_text ">{messageText}</div>
+              <div className="chat_text">
+                <p>
+                {messageText}
+                </p>
+               {messageText === 'Генерация' && <PulseLoader size={5}/>}
+                
+                </div>
             )}
           </div>
         </div>

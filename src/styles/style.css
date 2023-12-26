@@ -2370,8 +2370,6 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     gap: 0 24px;
     padding-top: 24px;
     padding-bottom: 37px;
-    width: 91%;
-    margin: 0 auto;
 }
 
 .chat_chatgpt_block textarea {
@@ -2385,6 +2383,12 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     background-color: transparent;
     border: none;
     display: block;
+}
+
+.chat_text {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
 }
 
 .chat_chatgpt_block .chat_text {
@@ -7709,7 +7713,9 @@ textarea {
 }
 
 .chat_chatgpt_block {
-    padding: 30px 20px;
+    padding: 30px 0;
+    max-width: 970px;
+    margin: 0 auto;
     align-items: center;
 }
 
@@ -7787,4 +7793,9 @@ textarea {
 .newChatButton:hover {
     color: #0a7941;
     background-color: #FFFFFF;
+}
+
+.message_block {
+    max-width: 970px;
+    margin: 0 auto;
 }
