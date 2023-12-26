@@ -3,6 +3,7 @@ import * as React from 'react';
 import { setNewChat } from '../redux/slices/chatSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import MidjourneyTabs from '../components/MidjourneyTabs/MidjourneyTabs';
 
 export const NewChatPage = () => {
   const dispatch = useDispatch()
@@ -35,7 +36,7 @@ export const NewChatPage = () => {
   return (
     <div className="mainNewChatPage">
       <div className="newChatButton" onClick={() => createChat()}>
-        <p>Создать новый чат</p>
+        <MidjourneyTabs />
       </div>
     </div>
   );

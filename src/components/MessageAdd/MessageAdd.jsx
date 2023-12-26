@@ -6,7 +6,6 @@ import PublicModal from '../PublicModal/PublicModal';
 import { useClickAway } from 'react-use';
 import { setNewStatus } from '../../redux/slices/statusMidSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../Loader/Loader';
 import toast from 'react-hot-toast';
 import { setErrorStatus } from '../../redux/slices/errorSlice';
 import styles from './styles.module.scss'
@@ -19,7 +18,8 @@ const MessageAdd = ({
   newChatName,
   activeItems,
   changeActiveItems,
-  isEmpty
+  isEmpty,
+  setMessageType
 }) => {
   function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -198,9 +198,14 @@ const MessageAdd = ({
     }
   }
 
+  useEffect(() => {
+    console.log(messages);
+  }, [messages])
+
   function midjourneyTest() {
     let id;
-
+  setMessageType('image')
+    setMessages([text])
     fetch('https://ziongpt.ai/api/v1/run-generation/', {
       method: 'POST',
       headers: {
@@ -220,7 +225,7 @@ const MessageAdd = ({
 
       .then((data) => {
         id = data.task_id;
-
+        
       });
 
     let MjInterval = setInterval(() => {

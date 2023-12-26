@@ -7768,7 +7768,6 @@ textarea {
 .mainNewChatPage {
     width: 100%;
     height: 100%;
-    margin-left: 500px;
     display: flex;
     align-items: center;
     justify-content: center;

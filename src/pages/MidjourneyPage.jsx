@@ -223,14 +223,15 @@ const MidjourneyPage = ({ folders, chats }) => {
             ) : null}
           </div>
 
-          <ChatBlock
+          {messageType === 'text' && <ChatBlock
             type={messageType}
             setMessages={setMessages}
             chatId={chatId}
             newChatName={newChatName}
             messages={messages}
             scrollBottom={scrollBottom}
-          />
+          />}
+          
           <MessageAdd
             isEmpty={isEmpty}
             MidjCallBack={MidjCallBack}
@@ -240,6 +241,7 @@ const MidjourneyPage = ({ folders, chats }) => {
             messages={messages}
             newChatName={newChatName}
             changeActiveItems={changeActiveItems}
+            setMessageType={setMessageType}
           />
         </div>
 
