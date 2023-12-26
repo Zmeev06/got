@@ -204,7 +204,7 @@ const MessageAdd = ({
 
   function midjourneyTest() {
     let id;
-  setMessageType('image')
+    setMessageType('image')
     setMessages([text])
     fetch('https://ziongpt.ai/api/v1/run-generation/', {
       method: 'POST',

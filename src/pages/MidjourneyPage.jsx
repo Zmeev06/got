@@ -24,7 +24,7 @@ const MidjourneyPage = ({ folders, chats }) => {
   const [midjData, setMidjData] = useState(null);
   const [messagesWidth, setMessagesWidth] = useState(messages.length);
   const [myMessages, setMyMessages] = useState({ type: 'text', messages: [] });
-  const [messageType, setMessageType] = useState('text');
+  const [messageType, setMessageType] = useState('');
   const [isEmpty, setIsEmpty] = useState(true);
   const status = useSelector((state) => state.status);
   const [stop, setStop] = useState(false);
@@ -66,7 +66,6 @@ const MidjourneyPage = ({ folders, chats }) => {
           setFirstMessage(res.data.messages[0].prompt);
           setChatType(res.data.messages[0].ai_model);
         } else {
-          setMessageType('text');
           setIsEmpty(true);
         }
       });
@@ -148,6 +147,10 @@ const MidjourneyPage = ({ folders, chats }) => {
     }
   }
 
+
+  useEffect(() => {
+    console.log(messageType);
+  }, [messageType])
   return (
     <div>
       <div className="content-page">
@@ -223,14 +226,14 @@ const MidjourneyPage = ({ folders, chats }) => {
             ) : null}
           </div>
 
-          {messageType === 'text' && <ChatBlock
+          {messageType === 'text' ? <ChatBlock
             type={messageType}
             setMessages={setMessages}
             chatId={chatId}
             newChatName={newChatName}
             messages={messages}
             scrollBottom={scrollBottom}
-          />}
+          /> : null}
           
           <MessageAdd
             isEmpty={isEmpty}
