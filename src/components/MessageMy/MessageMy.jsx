@@ -203,7 +203,6 @@ const MessageMy = ({
                 {messageText}
                 </p>
                {messageText === 'Генерация' && <PulseLoader size={5}/>}
-                
                 </div>
             )}
           </div>

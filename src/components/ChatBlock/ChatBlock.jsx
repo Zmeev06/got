@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
-import GptUser from '../../images/chat/mi_ic.png';
-import MessageGpt from '../MessageGpt/MessageGpt'
 import MessageMy from '../MessageMy/MessageMy'
-import MessageAdd from '../MessageAdd/MessageAdd'
-import GptAva from '../../images/chat/chatgpt_ic.png'
 import PublicModal from '../PublicModal/PublicModal'
 import styles from './style.module.scss'
-
 
 const ChatBlock = ({ setMessages, chatId, newChatName, messages, scrollBottom, type }) => {
 

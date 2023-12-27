@@ -20,7 +20,8 @@ const MessageAdd = ({
   activeItems,
   changeActiveItems,
   isEmpty,
-  setMessageType
+  setMessageType,
+  setIsEmptyMes
 }) => {
   function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -35,11 +36,11 @@ const MessageAdd = ({
   const ref = useRef(null);
   const dispatch = useDispatch();
   const status = useSelector((state) => state.status);
+
+
   useClickAway(settingsModal, () => {
     setSetting(false);
   });
-
-
 
   const setModalClick = () => {
     setModal(!modal);
@@ -207,9 +208,8 @@ const MessageAdd = ({
 
   function midjourneyTest() {
     let id;
+    setIsEmptyMes(false)
     setMessageType('image')
-    setMessages([text])
-
     fetch('https://ziongpt.ai/api/v1/run-generation/', {
       method: 'POST',
       headers: {

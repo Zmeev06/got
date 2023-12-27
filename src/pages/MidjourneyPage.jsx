@@ -10,7 +10,6 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MessageMy from '../components/MessageMy/MessageMy';
-import gptUser from '../images/chat/mi_ic.png';
 import gptBot from '../images/chat/chatgpt_ic.png';
 import { setNewStatus } from '../redux/slices/statusMidSlice';
 import TokenModal from '../components/tokenModal/TokenModal';
@@ -27,17 +26,17 @@ const MidjourneyPage = ({ folders, chats }) => {
   const [messageType, setMessageType] = useState('');
   const [isEmpty, setIsEmpty] = useState(true);
   const status = useSelector((state) => state.status);
-  const [stop, setStop] = useState(false);
   const [firstMessage, setFirstMessage] = useState('');
   const [statusMessage, setStatusMessage] = useState('В очереди');
   const [chatType, setChatType] = useState();
   const dispatch = useDispatch();
   const fetchStatus = useSelector(state => state.error)
   const user = useSelector(state => state.user)
+  const [isEmptyMes, setIsEmptyMes] = useState(true)
 
   useEffect(() => {
     lastMessageScroll('smooth');
-    if (messages.length != messagesWidth) lastMessageScroll('smooth');
+    if (messages.length !== messagesWidth) lastMessageScroll('smooth');
   }, []);
 
   function MidjCallBack(data) {
@@ -89,7 +88,6 @@ const MidjourneyPage = ({ folders, chats }) => {
     if (status.value === 'banned') {
       setStatusMessage('Ошибка');
     } else if (status.value === 'error') {
-      console.log('test err');
       setStatusMessage('Ошибка');
     } else if (status.value === 'ready') {
       setStatusMessage('');
@@ -98,7 +96,6 @@ const MidjourneyPage = ({ folders, chats }) => {
     } else {
       setStatusMessage('В очереди');
     }
-    console.log(statusMessage);
   }, [chatId, status.value]);
 
   function lastMessageScroll(b) {
@@ -149,11 +146,7 @@ const MidjourneyPage = ({ folders, chats }) => {
         });
     }
   }
-
-
-  useEffect(() => {
-    console.log(messageType);
-  }, [messageType])
+console.log('sdc', chatType);
   return (
     <div>
       <div className="content-page">
@@ -167,7 +160,6 @@ const MidjourneyPage = ({ folders, chats }) => {
               <NavigationsMidj activeItems={activeItems} setActiveItems={setActiveItems} />
             )}
           </div>
-
           {activeItems[0] || activeItems[1] || activeItems[2] ? (
             <div className="container-back-mid">{!messages.length && <Gpt />}</div>
           ) : null}
@@ -198,7 +190,7 @@ const MidjourneyPage = ({ folders, chats }) => {
               />
             ))}
             {fetchStatus.value === 426 ? <TokenModal /> : null}
-            {status.value === 'in_queue' ? (
+            {messageType !== 'text' && (status.value === 'in_queue' ? (
               <MessageMy
                 setMessages={setStatusMessage}
                 chatId={chatId}
@@ -228,7 +220,7 @@ const MidjourneyPage = ({ folders, chats }) => {
                 messageText={'Ошибка'}
                 avatar={gptBot}
               />
-            ) : null}
+            ) : null)}
           </div>
 
           {messageType === 'text' ? <ChatBlock
@@ -250,6 +242,7 @@ const MidjourneyPage = ({ folders, chats }) => {
             newChatName={newChatName}
             changeActiveItems={changeActiveItems}
             setMessageType={setMessageType}
+            setIsEmptyMes={setIsEmptyMes}
           />
         </div>
 
