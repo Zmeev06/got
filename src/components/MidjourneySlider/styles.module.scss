@@ -1,0 +1,35 @@
+.main {
+  display: flex; 
+  gap: 72px;
+  justify-content: center;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section {
+  padding: 7px 20px;
+  width: 200px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: .3s;
+  font-size: 18px;
+  color: #222628;
+}
+
+.activeSection {
+  background-color: #10A37F1A;
+  color: #10A37F;
+}
+
+.images {
+  overflow: auto;
+  height: 80vh;
+  display: flex;
+  flex-wrap: wrap;
+  width: 58%;
+  gap: 26px;
+}

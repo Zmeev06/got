@@ -13,6 +13,7 @@ import MessageMy from '../components/MessageMy/MessageMy';
 import gptBot from '../images/chat/chatgpt_ic.png';
 import { setNewStatus } from '../redux/slices/statusMidSlice';
 import TokenModal from '../components/tokenModal/TokenModal';
+import { MidjourneySlider } from '../components/MidjourneySlider';
 
 
 const MidjourneyPage = ({ folders, chats }) => {
@@ -33,6 +34,7 @@ const MidjourneyPage = ({ folders, chats }) => {
   const fetchStatus = useSelector(state => state.error)
   const user = useSelector(state => state.user)
   const [isEmptyMes, setIsEmptyMes] = useState(true)
+  const [text, setText] = useState('');
 
   useEffect(() => {
     lastMessageScroll('smooth');
@@ -154,11 +156,14 @@ console.log('sdc', chatType);
           <div className="container-back-mid">
             {messages.length ? <ChatBlockHead type={messageType} /> : null}
           </div>
-
+          
           <div className="container-back-mid">
             {!messages.length && (
               <NavigationsMidj activeItems={activeItems} setActiveItems={setActiveItems} />
             )}
+          </div>
+          <div className="container-back-mid">
+            {!messages.length && <MidjourneySlider text={text} setText={setText}/>}
           </div>
           {activeItems[0] || activeItems[1] || activeItems[2] ? (
             <div className="container-back-mid">{!messages.length && <Gpt />}</div>
@@ -243,6 +248,8 @@ console.log('sdc', chatType);
             changeActiveItems={changeActiveItems}
             setMessageType={setMessageType}
             setIsEmptyMes={setIsEmptyMes}
+            text={text}
+            setText={setText}
           />
         </div>
 
