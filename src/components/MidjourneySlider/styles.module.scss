@@ -2,6 +2,7 @@
   display: flex; 
   gap: 72px;
   justify-content: center;
+  
 }
 
 .sections {
@@ -27,7 +28,7 @@
 
 .images {
   overflow: auto;
-  height: 80vh;
+  height: 50vh;
   display: flex;
   flex-wrap: wrap;
   width: 58%;

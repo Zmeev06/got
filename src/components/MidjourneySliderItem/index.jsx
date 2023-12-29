@@ -21,6 +21,14 @@ export const MidjourneySliderItem = ({ img, name, text, value, setText }) => {
       handleRemoveWord(value)
     }
   }, [isChecked])
+
+  useEffect(() => {
+    if(text.includes(value)) {
+      setIsChecked(true)
+    } else {
+      setIsChecked(false)
+    }
+  }, [text])
   return (
     <div>
       <div className={styles.checkBox}>

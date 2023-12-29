@@ -19,7 +19,7 @@ import { MidjourneySlider } from '../components/MidjourneySlider';
 const MidjourneyPage = ({ folders, chats }) => {
   const { chatId } = useParams();
   const scrollBottom = useRef();
-  const [activeItems, setActiveItems] = useState([true, false, false, false, false, false, false]);
+  const [activeTab, setActiveTab] = useState('gpt');
   const [messages, setMessages] = useState([]);
   const [midjData, setMidjData] = useState(null);
   const [messagesWidth, setMessagesWidth] = useState(messages.length);
@@ -109,22 +109,17 @@ const MidjourneyPage = ({ folders, chats }) => {
     });
   }
 
-  function changeActiveItems(arr){
-    
-    setActiveItems(arr)
-  }
-
   function newChatName(e, models) {
     let model;
-    if (models[0] == true) model = 'gpt-3.5-turbo';
-    else if (models[1] == true) model = 'gpt-4';
-    else if (models[2] == true) model = 'gpt-4-1106-preview';
-    else if (models[3] == true) model = 'mj';
-    else if (models[4] == true) model = 'dall-e-2';
-    else if (models[5] == true) model = 'dall-e-3';
-    else if (models[6] == true) model = 'sd';
+    if (models[0] === true) model = 'gpt-3.5-turbo';
+    else if (models[1] === true) model = 'gpt-4';
+    else if (models[2] === true) model = 'gpt-4-1106-preview';
+    else if (models[3] === true) model = 'mj';
+    else if (models[4] === true) model = 'dall-e-2';
+    else if (models[5] === true) model = 'dall-e-3';
+    else if (models[6] === true) model = 'sd';
     setFirstMessage(e);
-    if (messages.length == 0) {
+    if (messages.length === 0) {
       fetch(
         `https://ziongpt.ai/api/v1/chatsession/${
           window.location.href.split('/')[window.location.href.split('/').length - 1]
@@ -159,15 +154,15 @@ console.log('sdc', chatType);
           
           <div className="container-back-mid">
             {!messages.length && (
-              <NavigationsMidj activeItems={activeItems} setActiveItems={setActiveItems} />
+              <NavigationsMidj activeTab={activeTab} setActiveTab={setActiveTab}/>
             )}
           </div>
-          <div className="container-back-mid">
-            {!messages.length && <MidjourneySlider text={text} setText={setText}/>}
-          </div>
-          {activeItems[0] || activeItems[1] || activeItems[2] ? (
+          {
+            activeTab === 'mj' && <div className="container-back-mid">{!messages.length && <MidjourneySlider text={text} setText={setText}/>}</div>
+          }
+          {activeTab === 'gpt' && (
             <div className="container-back-mid">{!messages.length && <Gpt />}</div>
-          ) : null}
+          )}
 
           <div className="container-back-mid">
             {firstMessage && (chatType === 'mj' || myMessages.type === 'image') && (
@@ -240,12 +235,12 @@ console.log('sdc', chatType);
           <MessageAdd
             isEmpty={isEmpty}
             MidjCallBack={MidjCallBack}
-            activeItems={activeItems}
+            activeItems={activeTab}
             chatId={chatId}
             setMessages={setMessages}
             messages={messages}
             newChatName={newChatName}
-            changeActiveItems={changeActiveItems}
+            changeActiveItems={setActiveTab}
             setMessageType={setMessageType}
             setIsEmptyMes={setIsEmptyMes}
             text={text}

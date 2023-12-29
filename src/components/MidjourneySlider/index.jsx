@@ -64,7 +64,6 @@ export const MidjourneySlider = ({text, setText}) => {
   }, []);
 
   const [currentSection, setCurrentSection] = useState('styles');
-  console.log(imageLists);
   return (
     <div className={styles.main}>
       <div className={styles.sections}>
