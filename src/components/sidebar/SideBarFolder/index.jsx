@@ -20,6 +20,8 @@ const SideBarFolder = ({ folder, chat }) => {
   const [deleteChatQuery] = chatApi.useDeleteChatMutation();
   const dispatch = useDispatch();
   const [createChatQuery] = chatApi.useCreateChatMutation();
+  const [editFolderQuery] = chatApi.useEditFolderMutation();
+  const [editChatQuery] = chatApi.useEditChatMutation();
 
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
@@ -125,19 +127,7 @@ const SideBarFolder = ({ folder, chat }) => {
       inputEdit.current.blur();
       collapseIcon.current.className = 'actions_sp three display-none';
       mainIcons.current.className = 'actions_sp main';
-
-      fetch(`https://ziongpt.ai/api/v1/folder/${folder.pk}/`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Token ' + getCookie('token')
-        },
-        body: JSON.stringify({
-          name: inputEdit.current.value
-        })
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+      editFolderQuery({ folder: folder.pk, name: inputEdit.current.value });
     } else {
       inputEdit.current.disabled = true;
       inputEdit.current.blur();
@@ -153,19 +143,7 @@ const SideBarFolder = ({ folder, chat }) => {
       chatsEdit.current.blur();
       collapseIcon.current.className = 'actions_sp three display-none';
       mainIcons.current.className = 'actions_sp main';
-
-      fetch(`https://ziongpt.ai/api/v1/chatsession/${chat.pk}/`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Token ' + getCookie('token')
-        },
-        body: JSON.stringify({
-          name: chatsEdit.current.value
-        })
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+      editChatQuery({ chat: chat.pk, name: chatsEdit.current.value });
 
       setChatVal(chatsEdit.current.value);
     } else {
