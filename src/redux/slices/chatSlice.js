@@ -14,7 +14,7 @@ export const chatSlice = createSlice({
             state.value = action.payload
         },
         setChats: (state, action) => {
-            if(action.payload) {
+            if(action.payload !== undefined) {
                 state.chats = action.payload
                 console.log(state.chats);
             }

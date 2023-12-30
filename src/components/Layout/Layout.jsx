@@ -13,6 +13,8 @@ export const Layout = ({ auth, getCookie }) => {
   const { data: chats, isSuccess } = chatApi.useGetChatsQuery();
   const dispatch = useDispatch();
   const globalChats = useSelector((state) => state.chat);
+  const [myChats, setMyChats] = useState()
+  const [myFolders, setMyFolders] = useState()
 
   React.useEffect(() => {
     if (isSuccess) {
@@ -25,7 +27,9 @@ export const Layout = ({ auth, getCookie }) => {
   };
 
   React.useEffect(() => {
-    console.log(globalChats.chats);
+    setMyChats(globalChats.chats.sessions)
+    setMyFolders(globalChats.chats.folders)
+    console.log('teststssts');
   }, [globalChats.chats])
   return (
     <div className={styles.main}>
@@ -35,8 +39,8 @@ export const Layout = ({ auth, getCookie }) => {
         }`}>
         {(auth && isSuccess && globalChats.chats.folders) ? (
           <SideBar
-            folders={globalChats.chats.folders}
-            chats={globalChats.chats.sessions}
+            folders={myFolders}
+            chats={myChats}
             auth={auth}
             getCookie={getCookie}
           />

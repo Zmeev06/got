@@ -15,7 +15,7 @@ const SideBarFolder = ({ folder, chat }) => {
   const [deleteFolder, setDeleteFolder] = useState();
   const [deleteFolder2, setDeleteFolder2] = useState();
   const chatId = useParams();
-  const [getChats, { data: chats, isLoading }] = chatApi.useLazyGetChatsQuery();
+  const [getChats, { data: chats, isSuccess: isSuccessGetChats }] = chatApi.useLazyGetChatsQuery();
   const [deleteFolderQuery, { isSuccess: isSuccessDeleteFolder }] =
     chatApi.useDeleteFolderMutation();
   const dispatch = useDispatch();
@@ -26,25 +26,47 @@ const SideBarFolder = ({ folder, chat }) => {
     if (parts.length === 2) return parts.pop().split(';').shift();
   };
 
-  const onClickFunc = (value) => {
+  //   const onClickFunc = (value) => {
+  //     const folderPk = folder.pk;
+  //     if (value) {
+  //       deleteFolderQuery({ folder: folderPk }).catch((error) => console.error(error));
+  //     } else {
+  //       setDeleteFolder(value);
+  //     }
+  //   };
+
+  //   useEffect(() => {
+  //     if (isSuccessDeleteFolder) {
+  //       getChats()
+  //     }
+  //     if (isSuccessDeleteFolder) {
+  //       setDeleteFolder(false);
+  //       console.log(chats);
+  //       dispatch(setChats(chats));
+  //     }
+  //   }, [isSuccessDeleteFolder, isSuccessGetChats]);
+  const onClickFunc = async (value) => {
     const folderPk = folder.pk;
     if (value) {
-      deleteFolderQuery({ folder: folderPk }).catch((error) => console.error(error));
+      try {
+        // Выполняем DELETE-запрос
+        await deleteFolderQuery({ folder: folderPk }).unwrap();
+
+        // Если DELETE-запрос выполнен успешно, выполняем GET-запрос
+        await getChats();
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       setDeleteFolder(value);
     }
   };
 
   useEffect(() => {
-    if (isSuccessDeleteFolder) {
-      getChats()
-    }
-    if (!isLoading) {
-      setDeleteFolder(false);
-      console.log(chats);
+    if (isSuccessGetChats) {
       dispatch(setChats(chats));
     }
-  }, [isSuccessDeleteFolder, isLoading]);
+  }, [isSuccessGetChats, chats, dispatch]);
 
   const onClickFunc2 = (value) => {
     if (value) {
