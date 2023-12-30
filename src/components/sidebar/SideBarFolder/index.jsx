@@ -16,9 +16,10 @@ const SideBarFolder = ({ folder, chat }) => {
   const [deleteFolder2, setDeleteFolder2] = useState();
   const chatId = useParams();
   const [getChats, { data: chats, isSuccess: isSuccessGetChats }] = chatApi.useLazyGetChatsQuery();
-  const [deleteFolderQuery, { isSuccess: isSuccessDeleteFolder }] =
-    chatApi.useDeleteFolderMutation();
+  const [deleteFolderQuery] = chatApi.useDeleteFolderMutation();
+  const [deleteChatQuery] = chatApi.useDeleteChatMutation();
   const dispatch = useDispatch();
+  const [createChatQuery] = chatApi.useCreateChatMutation();
 
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
@@ -26,33 +27,11 @@ const SideBarFolder = ({ folder, chat }) => {
     if (parts.length === 2) return parts.pop().split(';').shift();
   };
 
-  //   const onClickFunc = (value) => {
-  //     const folderPk = folder.pk;
-  //     if (value) {
-  //       deleteFolderQuery({ folder: folderPk }).catch((error) => console.error(error));
-  //     } else {
-  //       setDeleteFolder(value);
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     if (isSuccessDeleteFolder) {
-  //       getChats()
-  //     }
-  //     if (isSuccessDeleteFolder) {
-  //       setDeleteFolder(false);
-  //       console.log(chats);
-  //       dispatch(setChats(chats));
-  //     }
-  //   }, [isSuccessDeleteFolder, isSuccessGetChats]);
   const onClickFunc = async (value) => {
     const folderPk = folder.pk;
     if (value) {
       try {
-        // Выполняем DELETE-запрос
         await deleteFolderQuery({ folder: folderPk }).unwrap();
-
-        // Если DELETE-запрос выполнен успешно, выполняем GET-запрос
         await getChats();
       } catch (error) {
         console.error(error);
@@ -62,48 +41,34 @@ const SideBarFolder = ({ folder, chat }) => {
     }
   };
 
-  useEffect(() => {
-    if (isSuccessGetChats) {
-      dispatch(setChats(chats));
-    }
-  }, [isSuccessGetChats, chats, dispatch]);
-
-  const onClickFunc2 = (value) => {
+  const onClickFunc2 = async (value) => {
+    const chatPk = chat.pk;
     if (value) {
-      fetch(`https://ziongpt.ai/api/v1/chatsession/${chat.pk}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Token ' + getCookie('token')
-        }
-      }).then((data) => console.log(data));
-
-      setTimeout(() => {
-        window.location.reload(false);
-      }, 500);
+      try {
+        await deleteChatQuery({ chat: chatPk }).unwrap();
+        await getChats();
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       setDeleteFolder2(value);
     }
   };
 
-  const createChat = () => {
-    fetch(`https://ziongpt.ai/api/v1/chatsession/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Token ' + getCookie('token')
-      },
-      body: JSON.stringify({
-        folder: folder.pk,
-        ai_model: 'gpt-3.5-turbo'
-      })
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        window.location.href = `/chat/${data.pk}`;
-      });
+  const createChat = async () => {
+    try {
+      await createChatQuery({ folder: folder.pk }).unwrap();
+      await getChats();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    if (isSuccessGetChats) {
+      dispatch(setChats(chats));
+    }
+  }, [isSuccessGetChats, chats, dispatch]);
 
   const [inputVal, setInputVal] = useState(folder?.name);
   const [prevInputVal, setPrevInputVal] = useState();
