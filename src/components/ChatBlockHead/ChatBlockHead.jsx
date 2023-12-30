@@ -19,21 +19,6 @@ const ChatBlockHead = ({type}) => {
                     <path d="M11 1.8335V13.7502" stroke="black" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg></a>
             </div>
-
-            <div className="chat_top_header_mob ch_menu">
-                <a href="#" className="bars_menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M3 18V16.5H21V18H3ZM3 12.75V11.25H21V12.75H3ZM3 7.5V6H21V7.5H3Z" fill="#B0B0BA" />
-                    </svg>
-                </a>
-                <p className="header_mob_text">Здесь запрос</p>
-                <a href="#" className="plus_menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M11.25 12.75H5V11.25H11.25V5H12.75V11.25H19V12.75H12.75V19H11.25V12.75Z" fill="#B0B0BA" />
-                    </svg>
-                </a>
-            </div>
-
         </div>
     )
 }

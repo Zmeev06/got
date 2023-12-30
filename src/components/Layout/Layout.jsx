@@ -1,16 +1,47 @@
 import * as React from 'react';
 import SideBar from '../sidebar/SideBar';
-import { Outlet } from 'react-router-dom'
-import styles from './style.module.css'
-import { useEffect } from 'react';
-export const Layout = ({folders, chats, auth, getCookie}) => {
-  useEffect(() => {
-    console.log('tet',chats);
-  }, [chats])
+import { Outlet } from 'react-router-dom';
+import styles from './style.module.scss';
+import { useState } from 'react';
+import { ClipLoader } from 'react-spinners';
+export const Layout = ({ folders, chats, auth, getCookie }) => {
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const clickHandler = () => {
+    setIsOpenSidebar(!isOpenSidebar)
+  }
   return (
     <div className={styles.main}>
-      <div className={styles.sidebarMy} >
-        {auth && <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie} /> }
+      <div className={`${styles.sidebarMy} ${isOpenSidebar ? styles.sidebarActive : ''} ${!auth ? styles.auth : '' }`}>
+        {auth ? <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie} /> : <ClipLoader color='white'/>}
+      </div>
+      <div className={`${styles.header}`}>
+        <div className="bars_menu" onClick={() => clickHandler()}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none">
+            <path
+              d="M3 18V16.5H21V18H3ZM3 12.75V11.25H21V12.75H3ZM3 7.5V6H21V7.5H3Z"
+              fill="#B0B0BA"
+            />
+          </svg>
+        </div>
+        <p className="header_mob_text">Здесь запрос</p>
+        <div className="plus_menu">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none">
+            <path
+              d="M11.25 12.75H5V11.25H11.25V5H12.75V11.25H19V12.75H12.75V19H11.25V12.75Z"
+              fill="#B0B0BA"
+            />
+          </svg>
+        </div>
       </div>
       <div className={styles.content}>
         <Outlet />

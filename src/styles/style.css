@@ -91,6 +91,22 @@ html {
     gap: 0 19px;
 }
 
+@media (max-width: 1028px) {
+    .sidebar_menu_top_actions_new_chat button {
+        width: 100%;
+    }
+    .sidebar_menu_top_actions_new_chat {
+        width: 100%;
+    }
+    .sidebar_menu_top_actions {
+        width: 100%;
+    }
+    .sidebarNewChatLink {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+
 .sidebar_menu_top_actions_new_chat .folder_sp {
     border-radius: 8px;
     border: 1px solid #4d4d4f;
@@ -3814,6 +3830,12 @@ body[data-leftbar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>.c
     top: 5px;
 }
 
+@media (max-width: 1028px) {
+    .sidebar_menu_top_logo {
+        display: none;
+    }
+}
+
 .sidebar_menu_top_actions {
     padding-top: 75px;
 }
@@ -4002,10 +4024,6 @@ pre {
 }
 
 .x_menu_mob {
-    display: none;
-}
-
-.chat_top_header_mob {
     display: none;
 }
 
@@ -4951,6 +4969,10 @@ pre {
         max-width: 800px;
     }
 
+    .left-side-menu {
+        padding: 0px;
+        padding-top: 44px;
+    }
 
     .chatgpt_begin {
         margin-bottom: 400px;
@@ -4967,10 +4989,6 @@ pre {
     .content-page,
     .content-page.midjourney {
         margin-left: 0;
-    }
-
-    .left-side-menu.show .sidebar_menu_top_logo {
-        display: none;
     }
 
     .left-side-menu.show .x_menu_mob {
@@ -4991,7 +5009,7 @@ pre {
 
     .sidebar_menu_top_actions {
         gap: 0;
-        padding: 18px 0 14px 0;
+        padding: 5px;
     }
 
     /* .nav-second-level li a.active{
@@ -5037,13 +5055,6 @@ pre {
         left: 200px;
     }
 
-    .chat_top_header_mob .header_mob_text {
-        color: #FFF;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 20px;
-    }
-
     .left-side-menu.show {
         display: block;
         width: 85%;
@@ -5051,17 +5062,6 @@ pre {
         z-index: 107 !important;
         height: 100vh;
         /* top: 44px; */
-    }
-
-    .chat_top_header_mob {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: fixed;
-        width: 100%;
-        background: #343541;
-        padding: 10px 30px;
-        z-index: 100;
     }
 
     .chat_chatgpt.mob_h {
@@ -5112,20 +5112,12 @@ pre {
         padding-top: 44px;
     }
 
-    .chat_top_header_mob.ap {
-        margin: 0 -15px;
-    }
-
     .public_tab.rate_tab {
         padding-top: 44px;
     }
 
     .midjourney_ul.mob {
         margin-top: 62px;
-    }
-
-    .chat_top_header_mob.ch_menu {
-        margin: 0;
     }
 
     .editor-container.three {
@@ -5154,10 +5146,6 @@ pre {
 
     .container-back-midjourney {
         justify-content: center;
-    }
-
-    .left-side-menu {
-        display: none;
     }
 
     .mySidebarClass {
@@ -5214,21 +5202,6 @@ pre {
         left: 150px;
     }
 
-    .chat_top_header_mob.mob_mid {
-        margin: 0 -18px;
-    }
-
-    .chat_top_header_mob.ch_menu {
-        margin: 0 -10px;
-    }
-
-    .chat_top_header_mob.ap {
-        margin: 0 -15px;
-    }
-
-    .chat_top_header_mob {
-        margin: 0 -30px;
-    }
 
     .chat_user.code_ch {
         padding-left: 0;
@@ -5515,18 +5488,6 @@ pre {
 
     .pagi.three {
         left: 74px;
-    }
-
-    .chat_top_header_mob.ch_menu {
-        margin: 0;
-    }
-
-    .chat_top_header_mob.ap {
-        margin: 0 -15px;
-    }
-
-    .chat_top_header_mob {
-        margin: 0 -10px;
     }
 
     .chat_user.code_ch {
@@ -6061,9 +6022,6 @@ pre {
         padding-top: 0;
     }
 
-    .chat_top_header_mob.ap {
-        margin: 0px;
-    }
 
     /* .left-side-menu.show{
         display: block;
@@ -6072,17 +6030,6 @@ pre {
         z-index: 101;
         height: 100vh;
     } */
-    .chat_top_header_mob {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: fixed;
-        width: 100%;
-        background: #343541;
-        padding: 10px 30px;
-        z-index: 100;
-        margin: 0;
-    }
 
     .chat_chatgpt.mob_h {
         padding-top: 44px;
@@ -6094,13 +6041,6 @@ pre {
 
     .chat_top_header.desc {
         display: none;
-    }
-
-    .chat_top_header_mob .header_mob_text {
-        color: #FFF;
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 20px;
     }
 
     .content-page.chat.cod {
@@ -6422,16 +6362,8 @@ pre {
         line-height: normal;
     }
 
-    .chat_top_header_mob.faq_menu {
-        margin: 0 -15px;
-    }
-
     .faq_block {
         padding-top: 43px;
-    }
-
-    .chat_top_header_mob.what_menu {
-        margin: 0 -15px;
     }
 
     .container-back.what_con {
@@ -6440,14 +6372,6 @@ pre {
 
     .container-back.not_found_con {
         padding-top: 44px;
-    }
-
-    .chat_top_header_mob.mob_m {
-        margin: 0 -15px;
-    }
-
-    .chat_top_header_mob.mob_mid {
-        margin: 0 -18px;
     }
 
     .chat_top_header.mid_chat {
@@ -6460,10 +6384,6 @@ pre {
 
     .container-back.con_t {
         padding-top: 44px;
-    }
-
-    .chat_top_header_mob.not_found_menu {
-        margin: 0 -15px;
     }
 
     .content-page.ap_bal_pg {
@@ -7107,10 +7027,6 @@ pre {
 
     .midjourney_ul.mob {
         min-width: 300px;
-    }
-
-    .chat_top_header_mob {
-        padding: 10px 18px;
     }
 
     .container-chat.chat_con {

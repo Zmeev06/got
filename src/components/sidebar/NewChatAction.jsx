@@ -40,7 +40,7 @@ const NewChatAction = () => {
 
 
     return (
-        <Link to={chatUrl && '/'}>
+        <Link to={chatUrl && '/'} className='sidebarNewChatLink'>
             <div onClick={() => createChat()}>
                 <button type='button'><span className="plus_sp">+</span> Новый чат</button>
             </div>
