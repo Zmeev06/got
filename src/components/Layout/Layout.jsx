@@ -4,15 +4,45 @@ import { Outlet } from 'react-router-dom';
 import styles from './style.module.scss';
 import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
-export const Layout = ({ folders, chats, auth, getCookie }) => {
+import { chatApi } from '../../redux/services/chatService';
+import { useDispatch, useSelector } from 'react-redux';
+import { setChats } from '../../redux/slices/chatSlice';
+export const Layout = ({ auth, getCookie }) => {
+
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const { data: chats, isSuccess } = chatApi.useGetChatsQuery();
+  const dispatch = useDispatch();
+  const globalChats = useSelector((state) => state.chat);
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      dispatch(setChats(chats));
+    }
+  }, [isSuccess]);
+
   const clickHandler = () => {
-    setIsOpenSidebar(!isOpenSidebar)
-  }
+    setIsOpenSidebar(!isOpenSidebar);
+  };
+
+  React.useEffect(() => {
+    console.log(globalChats.chats);
+  }, [globalChats.chats])
   return (
     <div className={styles.main}>
-      <div className={`${styles.sidebarMy} ${isOpenSidebar ? styles.sidebarActive : ''} ${!auth ? styles.auth : '' }`}>
-        {auth ? <SideBar folders={folders} chats={chats} auth={auth} getCookie={getCookie} /> : <ClipLoader color='white'/>}
+      <div
+        className={`${styles.sidebarMy} ${isOpenSidebar ? styles.sidebarActive : ''} ${
+          !auth ? styles.auth : ''
+        }`}>
+        {(auth && isSuccess && globalChats.chats.folders) ? (
+          <SideBar
+            folders={globalChats.chats.folders}
+            chats={globalChats.chats.sessions}
+            auth={auth}
+            getCookie={getCookie}
+          />
+        ) : (
+          <ClipLoader color="white" />
+        )}
       </div>
       <div className={`${styles.header}`}>
         <div className="bars_menu" onClick={() => clickHandler()}>

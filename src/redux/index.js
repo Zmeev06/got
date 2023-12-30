@@ -4,6 +4,8 @@ import statusMidReducer from './slices/statusMidSlice'
 import errorReducer from './slices/errorSlice'
 import counterReducer from './slices/counterSlice'
 import userReducer from './slices/userSlice'
+import { userApi } from './services/userService'
+import { chatApi } from './services/chatService'
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +13,10 @@ export const store = configureStore({
         status: statusMidReducer,
         error: errorReducer,
         counter: counterReducer,
-        user: userReducer
+        user: userReducer,
+        [userApi.reducerPath]: userApi.reducer,
+        [chatApi.reducerPath]: chatApi.reducer
     },
+    middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(userApi.middleware).concat(chatApi.middleware),
 })

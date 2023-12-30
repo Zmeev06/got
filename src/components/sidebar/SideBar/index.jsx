@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CloseMenuMobImg from '../../../images/close_menu_mob.png';
 import SideBarHeader from '../SideBarHeader';
 import SideBarBottomLinks from '../SideBarBottomLinks';
@@ -15,7 +15,6 @@ const SideBar = ({ folders, chats, auth }) => {
   const filterData = (searchChar) => {
     setFoldersArr([]);
     setChatsArr([]);
-
     folders.filter((element) => {
       const name = element.name.toLowerCase();
       if (name.includes(searchChar.toLowerCase())) {
@@ -38,6 +37,10 @@ const SideBar = ({ folders, chats, auth }) => {
       filterData(e);
     }
   };
+
+  useEffect(() => {
+    console.log(folders);
+  }, [folders])
 
   return (
     <div className="left-side-menu">

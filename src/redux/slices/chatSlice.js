@@ -4,15 +4,26 @@ export const chatSlice = createSlice({
     name: 'chat',
     initialState: {
         value: '',
+        chats: {
+            sessions: [],
+            folders: []
+        }
     },
     reducers: {
         setNewChat: (state, action) => {
             state.value = action.payload
         },
+        setChats: (state, action) => {
+            if(action.payload) {
+                state.chats = action.payload
+                console.log(state.chats);
+            }
+            
+        }
     },
 })
 
-export const { setNewChat } = chatSlice.actions
+export const { setNewChat, setChats } = chatSlice.actions
 
 export const selectChat = (state) => state.chat.value
 
