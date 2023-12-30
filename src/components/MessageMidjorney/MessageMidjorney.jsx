@@ -3,7 +3,7 @@ import MidImg from '../../images/midjorney/bears.png';
 import styles from './style.module.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { setNewStatus } from '../../redux/slices/statusMidSlice';
+import { setNewStatus, setNewTaskId } from '../../redux/slices/statusMidSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import gptBot from '../../images/chat/chatgpt_ic.png'
@@ -56,6 +56,7 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type, index }) => {
       })
         .then((response) => response.json())
         .then((data) => {
+          dispatch(setNewTaskId(chatId))
           if (data.status === 'ready') {
             clearInterval(MjInterval);
             MidjCallBack(data.result);
@@ -90,7 +91,10 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type, index }) => {
     }
   }
 
+
   return (
+    <>
+    {(message.result !== '' && !message.result.includes('%')) &&
     <div className={styles.root} style={{
       background: index % 2 === 0 ? '#F7F7F8' : 'transparrent'
     }}>
@@ -155,6 +159,8 @@ const MessageMidjorney = ({ message, midjData, MidjCallBack, type, index }) => {
       </div>
     </div>
     </div>
+}
+    </>
   );
 };
 

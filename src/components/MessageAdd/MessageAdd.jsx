@@ -4,12 +4,13 @@ import GptUser from '../../images/chat/mi_ic.png';
 import GptChat from '../../images/chat/chatgpt_ic.png';
 import PublicModal from '../PublicModal/PublicModal';
 import { useClickAway } from 'react-use';
-import { setNewStatus } from '../../redux/slices/statusMidSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { setNewStatus, setNewTaskId } from '../../redux/slices/statusMidSlice';
+import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { setErrorStatus } from '../../redux/slices/errorSlice';
 import styles from './styles.module.scss';
 import { increment } from '../../redux/slices/counterSlice';
+import { useParams } from 'react-router-dom';
 
 const MessageAdd = ({
   MidjCallBack,
@@ -34,9 +35,8 @@ const MessageAdd = ({
   const [setting, setSetting] = useState(false);
   const [modal, setModal] = useState(false);
   const settingsModal = useRef(null);
-  const ref = useRef(null);
   const dispatch = useDispatch();
-  const status = useSelector((state) => state.status);
+
 
   useClickAway(settingsModal, () => {
     setSetting(false);
@@ -190,9 +190,9 @@ const MessageAdd = ({
     if (textareaRef.current.value.length > 0) {
       newChatName(textareaRef.current.value, activeItems);
 
-      if (activeItems[0] || activeItems[1] || activeItems[2]) {
+      if (activeItems === 'gpt') {
         await newGptReq();
-      } else if (activeItems[3] == true) {
+      } else if (activeItems === 'mj') {
         setTimeout(() => {
           setText('');
           midjourneyTest();
@@ -200,10 +200,6 @@ const MessageAdd = ({
       }
     }
   }
-
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
 
   function midjourneyTest() {
     let id;
@@ -244,6 +240,7 @@ const MessageAdd = ({
       })
         .then((response) => response.json())
         .then((data) => {
+          dispatch(setNewTaskId(chatId))
           if (data.status === 'ready') {
             clearInterval(MjInterval);
             MidjCallBack(data.result);
@@ -266,15 +263,6 @@ const MessageAdd = ({
   }
 
   const chooseRef = useRef();
-
-  function chooseGpt() {
-    if (chooseRef.current.value == 'GPT-3.5')
-      changeActiveItems([true, false, false, false, false, false, false]);
-    else if (chooseRef.current.value == 'GPT-4')
-      changeActiveItems([false, true, false, false, false, false, false]);
-    else if (chooseRef.current.value == 'GPT-4 Turbo')
-      changeActiveItems([false, false, true, false, false, false, false]);
-  }
 
   return (
     <section className={styles.footerContent} id="bottom">
@@ -335,7 +323,6 @@ const MessageAdd = ({
               className="choose"
               name="choose"
               id="choose"
-              onClick={() => chooseGpt()}
               ref={chooseRef}>
               <option value="GPT-3.5">GPT-3.5</option>
               <option value="GPT-4">GPT-4</option>

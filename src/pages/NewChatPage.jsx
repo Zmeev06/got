@@ -34,11 +34,11 @@ export const NewChatPage = () => {
         navigate(`/chat/${data.pk}`)
       })
   }
+
+  const [text, setText] = React.useState('')
   return (
     <div className="mainNewChatPage">
-
-        <MidjourneySlider />
-
+        <MidjourneySlider text={text} setText={setText}/>
     </div>
   );
 };

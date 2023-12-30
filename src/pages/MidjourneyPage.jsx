@@ -15,7 +15,6 @@ import { setNewStatus } from '../redux/slices/statusMidSlice';
 import TokenModal from '../components/tokenModal/TokenModal';
 import { MidjourneySlider } from '../components/MidjourneySlider';
 
-
 const MidjourneyPage = ({ folders, chats }) => {
   const { chatId } = useParams();
   const scrollBottom = useRef();
@@ -31,9 +30,9 @@ const MidjourneyPage = ({ folders, chats }) => {
   const [statusMessage, setStatusMessage] = useState('В очереди');
   const [chatType, setChatType] = useState();
   const dispatch = useDispatch();
-  const fetchStatus = useSelector(state => state.error)
-  const user = useSelector(state => state.user)
-  const [isEmptyMes, setIsEmptyMes] = useState(true)
+  const fetchStatus = useSelector((state) => state.error);
+  const user = useSelector((state) => state.user);
+  const [isEmptyMes, setIsEmptyMes] = useState(true);
   const [text, setText] = useState('');
 
   useEffect(() => {
@@ -68,7 +67,7 @@ const MidjourneyPage = ({ folders, chats }) => {
           setFirstMessage(res.data.messages[0].prompt);
           setChatType(res.data.messages[0].ai_model);
         } else if (res.data.messages.length !== 0 && res.data.type === 'text') {
-          setMessageType('text')
+          setMessageType('text');
         } else {
           setIsEmpty(true);
         }
@@ -80,10 +79,10 @@ const MidjourneyPage = ({ folders, chats }) => {
   }, [chatId]);
 
   useEffect(() => {
+    getMessages(chatId);
     if (status.value === 'ready') {
       setFirstMessage('');
     }
-
     if (chatId) {
       getMessages(chatId);
     }
@@ -111,10 +110,10 @@ const MidjourneyPage = ({ folders, chats }) => {
 
   function newChatName(e, models) {
     let model;
-    if (models[0] === true) model = 'gpt-3.5-turbo';
-    else if (models[1] === true) model = 'gpt-4';
-    else if (models[2] === true) model = 'gpt-4-1106-preview';
-    else if (models[3] === true) model = 'mj';
+    if (models === 'gpt') model = 'gpt-3.5-turbo';
+    // else if (models[1] === true) model = 'gpt-4';
+    // else if (models[2] === true) model = 'gpt-4-1106-preview';
+    else if (models === 'mj') model = 'mj';
     else if (models[4] === true) model = 'dall-e-2';
     else if (models[5] === true) model = 'dall-e-3';
     else if (models[6] === true) model = 'sd';
@@ -138,35 +137,48 @@ const MidjourneyPage = ({ folders, chats }) => {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           setFirstMessage(data.name);
         });
     }
   }
-console.log('sdc', chatType);
+
+  useEffect(() => {
+    if (firstMessage || !messages.length) {
+      setIsEmptyMes(false);
+    }
+  }, [firstMessage]);
+
+  useEffect(() => {
+    console.log(myMessages);
+  }, [myMessages]);
   return (
     <div>
       <div className="content-page">
         <div className="content">
           <div className="container-back-mid">
-            {messages.length ? <ChatBlockHead type={messageType} /> : null}
+            {messages.length || myMessages.messages.length > 0 ? (
+              <ChatBlockHead type={messageType} />
+            ) : null}
           </div>
-          
+
           <div className="container-back-mid">
-            {!messages.length && (
-              <NavigationsMidj activeTab={activeTab} setActiveTab={setActiveTab}/>
+            {myMessages.messages.length === 0 && !messages.length && (
+              <NavigationsMidj activeTab={activeTab} setActiveTab={setActiveTab} />
             )}
           </div>
-          {
-            activeTab === 'mj' && <div className="container-back-mid">{!messages.length && <MidjourneySlider text={text} setText={setText}/>}</div>
-          }
+          {activeTab === 'mj' && (
+            <div className="container-back-mid">
+              {myMessages.messages.length === 0 && (
+                <MidjourneySlider text={text} setText={setText} />
+              )}
+            </div>
+          )}
           {activeTab === 'gpt' && (
             <div className="container-back-mid">{!messages.length && <Gpt />}</div>
           )}
 
           <div className="container-back-mid">
             {firstMessage && (chatType === 'mj' || myMessages.type === 'image') && (
-
               <MessageMy
                 setMessages={setFirstMessage}
                 chatId={chatId}
@@ -179,59 +191,68 @@ console.log('sdc', chatType);
               />
             )}
 
-            {myMessages.messages.map((item, index) => (
-              <MessageMidjorney
-                message={item}
-                midjData={myMessages}
-                MidjCallBack={MidjCallBack}
-                type={myMessages.type}
-                index={index}
-                key={index}
-              />
-            ))}
+            {(chatType === 'mj' || myMessages.type === 'image') &&
+              myMessages.messages.length > 0 &&
+              myMessages.messages[0].result !== '' &&
+              !myMessages.messages[0].result.includes('%') &&
+              myMessages.messages.map((item, index) => (
+                <MessageMidjorney
+                  message={item}
+                  midjData={myMessages}
+                  MidjCallBack={MidjCallBack}
+                  type={myMessages.type}
+                  index={index}
+                  key={index}
+                />
+              ))}
+              <div id='chat' />
             {fetchStatus.value === 426 ? <TokenModal /> : null}
-            {messageType !== 'text' && (status.value === 'in_queue' ? (
-              <MessageMy
-                setMessages={setStatusMessage}
-                chatId={chatId}
-                newChatName={newChatName}
-                index={0}
-                messages={[]}
-                messageText={'В очереди'}
-                avatar={gptBot}
-              />
-            ) : status.value === 'in_process' ? (
-              <MessageMy
-                setMessages={setStatusMessage}
-                chatId={chatId}
-                newChatName={newChatName}
-                index={0}
-                messages={[]}
-                messageText={'Генерация'}
-                avatar={gptBot}
-              />
-            ) : status.value === 'error' ? (
-              <MessageMy
-                setMessages={setStatusMessage}
-                chatId={chatId}
-                newChatName={newChatName}
-                index={0}
-                messages={[]}
-                messageText={'Ошибка'}
-                avatar={gptBot}
-              />
-            ) : null)}
+            {messageType !== 'text' &&
+              status.taskId === chatId &&
+              (status.value === 'in_queue' || status.value === 'waiting' ? (
+                <MessageMy
+                  setMessages={setStatusMessage}
+                  chatId={chatId}
+                  newChatName={newChatName}
+                  index={0}
+                  messages={[]}
+                  messageText={'В очереди'}
+                  avatar={gptBot}
+                />
+              ) : status.value === 'in_process' ? (
+                <MessageMy
+                  setMessages={setStatusMessage}
+                  chatId={chatId}
+                  newChatName={newChatName}
+                  index={0}
+                  messages={[]}
+                  messageText={'Генерация'}
+                  avatar={gptBot}
+                />
+              ) : status.value === 'error' ? (
+                <MessageMy
+                  setMessages={setStatusMessage}
+                  chatId={chatId}
+                  newChatName={newChatName}
+                  index={0}
+                  messages={[]}
+                  messageText={'Ошибка'}
+                  avatar={gptBot}
+                />
+              ) : null)}
           </div>
 
-          {messageType === 'text' ? <ChatBlock
-            type={messageType}
-            setMessages={setMessages}
-            chatId={chatId}
-            newChatName={newChatName}
-            messages={messages}
-            scrollBottom={scrollBottom}
-          /> : null}
-          
+          {messageType === 'text' ? (
+            <ChatBlock
+              type={messageType}
+              setMessages={setMessages}
+              chatId={chatId}
+              newChatName={newChatName}
+              messages={messages}
+              scrollBottom={scrollBottom}
+            />
+          ) : null}
+
           <MessageAdd
             isEmpty={isEmpty}
             MidjCallBack={MidjCallBack}
@@ -247,9 +268,7 @@ console.log('sdc', chatType);
             setText={setText}
           />
         </div>
-
       </div>
-
     </div>
   );
 };

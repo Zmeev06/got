@@ -97,7 +97,7 @@ const RateSettings = ({auth}) => {
                                 <ul>
                                 <li className={styles.tgBlock} onClick={() =>
                     // @ts-ignore
-                    window.Telegram.Login.auth({ bot_id: 6743055068 }, tgAuth)
+                    window.Telegram.Login.auth({ bot_id: 6482030236 }, tgAuth)
                   }>
                                             <p>Подключить Telegram</p>
                                             <img src={Tg} alt="" />
