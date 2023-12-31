@@ -20,12 +20,11 @@ const MessageAdd = ({
   chatId,
   newChatName,
   activeItems,
-  changeActiveItems,
-  isEmpty,
   setMessageType,
   setIsEmptyMes,
   text,
-  setText
+  setText,
+  blockInput
 }) => {
   function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -394,12 +393,12 @@ const MessageAdd = ({
               ref={textareaRef}
               className="message__area"
               name="tmp"
-              disabled={!isEmpty}
+              disabled={blockInput}
               id="tmp"
               cols="30"
               rows="1"
               placeholder={
-                isEmpty ? 'Отправить сообщение' : 'Вы не можете выполнить больше одного запроса'
+                !blockInput ? 'Отправить сообщение' : 'Вы не можете выполнить больше одного запроса'
               }
               value={text}
               onKeyDown={handleKeyPress}

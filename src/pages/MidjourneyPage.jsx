@@ -6,7 +6,6 @@ import MessageAdd from '../components/MessageAdd/MessageAdd';
 import ChatBlockHead from '../components/ChatBlockHead/ChatBlockHead';
 import { useRef } from 'react';
 import MessageMidjorney from '../components/MessageMidjorney/MessageMidjorney';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MessageMy from '../components/MessageMy/MessageMy';
@@ -36,6 +35,7 @@ const MidjourneyPage = ({ folders, chats }) => {
   const fetchStatus = useSelector((state) => state.error);
   const user = useSelector((state) => state.user);
   const [isEmptyMes, setIsEmptyMes] = useState(true);
+  const [blockInput, setBlockInput] = useState(false);
   const [text, setText] = useState('');
   const [
     getMessagesQuery,
@@ -62,8 +62,8 @@ const MidjourneyPage = ({ folders, chats }) => {
       setMyMessages({ type: 'text', messages: [] });
       notify('Произошла ошибка, повторите попытку позже');
     }
-    if(isGetMessagesSuccess) {
-      setMessageType(myMessagesRtk.type)
+    if (isGetMessagesSuccess) {
+      setMessageType(myMessagesRtk.type);
     }
   }, [myMessagesRtk, isGetMessagesError, isGetMessagesSuccess]);
 
@@ -101,6 +101,10 @@ const MidjourneyPage = ({ folders, chats }) => {
       setStatusMessage('В очереди');
     }
   }, [chatId, status.value]);
+
+  useEffect(() => {
+    setText('');
+  }, [chatId]);
 
   function lastMessageScroll(b) {
     if (!scrollBottom.current) return;
@@ -149,8 +153,18 @@ const MidjourneyPage = ({ folders, chats }) => {
     if (firstMessage || !messages.length) {
       setIsEmptyMes(false);
     }
-    console.log(firstMessage);
   }, [firstMessage]);
+
+  useEffect(() => {
+    console.log(myMessagesRtk);
+    if (isGetMessagesSuccess) {
+      if (myMessagesRtk.type === 'image') {
+        setBlockInput(true);
+      } else if (myMessagesRtk.type === 'text') {
+        setBlockInput(false);
+      }
+    }
+  }, [myMessagesRtk]);
 
   return (
     <div>
@@ -187,7 +201,9 @@ const MidjourneyPage = ({ folders, chats }) => {
                   newChatName={newChatName}
                   index={0}
                   messages={[]}
-                  messageText={myMessagesRtk.messages.length > 0 ? myMessagesRtk.messages[0].prompt : ''}
+                  messageText={
+                    myMessagesRtk.messages.length > 0 ? myMessagesRtk.messages[0].prompt : ''
+                  }
                   mine
                   avatar={`https://ziongpt.ai${user.avatar}`}
                 />
@@ -256,18 +272,17 @@ const MidjourneyPage = ({ folders, chats }) => {
             ) : null}
 
             <MessageAdd
-              isEmpty={isEmpty}
               MidjCallBack={MidjCallBack}
               activeItems={activeTab}
               chatId={chatId}
               setMessages={setMessages}
               messages={messages}
               newChatName={newChatName}
-              changeActiveItems={setActiveTab}
               setMessageType={setMessageType}
               setIsEmptyMes={setIsEmptyMes}
               text={text}
               setText={setText}
+              blockInput={blockInput}
             />
           </div>
         ) : (
