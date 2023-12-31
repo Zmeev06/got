@@ -28,12 +28,6 @@ const NewFolderAction = () => {
   };
 
   useEffect(() => {
-    if (isSuccessGetChats) {
-      dispatch(setChats(chats));
-    }
-  }, [isSuccessGetChats, chats, dispatch]);
-
-  useEffect(() => {
     if (isErrorGetChats || isCreateFolderError || isGetFolderError) {
       notify();
     }

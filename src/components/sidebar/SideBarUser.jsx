@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const SideBarUser = ({ auth }) => {
   const [imgUser, setImgUser] = useState(DefaultAvatarImg);
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user);
   function changeUrl() {
     setImgUser(`https://ziongpt.ai${auth.avatar}`);
   }
@@ -14,67 +14,61 @@ const SideBarUser = ({ auth }) => {
     changeUrl();
   }, []);
 
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-useEffect(()=>{
-  
-    if(auth.tariff.name == "PRO" || auth.tariff.name == "ULTIMA"){
-      console.log(document.querySelector('.side-links'))
-      document.querySelector('.side-links').style.bottom = '164px'
+  useEffect(() => {
+    if (auth.tariff.name === 'PRO' || auth.tariff.name === 'ULTIMA') {
+      console.log(document.querySelector('.side-links'));
+      document.querySelector('.side-links').style.bottom = '164px';
     }
-  },[])
-
+  }, []);
 
   return (
     <div className="user_block">
       <div className="user-box text-center">
-        <img src={`https://ziongpt.ai${user.avatar}`} alt="user-img" title="Mat Helme" className="rounded-circle avatar-md" />
+        <img
+          src={`https://ziongpt.ai${user.avatar}`}
+          alt="user-img"
+          title="Mat Helme"
+          className="rounded-circle avatar-md"
+        />
         <div className="user_content">
           <div className="user_name">
             <Link to={'/settings'} className="text-white">
-                {auth.username}
+              {auth.username}
             </Link>
           </div>
-            <Link to={'/settings'} className="text-muted user_email">
-                {auth.email}
-            </Link>
-          </div>
-            <Link to={'/settings'}  state={{
+          <Link to={'/settings'} className="text-muted user_email">
+            {auth.email}
+          </Link>
+        </div>
+        <Link
+          to={'/settings'}
+          state={{
+            plan: true
+          }}
+          className="free_btn">
+          {auth.tariff.name}
+        </Link>
+      </div>
+
+      {auth.tariff.name != 'PRO' && auth.tariff.name != 'ULTIMA' && (
+        <div className="user_box_bottom">
+          <Link
+            to="/settings"
+            state={{
               plan: true
             }}
-            className="free_btn">
-                {auth.tariff.name}
-            </Link>
-          </div>
-    
-          {auth.tariff.name != "PRO" && auth.tariff.name != "ULTIMA" &&
-          <div className="user_box_bottom">
-            <Link
-              to="/settings"
-              state={{
-                plan: true
-              }}
-              className="user_box_bottom_action">
-              Обновить до Про
-            </Link>
-          </div>
-        }
-      
-      <div className="user_box_bottom">
-          <Link to={"https://ziongpt.ai/auth/logout"} className="user_box_bottom_action">
-          
-            Выйти
+            className="user_box_bottom_action">
+            Обновить до Про
           </Link>
-         
-          
-          
         </div>
+      )}
+
+      <div className="user_box_bottom">
+        <Link to={'https://ziongpt.ai/auth/logout'} className="user_box_bottom_action">
+          Выйти
+        </Link>
+      </div>
     </div>
-    
   );
 };
 

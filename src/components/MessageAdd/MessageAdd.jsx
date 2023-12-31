@@ -10,7 +10,8 @@ import toast from 'react-hot-toast';
 import { setErrorStatus } from '../../redux/slices/errorSlice';
 import styles from './styles.module.scss';
 import { increment } from '../../redux/slices/counterSlice';
-import { useParams } from 'react-router-dom';
+import { chatApi } from '../../redux/services/chatService';
+import { setChats } from '../../redux/slices/chatSlice';
 
 const MessageAdd = ({
   MidjCallBack,
@@ -36,7 +37,14 @@ const MessageAdd = ({
   const [modal, setModal] = useState(false);
   const settingsModal = useRef(null);
   const dispatch = useDispatch();
+  const [getChats, { data: chats, isSuccess: isSuccessGetChats }] =
+    chatApi.useLazyGetChatsQuery();
 
+  useEffect(() => {
+    if (isSuccessGetChats) {
+      dispatch(setChats(chats));
+    }
+  }, [isSuccessGetChats, chats, dispatch]);
 
   useClickAway(settingsModal, () => {
     setSetting(false);
@@ -182,7 +190,7 @@ const MessageAdd = ({
 
       setMessages([...iMessages]);
     }
-    dispatch(increment());
+    await getChats()
     const text1 = new TextDecoder('utf-8').decode(new Uint8Array(chunks.flat()));
   }
 
@@ -240,7 +248,7 @@ const MessageAdd = ({
       })
         .then((response) => response.json())
         .then((data) => {
-          dispatch(setNewTaskId(chatId))
+          dispatch(setNewTaskId(chatId));
           if (data.status === 'ready') {
             clearInterval(MjInterval);
             MidjCallBack(data.result);
@@ -319,11 +327,7 @@ const MessageAdd = ({
                 </svg>
               </a>
             </label>
-            <select
-              className="choose"
-              name="choose"
-              id="choose"
-              ref={chooseRef}>
+            <select className="choose" name="choose" id="choose" ref={chooseRef}>
               <option value="GPT-3.5">GPT-3.5</option>
               <option value="GPT-4">GPT-4</option>
               <option value="GPT-4 Turbo">GPT-4 Turbo</option>

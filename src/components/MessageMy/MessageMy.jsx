@@ -52,33 +52,6 @@ const MessageMy = ({
     }
   };
   let iMessages = [];
-  function fetchMessages() {
-    fetch(`https://ziongpt.ai/api/v1/messages/${chatId}/`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Token ' + getCookie('token')
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        iMessages = data.messages
-          .map((e) => [
-            {
-              messageText: e.text,
-              avatar: GptUser,
-              mine: true
-            },
-            {
-              messageText: e.answer,
-              avatar: GptUser,
-              mine: false
-            }
-          ])
-          .flat();
-        setMessages(iMessages);
-      });
-  }
 
   async function newChatReq() {
     if (textareaRef.current.value.length > 0) {
@@ -137,7 +110,7 @@ const MessageMy = ({
 
         const objects = jsonStrings.map(JSON.parse);
         objects.forEach((el) => {
-          if (el.content != null) {
+          if (el.content !== null) {
             iMessages.at(-1).messageText += el.content;
           }
         });
@@ -165,6 +138,11 @@ const MessageMy = ({
     setButtonsVisible(false);
   };
   // console.log(text);
+
+  useEffect(() => {
+    setText(messageText)
+  }, [messageText])
+  
   return (
     <div key={index} className={styles.main}>
       <div className={mine ? 'chat_user' : 'chat_chatgpt  mob_h chat_p'}>

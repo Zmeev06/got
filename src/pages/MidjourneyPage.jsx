@@ -14,6 +14,9 @@ import gptBot from '../images/chat/chatgpt_ic.png';
 import { setNewStatus } from '../redux/slices/statusMidSlice';
 import TokenModal from '../components/tokenModal/TokenModal';
 import { MidjourneySlider } from '../components/MidjourneySlider';
+import { messagesApi } from '../redux/services/messagesService';
+import toast from 'react-hot-toast';
+import { ClipLoader } from 'react-spinners';
 
 const MidjourneyPage = ({ folders, chats }) => {
   const { chatId } = useParams();
@@ -34,11 +37,35 @@ const MidjourneyPage = ({ folders, chats }) => {
   const user = useSelector((state) => state.user);
   const [isEmptyMes, setIsEmptyMes] = useState(true);
   const [text, setText] = useState('');
+  const [
+    getMessagesQuery,
+    {
+      data: myMessagesRtk,
+      isError: isGetMessagesError,
+      isLoading: isGetMessagesLoading,
+      isSuccess: isGetMessagesSuccess
+    }
+  ] = messagesApi.useLazyGetMessagesQuery();
+
+  const notify = (message) => toast.error(message);
 
   useEffect(() => {
     lastMessageScroll('smooth');
     if (messages.length !== messagesWidth) lastMessageScroll('smooth');
   }, []);
+
+  useEffect(() => {
+    if (!isGetMessagesError) {
+      setMyMessages(myMessagesRtk);
+    }
+    if (isGetMessagesError) {
+      setMyMessages({ type: 'text', messages: [] });
+      notify('Произошла ошибка, повторите попытку позже');
+    }
+    if(isGetMessagesSuccess) {
+      setMessageType(myMessagesRtk.type)
+    }
+  }, [myMessagesRtk, isGetMessagesError, isGetMessagesSuccess]);
 
   function MidjCallBack(data) {
     setMidjData(data);
@@ -50,41 +77,17 @@ const MidjourneyPage = ({ folders, chats }) => {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  const getMessages = (id) => {
-    axios
-      .get(`https://ziongpt.ai/api/v1/messages/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Token ' + getCookie('token')
-        }
-      })
-
-      .then((res) => {
-        setMyMessages(res.data);
-        if (res.data.messages.length !== 0 && res.data.type === 'image') {
-          setMessageType('image');
-          setIsEmpty(false);
-          setFirstMessage(res.data.messages[0].prompt);
-          setChatType(res.data.messages[0].ai_model);
-        } else if (res.data.messages.length !== 0 && res.data.type === 'text') {
-          setMessageType('text');
-        } else {
-          setIsEmpty(true);
-        }
-      });
-  };
-
   useEffect(() => {
     dispatch(setNewStatus('ready'));
   }, [chatId]);
 
   useEffect(() => {
-    getMessages(chatId);
+    getMessagesQuery({ id: chatId });
     if (status.value === 'ready') {
       setFirstMessage('');
     }
     if (chatId) {
-      getMessages(chatId);
+      getMessagesQuery({ id: chatId });
     }
     if (status.value === 'banned') {
       setStatusMessage('Ошибка');
@@ -146,128 +149,130 @@ const MidjourneyPage = ({ folders, chats }) => {
     if (firstMessage || !messages.length) {
       setIsEmptyMes(false);
     }
+    console.log(firstMessage);
   }, [firstMessage]);
 
-  useEffect(() => {
-    console.log(myMessages);
-  }, [myMessages]);
   return (
     <div>
-      <div className="content-page">
-        <div className="content">
-          <div className="container-back-mid">
-            {messages.length || myMessages.messages.length > 0 ? (
-              <ChatBlockHead type={messageType} />
-            ) : null}
-          </div>
-
-          <div className="container-back-mid">
-            {myMessages.messages.length === 0 && !messages.length && (
-              <NavigationsMidj activeTab={activeTab} setActiveTab={setActiveTab} />
-            )}
-          </div>
-          {activeTab === 'mj' && (
+      <div className={`content-page ${isGetMessagesLoading ? 'content-page-loader' : ''}`}>
+        {myMessages ? (
+          <div className="content">
             <div className="container-back-mid">
-              {myMessages.messages.length === 0 && (
-                <MidjourneySlider text={text} setText={setText} />
+              {(messages && messages.length) || myMessages.messages.length > 0 ? (
+                <ChatBlockHead type={messageType} />
+              ) : null}
+            </div>
+
+            <div className="container-back-mid">
+              {myMessages.messages.length === 0 && !messages.length && (
+                <NavigationsMidj activeTab={activeTab} setActiveTab={setActiveTab} />
               )}
             </div>
-          )}
-          {activeTab === 'gpt' && (
-            <div className="container-back-mid">{!messages.length && <Gpt />}</div>
-          )}
-
-          <div className="container-back-mid">
-            {firstMessage && (chatType === 'mj' || myMessages.type === 'image') && (
-              <MessageMy
-                setMessages={setFirstMessage}
-                chatId={chatId}
-                newChatName={newChatName}
-                index={0}
-                messages={[]}
-                messageText={firstMessage}
-                mine
-                avatar={`https://ziongpt.ai${user.avatar}`}
-              />
+            {activeTab === 'mj' && (
+              <div className="container-back-mid">
+                {myMessages.messages.length === 0 && (
+                  <MidjourneySlider text={text} setText={setText} />
+                )}
+              </div>
+            )}
+            {activeTab === 'gpt' && (
+              <div className="container-back-mid">{!messages.length && <Gpt />}</div>
             )}
 
-            {(chatType === 'mj' || myMessages.type === 'image') &&
-              myMessages.messages.length > 0 &&
-              myMessages.messages[0].result !== '' &&
-              !myMessages.messages[0].result.includes('%') &&
-              myMessages.messages.map((item, index) => (
-                <MessageMidjorney
-                  message={item}
-                  midjData={myMessages}
-                  MidjCallBack={MidjCallBack}
-                  type={myMessages.type}
-                  index={index}
-                  key={index}
-                />
-              ))}
-              <div id='chat' />
-            {fetchStatus.value === 426 ? <TokenModal /> : null}
-            {messageType !== 'text' &&
-              status.taskId === chatId &&
-              (status.value === 'in_queue' || status.value === 'waiting' ? (
+            <div className="container-back-mid">
+              {(chatType === 'mj' || myMessages.type === 'image') && (
                 <MessageMy
-                  setMessages={setStatusMessage}
+                  setMessages={setFirstMessage}
                   chatId={chatId}
                   newChatName={newChatName}
                   index={0}
                   messages={[]}
-                  messageText={'В очереди'}
-                  avatar={gptBot}
+                  messageText={myMessagesRtk.messages.length > 0 ? myMessagesRtk.messages[0].prompt : ''}
+                  mine
+                  avatar={`https://ziongpt.ai${user.avatar}`}
                 />
-              ) : status.value === 'in_process' ? (
-                <MessageMy
-                  setMessages={setStatusMessage}
-                  chatId={chatId}
-                  newChatName={newChatName}
-                  index={0}
-                  messages={[]}
-                  messageText={'Генерация'}
-                  avatar={gptBot}
-                />
-              ) : status.value === 'error' ? (
-                <MessageMy
-                  setMessages={setStatusMessage}
-                  chatId={chatId}
-                  newChatName={newChatName}
-                  index={0}
-                  messages={[]}
-                  messageText={'Ошибка'}
-                  avatar={gptBot}
-                />
-              ) : null)}
-          </div>
+              )}
 
-          {messageType === 'text' ? (
-            <ChatBlock
-              type={messageType}
-              setMessages={setMessages}
+              {(chatType === 'mj' || myMessages.type === 'image') &&
+                myMessages.messages.length > 0 &&
+                myMessages.messages[0].result !== '' &&
+                !myMessages.messages[0].result.includes('%') &&
+                myMessages.messages.map((item, index) => (
+                  <MessageMidjorney
+                    message={item}
+                    midjData={myMessages}
+                    MidjCallBack={MidjCallBack}
+                    type={myMessages.type}
+                    index={index}
+                    key={index}
+                  />
+                ))}
+              <div id="chat" />
+              {fetchStatus.value === 426 ? <TokenModal /> : null}
+              {messageType !== 'text' &&
+                status.taskId === chatId &&
+                (status.value === 'in_queue' || status.value === 'waiting' ? (
+                  <MessageMy
+                    setMessages={setStatusMessage}
+                    chatId={chatId}
+                    newChatName={newChatName}
+                    index={0}
+                    messages={[]}
+                    messageText={'В очереди'}
+                    avatar={gptBot}
+                  />
+                ) : status.value === 'in_process' ? (
+                  <MessageMy
+                    setMessages={setStatusMessage}
+                    chatId={chatId}
+                    newChatName={newChatName}
+                    index={0}
+                    messages={[]}
+                    messageText={'Генерация'}
+                    avatar={gptBot}
+                  />
+                ) : status.value === 'error' ? (
+                  <MessageMy
+                    setMessages={setStatusMessage}
+                    chatId={chatId}
+                    newChatName={newChatName}
+                    index={0}
+                    messages={[]}
+                    messageText={'Ошибка'}
+                    avatar={gptBot}
+                  />
+                ) : null)}
+            </div>
+
+            {myMessages.type === 'text' || myMessagesRtk.type === 'text' ? (
+              <ChatBlock
+                type={messageType}
+                setMessages={setMessages}
+                chatId={chatId}
+                newChatName={newChatName}
+                messages={messages}
+                scrollBottom={scrollBottom}
+              />
+            ) : null}
+
+            <MessageAdd
+              isEmpty={isEmpty}
+              MidjCallBack={MidjCallBack}
+              activeItems={activeTab}
               chatId={chatId}
-              newChatName={newChatName}
+              setMessages={setMessages}
               messages={messages}
-              scrollBottom={scrollBottom}
+              newChatName={newChatName}
+              changeActiveItems={setActiveTab}
+              setMessageType={setMessageType}
+              setIsEmptyMes={setIsEmptyMes}
+              text={text}
+              setText={setText}
             />
-          ) : null}
-
-          <MessageAdd
-            isEmpty={isEmpty}
-            MidjCallBack={MidjCallBack}
-            activeItems={activeTab}
-            chatId={chatId}
-            setMessages={setMessages}
-            messages={messages}
-            newChatName={newChatName}
-            changeActiveItems={setActiveTab}
-            setMessageType={setMessageType}
-            setIsEmptyMes={setIsEmptyMes}
-            text={text}
-            setText={setText}
-          />
-        </div>
+          </div>
+        ) : (
+          <ClipLoader />
+        )}
       </div>
     </div>
   );

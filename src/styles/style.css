@@ -4199,6 +4199,12 @@ pre {
     height: 5px;
 }
 
+.content-page-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* width */
 #side-menu::-webkit-scrollbar {
     background-color: #202123;

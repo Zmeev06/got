@@ -18,8 +18,8 @@ const SideBarFolder = ({ folder, chat }) => {
   const chatId = useParams();
   const [getChats, { data: chats, isSuccess: isSuccessGetChats, isError: isErrorGetChats }] =
     chatApi.useLazyGetChatsQuery();
-  const [deleteFolderQuery, {isError: isDeleteFolderError}] = chatApi.useDeleteFolderMutation();
-  const [deleteChatQuery, {isError: isDeleteChatError}] = chatApi.useDeleteChatMutation();
+  const [deleteFolderQuery, { isError: isDeleteFolderError }] = chatApi.useDeleteFolderMutation();
+  const [deleteChatQuery, { isError: isDeleteChatError }] = chatApi.useDeleteChatMutation();
   const dispatch = useDispatch();
   const [createChatQuery, { isError: isCreateChatError }] = chatApi.useCreateChatMutation();
   const [editFolderQuery, { isError: isEditFolderError }] = chatApi.useEditFolderMutation();
@@ -70,12 +70,26 @@ const SideBarFolder = ({ folder, chat }) => {
   }, [isSuccessGetChats, chats, dispatch]);
 
   useEffect(() => {
-    if (isEditFolderError || isCreateChatError || isEditChatError || isEditFolderError || isDeleteChatError || isDeleteFolderError) {
-        notify('Произошла ошибка, повторите попытку позже')
-        setDeleteFolder(false)
-        setDeleteFolder2(false)
+    if (
+      isEditFolderError ||
+      isCreateChatError ||
+      isEditChatError ||
+      isEditFolderError ||
+      isDeleteChatError ||
+      isDeleteFolderError
+    ) {
+      notify('Произошла ошибка, повторите попытку позже');
+      setDeleteFolder(false);
+      setDeleteFolder2(false);
     }
-  }, [isErrorGetChats, isCreateChatError, isEditChatError, isEditFolderError, isDeleteChatError, isDeleteFolderError]);
+  }, [
+    isErrorGetChats,
+    isCreateChatError,
+    isEditChatError,
+    isEditFolderError,
+    isDeleteChatError,
+    isDeleteFolderError
+  ]);
 
   const [inputVal, setInputVal] = useState(folder?.name);
   const [prevInputVal, setPrevInputVal] = useState();
