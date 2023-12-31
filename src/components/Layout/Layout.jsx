@@ -7,20 +7,29 @@ import { ClipLoader } from 'react-spinners';
 import { chatApi } from '../../redux/services/chatService';
 import { useDispatch, useSelector } from 'react-redux';
 import { setChats } from '../../redux/slices/chatSlice';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 export const Layout = ({ auth, getCookie }) => {
 
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
-  const { data: chats, isSuccess } = chatApi.useGetChatsQuery();
+  const { data: chats, isSuccess, isError } = chatApi.useGetChatsQuery();
   const dispatch = useDispatch();
   const globalChats = useSelector((state) => state.chat);
   const [myChats, setMyChats] = useState()
   const [myFolders, setMyFolders] = useState()
+  const notify = (message) => toast.error(message);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSuccess) {
       dispatch(setChats(chats));
     }
   }, [isSuccess]);
+
+  useEffect(() => {
+    if(isError) {
+      notify('Произошла ошибка, повторите запрос позже')
+    }
+  }, [isError])
 
   const clickHandler = () => {
     setIsOpenSidebar(!isOpenSidebar);

@@ -55,6 +55,27 @@ export const chatApi = createApi({
           name
         }
       })
+    }),
+    createChatWithoutName: builder.mutation({
+      query: () => ({
+        url: 'api/v1/chatsession/',
+        method: 'POST',
+        body: {
+          ai_model: 'gpt-3.5-turbo'
+        }
+      })
+    }),
+    createFolder: builder.mutation({
+      query: () => ({
+        url: 'api/v1/folder/',
+        method: 'POST'
+      })
+    }),
+    getFolder: builder.query({
+      query: () => ({
+        url: 'api/v1/folder/',
+        method: 'GET'
+      })
     })
   })
 });

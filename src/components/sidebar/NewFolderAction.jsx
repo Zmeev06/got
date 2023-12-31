@@ -1,51 +1,49 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import NewFolderIcon from "../UI/icons/NewFolderIcon";
+import NewFolderIcon from '../UI/icons/NewFolderIcon';
+import { chatApi } from '../../redux/services/chatService';
+import { useDispatch } from 'react-redux';
+import { setChats } from '../../redux/slices/chatSlice';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const NewFolderAction = () => {
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-      }
+  const [createFolderQuery, { isError: isCreateFolderError }] = chatApi.useCreateFolderMutation();
+  const [getFolderQuery, { isError: isGetFolderError }] = chatApi.useLazyGetFolderQuery();
+  const [getChats, { data: chats, isSuccess: isSuccessGetChats, isError: isErrorGetChats }] =
+    chatApi.useLazyGetChatsQuery();
+    
+  const dispatch = useDispatch();
+  const notify = (message) => toast.error(message);
 
-    const newFolder = () => {
-
-        fetch('https://ziongpt.ai/api/v1/folder/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-
-                "Authorization": "Token " + getCookie('token'),
-            }
-
-
-        })
-            .then(response => response.json())
-
-        fetch('https://ziongpt.ai/api/v1/folder/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Cookie': 'csrftoken=TUeTRp5vrjwDPP4BjTjJVuq40EKFNnbG; sessionid=s1yyur1j74ab874vjxxmzo9zz9ia3r9v',
-                "Authorization": "Token " + getCookie('token'),
-            }
-
-        })
-            .then(response => response.json())
-        setTimeout(() => {
-            window.location.reload(false);
-        }, 500)
+  useEffect(() => {
+    if (isSuccessGetChats) {
+      dispatch(setChats(chats));
     }
+  }, [isSuccessGetChats, chats, dispatch]);
 
-    return (
+  const newFolder = async () => {
+    await createFolderQuery().unwrap();
+    await getFolderQuery()
+    await getChats();
+  };
 
+  useEffect(() => {
+    if (isSuccessGetChats) {
+      dispatch(setChats(chats));
+    }
+  }, [isSuccessGetChats, chats, dispatch]);
 
-        <div className='folder_sp' onClick={() => newFolder()}>
-            <NewFolderIcon />
-        </div>
+  useEffect(() => {
+    if (isErrorGetChats || isCreateFolderError || isGetFolderError) {
+      notify();
+    }
+  });
 
-    );
+  return (
+    <div className="folder_sp" onClick={() => newFolder()}>
+      <NewFolderIcon />
+    </div>
+  );
 };
 
 export default NewFolderAction;

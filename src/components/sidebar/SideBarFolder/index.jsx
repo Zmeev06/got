@@ -10,24 +10,21 @@ import { useDispatch } from 'react-redux';
 import { setChats, setNewChat } from '../../../redux/slices/chatSlice';
 import styles from './style.module.scss';
 import { chatApi } from '../../../redux/services/chatService';
+import toast from 'react-hot-toast';
 
 const SideBarFolder = ({ folder, chat }) => {
   const [deleteFolder, setDeleteFolder] = useState();
   const [deleteFolder2, setDeleteFolder2] = useState();
   const chatId = useParams();
-  const [getChats, { data: chats, isSuccess: isSuccessGetChats }] = chatApi.useLazyGetChatsQuery();
-  const [deleteFolderQuery] = chatApi.useDeleteFolderMutation();
-  const [deleteChatQuery] = chatApi.useDeleteChatMutation();
+  const [getChats, { data: chats, isSuccess: isSuccessGetChats, isError: isErrorGetChats }] =
+    chatApi.useLazyGetChatsQuery();
+  const [deleteFolderQuery, {isError: isDeleteFolderError}] = chatApi.useDeleteFolderMutation();
+  const [deleteChatQuery, {isError: isDeleteChatError}] = chatApi.useDeleteChatMutation();
   const dispatch = useDispatch();
-  const [createChatQuery] = chatApi.useCreateChatMutation();
-  const [editFolderQuery] = chatApi.useEditFolderMutation();
-  const [editChatQuery] = chatApi.useEditChatMutation();
-
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  };
+  const [createChatQuery, { isError: isCreateChatError }] = chatApi.useCreateChatMutation();
+  const [editFolderQuery, { isError: isEditFolderError }] = chatApi.useEditFolderMutation();
+  const [editChatQuery, { isError: isEditChatError }] = chatApi.useEditChatMutation();
+  const notify = (message) => toast.error(message);
 
   const onClickFunc = async (value) => {
     const folderPk = folder.pk;
@@ -71,6 +68,14 @@ const SideBarFolder = ({ folder, chat }) => {
       dispatch(setChats(chats));
     }
   }, [isSuccessGetChats, chats, dispatch]);
+
+  useEffect(() => {
+    if (isEditFolderError || isCreateChatError || isEditChatError || isEditFolderError || isDeleteChatError || isDeleteFolderError) {
+        notify('Произошла ошибка, повторите попытку позже')
+        setDeleteFolder(false)
+        setDeleteFolder2(false)
+    }
+  }, [isErrorGetChats, isCreateChatError, isEditChatError, isEditFolderError, isDeleteChatError, isDeleteFolderError]);
 
   const [inputVal, setInputVal] = useState(folder?.name);
   const [prevInputVal, setPrevInputVal] = useState();

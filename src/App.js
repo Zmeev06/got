@@ -18,14 +18,14 @@ import { userApi } from './redux/services/userService';
 function App() {
   const dispatch = useDispatch();
   const { data: auth, isSuccess, error } = userApi.useAuthUserQuery();
-  
+
   useEffect(() => {
-    if(isSuccess) {
+    if (isSuccess) {
       dispatch(setUserAvatar(auth.avatar));
       dispatch(setTg(auth.telegram_associated));
     } else if (error) {
-      if(error.status === 401) {
-        window.location.href = 'https://ziongpt.ai'
+      if (error.status === 401) {
+        window.location.href = 'https://ziongpt.ai';
       }
     }
   }, [auth]);
@@ -34,19 +34,18 @@ function App() {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
-  }
+  };
   return (
     <>
       <Toaster />
       <Routes>
-        <Route
-          path="/"
-          element={<Layout auth={auth} getCookie={getCookie} />}>
+        <Route path="/" element={<Layout auth={auth} getCookie={getCookie} />}>
           <Route path="/chat" element={<NewChatPage />} />
           <Route path="/chat/:chatId" Component={MidjourneyPage} />
           <Route path="/faq" element={<WhatPage />} />
           <Route path="/settings" element={<RatePage auth={auth} />} />
           <Route path="*" element={<NewChatPage />} />
+          <Route path="server_error" element={<NewChatPage />} />
         </Route>
       </Routes>
     </>
