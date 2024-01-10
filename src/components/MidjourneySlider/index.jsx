@@ -30,7 +30,6 @@ export const MidjourneySlider = ({text, setText}) => {
     }
   ];
   const [imageLists, setImageLists] = useState();
-  const [stylesList, setStylesList] = useState([])
   useEffect(() => {
     const importAll = (r) => r.keys().map(r);
 

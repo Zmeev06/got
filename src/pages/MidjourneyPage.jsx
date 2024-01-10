@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import Gpt from '../components/Gpt/Gpt';
 import NavigationsMidj from '../components/NavigationsMidj/NavigationsMidj';
@@ -17,7 +18,7 @@ import { messagesApi } from '../redux/services/messagesService';
 import toast from 'react-hot-toast';
 import { ClipLoader } from 'react-spinners';
 
-const MidjourneyPage = ({ folders, chats }) => {
+const MidjourneyPage = () => {
   const { chatId } = useParams();
   const scrollBottom = useRef();
   const [activeTab, setActiveTab] = useState('gpt');
@@ -26,7 +27,6 @@ const MidjourneyPage = ({ folders, chats }) => {
   const [messagesWidth, setMessagesWidth] = useState(messages.length);
   const [myMessages, setMyMessages] = useState({ type: 'text', messages: [] });
   const [messageType, setMessageType] = useState('');
-  const [isEmpty, setIsEmpty] = useState(true);
   const status = useSelector((state) => state.status);
   const [firstMessage, setFirstMessage] = useState('');
   const [statusMessage, setStatusMessage] = useState('В очереди');
