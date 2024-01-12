@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { MidjourneySliderItem } from '../MidjourneySliderItem';
+import { useWindowSize } from 'react-use';
+import { Swiper } from 'swiper/react';
+import { SwiperSlide } from 'swiper/react';
 
-export const MidjourneySlider = ({text, setText}) => {
+export const MidjourneySlider = ({ text, setText }) => {
   const sections = [
     {
       title: 'Стили',
@@ -63,34 +66,83 @@ export const MidjourneySlider = ({text, setText}) => {
   }, []);
 
   const [currentSection, setCurrentSection] = useState('styles');
+  const { width } = useWindowSize();
+
   return (
-    <div className={styles.main}>
-      <div className={styles.sections}>
-        {sections.map((item, index) => (
-          <div
-            key={index}
-            className={`${styles.section} ${
-              item.link === currentSection ? styles.activeSection : ''
-            }`}
-            onClick={() => setCurrentSection(item.link)}>
-            <p>{item.title}</p>
+    <>
+      {width > 475 ? (
+        <div className={styles.main}>
+          <div className={styles.sections}>
+            {sections.map((item, index) => (
+              <div
+                key={index}
+                className={`${styles.section} ${
+                  item.link === currentSection ? styles.activeSection : ''
+                }`}
+                onClick={() => setCurrentSection(item.link)}>
+                <p>{item.title}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className={styles.images}>
-        {imageLists &&
-          imageLists[currentSection].map((item, index) => (
-              <MidjourneySliderItem key={index} img={`../../slider_images/` +
-                  `${item.folder}/` +
-                  `${item.fileName.split('.')[0]}.` +
-                  `${item.fileName.split('.')[1]}.` +
-                  `${item.fileName.split('.')[3]}`} name={item.name}
+          <div className={styles.images}>
+            {imageLists &&
+              imageLists[currentSection].map((item, index) => (
+                <MidjourneySliderItem
+                  key={index}
+                  img={
+                    `../../slider_images/` +
+                    `${item.folder}/` +
+                    `${item.fileName.split('.')[0]}.` +
+                    `${item.fileName.split('.')[1]}.` +
+                    `${item.fileName.split('.')[3]}`
+                  }
+                  name={item.name}
                   value={item.style}
                   text={text}
-                  setText={setText} />
-          ))}
-      </div>
-      <div></div>
-    </div>
+                  setText={setText}
+                />
+              ))}
+          </div>
+          <div></div>
+        </div>
+      ) : (
+        <div className={styles.mainMobile}>
+          <div className={styles.sectionsMobile}>
+            {sections.map((item, index) => (
+              <div
+                key={index}
+                className={`${styles.sectionMobile} ${
+                  item.link === currentSection ? styles.activeSection : ''
+                }`}
+                onClick={() => setCurrentSection(item.link)}>
+                <p>{item.title}</p>
+              </div>
+            ))}
+          </div>
+          <div className={styles.images}>
+            <Swiper lidesPerView="auto" loop>
+              {imageLists &&
+                imageLists[currentSection].map((item, index) => (
+                  <SwiperSlide key={index}>
+                    <MidjourneySliderItem
+                      img={
+                        `../../slider_images/` +
+                        `${item.folder}/` +
+                        `${item.fileName.split('.')[0]}.` +
+                        `${item.fileName.split('.')[1]}.` +
+                        `${item.fileName.split('.')[3]}`
+                      }
+                      name={item.name}
+                      value={item.style}
+                      text={text}
+                      setText={setText}
+                    />
+                  </SwiperSlide>
+                ))}
+            </Swiper>
+          </div>
+        </div>
+      )}
+    </>
   );
 };

@@ -2,7 +2,13 @@
   width: 10em;
   height: auto;
   cursor: pointer;
+  @media (max-width: 475px) {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+  }
 }
+
 
 .checkBox {
   display: flex;
@@ -11,4 +17,16 @@
   cursor: pointer;
   margin-bottom: 6px;
   color: #222628;
+  @media (max-width: 475px) {
+    font-size: 20px;
+  }
+}
+
+.main {
+  @media (max-width: 475px) {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 20px;
+  }
 }

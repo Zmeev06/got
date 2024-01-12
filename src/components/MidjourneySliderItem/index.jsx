@@ -30,7 +30,7 @@ export const MidjourneySliderItem = ({ img, name, text, value, setText }) => {
     }
   }, [text])
   return (
-    <div>
+    <div className={styles.main}>
       <div className={styles.checkBox}>
         <input type="checkbox" id={`sliderItem-${value}`} checked={isChecked} value={isChecked} onChange={(e) => setIsChecked(e.target.checked)}/>
         <label htmlFor={`sliderItem-${value}`}>{name}</label>
