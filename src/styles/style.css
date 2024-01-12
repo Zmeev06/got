@@ -1376,6 +1376,26 @@ section form button {
   margin-bottom: 50px;
 }
 
+.swiper-slide {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper {
+  width: 100%;
+}
+
+@media (max-width: 615px) {
+  .chatgpt header ul {
+    width: 100% !important;
+  }
+  .header.chatgpt_begin_header {
+    width: 90vw;
+    margin: 0 auto;
+  }
+}
+
 .chatgpt header ul li {
   color: #6c7275;
   text-align: center;
@@ -6990,9 +7010,12 @@ pre {
   }
 
   .chatgpt_begin.mob {
-    display: block;
+    display: flex;
     padding-left: 0;
     padding-right: 0;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
   }
 
   .chatgpt_begin.desc {

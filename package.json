@@ -25,6 +25,7 @@
     "react-use": "^17.4.2",
     "sass": "^1.69.6",
     "sort-by": "^1.2.0",
+    "swiper": "^11.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
