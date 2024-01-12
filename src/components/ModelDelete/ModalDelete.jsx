@@ -1,12 +1,9 @@
 import React from 'react'
-import SideBarFolder from '../sidebar/SideBarFolder'
+import styles from './style.module.scss'
 
 const ModalDelete = ({ onChange }) => {
-
-
-
     return (
-        <div>
+        <div className={styles.main}>
             <div id="order_modal" className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => onChange(false)}></button>

@@ -2,7 +2,7 @@ import React from 'react';
 import SideBarSession from "./SideBarSession";
 
 const SideBarSessionList = ({ sessions, createChat }) => {
- 
+    console.log(sessions);
 
     return (
         <ul className="nav-second-level">

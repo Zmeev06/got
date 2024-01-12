@@ -11,6 +11,7 @@ import { setChats, setNewChat } from '../../../redux/slices/chatSlice';
 import styles from './style.module.scss';
 import { chatApi } from '../../../redux/services/chatService';
 import toast from 'react-hot-toast';
+import { createPortal } from 'react-dom';
 
 const SideBarFolder = ({ folder, chat }) => {
   const [deleteFolder, setDeleteFolder] = useState();
@@ -180,8 +181,9 @@ const SideBarFolder = ({ folder, chat }) => {
   return (
     // <div key={folder?.pk ?? chat?.id}>
     <>
-      {deleteFolder && <ModalDelete onChange={onClickFunc} />}
-      {deleteFolder2 && <ModalDelete onChange={onClickFunc2} />}
+      {deleteFolder && createPortal(<ModalDelete onChange={onClickFunc} />, document.body)}
+      {deleteFolder2 && createPortal(<ModalDelete onChange={onClickFunc2} />, document.body)}
+
       {folder ? (
         <li>
           <a ref={collapseParent}>
