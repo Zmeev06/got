@@ -5145,12 +5145,20 @@ pre {
     margin-bottom: 24px;
   }
 
-  .midjourney_chat_form .midjourney_chat_box {
-    width: 100%;
-  }
+
 
   .chat_code_img {
-    width: 100%;
+    width: 90vw;
+    margin: 0 auto;
+  }
+
+  .midjourney_chat_form {
+    width: 90vw;
+    margin: 0 auto;
+  }
+
+  .midjourney_chat {
+    width: auto;
   }
 
   .chat_user.tab.mid_chat {
