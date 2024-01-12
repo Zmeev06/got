@@ -2222,7 +2222,6 @@ body[data-leftbar-size="condensed"] .user-box {
         /* padding-bottom: 80px; */
     }
     .left-side-menu {
-        display: none;
         z-index: 10 !important;
     }
     .sidebar-enable .left-side-menu {
