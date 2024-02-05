@@ -1538,6 +1538,10 @@ section form button {
   line-height: 20px;
 }
 
+.form_f .input_group textarea::-webkit-scrollbar {
+  display: none;
+}
+
 .container-back-midjourney {
   max-width: 1047px;
   gap: 0 72px;
@@ -5145,8 +5149,6 @@ pre {
     margin-bottom: 24px;
   }
 
-
-
   .chat_code_img {
     width: 90vw;
     margin: 0 auto;
@@ -7078,7 +7080,7 @@ pre {
   }
 
   .chatgpt_begin {
-    margin-bottom: 320px;
+    margin-bottom: 20px;
   }
 
   #main_input {

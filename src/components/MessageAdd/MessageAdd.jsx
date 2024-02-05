@@ -12,6 +12,7 @@ import styles from './styles.module.scss';
 import { increment } from '../../redux/slices/counterSlice';
 import { chatApi } from '../../redux/services/chatService';
 import { setChats } from '../../redux/slices/chatSlice';
+import {useWindowSize} from '../../hooks/useWindowSize'
 
 const MessageAdd = ({
   MidjCallBack,
@@ -31,6 +32,7 @@ const MessageAdd = ({
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
+  const dimensions = useWindowSize();
 
   const [setting, setSetting] = useState(false);
   const [modal, setModal] = useState(false);
@@ -110,7 +112,9 @@ const MessageAdd = ({
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault(); // Предотвратить перенос строки в поле ввода
-      textareaRef.current.style.height = '60px';
+
+      dimensions.width <= 576 ? 
+      textareaRef.current.style.height = '60px' : textareaRef.current.style.height = '46px'
 
       newChatReq();
       if (!document.getElementById('ques_input') == null)
