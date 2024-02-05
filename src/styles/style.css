@@ -7372,7 +7372,6 @@ textarea {
 }
 
 .content__chat {
-  padding-bottom: 80px;
   margin-bottom: 10px;
 }
 
@@ -7383,7 +7382,6 @@ textarea {
 
   .content__chat {
     padding-top: 40px;
-    padding-bottom: 120px;
   }
 
   .form_f .input_group .btn_f {
@@ -7597,7 +7595,6 @@ textarea {
   padding: 30px 0;
   max-width: 970px;
   margin: 0 auto;
-  align-items: center;
 }
 
 .chatgpt header ul li {
