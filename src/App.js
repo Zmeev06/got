@@ -5,6 +5,7 @@ import './styles/icons.min.css';
 import './styles/swiper-bundle.min.css';
 import './styles/style.css';
 import WhatPage from './pages/WhatPage';
+import NotFound from './pages/NotFound';
 import RatePage from './pages/RatePage';
 import MidjourneyPage from './pages/MidjourneyPage';
 import { Route, Routes } from 'react-router-dom';
@@ -44,7 +45,7 @@ function App() {
           <Route path="/chat/:chatId" Component={MidjourneyPage} />
           <Route path="/faq" element={<WhatPage />} />
           <Route path="/settings" element={<RatePage auth={auth} />} />
-          <Route path="*" element={<NewChatPage />} />
+          <Route path="*" element={<NotFound />} />
           <Route path="server_error" element={<NewChatPage />} />
         </Route>
       </Routes>

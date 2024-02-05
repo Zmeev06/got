@@ -12,7 +12,7 @@ import styles from './styles.module.scss';
 import { increment } from '../../redux/slices/counterSlice';
 import { chatApi } from '../../redux/services/chatService';
 import { setChats } from '../../redux/slices/chatSlice';
-import {useWindowSize} from '../../hooks/useWindowSize'
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const MessageAdd = ({
   MidjCallBack,
@@ -38,8 +38,7 @@ const MessageAdd = ({
   const [modal, setModal] = useState(false);
   const settingsModal = useRef(null);
   const dispatch = useDispatch();
-  const [getChats, { data: chats, isSuccess: isSuccessGetChats }] =
-    chatApi.useLazyGetChatsQuery();
+  const [getChats, { data: chats, isSuccess: isSuccessGetChats }] = chatApi.useLazyGetChatsQuery();
 
   useEffect(() => {
     if (isSuccessGetChats) {
@@ -113,8 +112,9 @@ const MessageAdd = ({
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault(); // Предотвратить перенос строки в поле ввода
 
-      dimensions.width <= 576 ? 
-      textareaRef.current.style.height = '60px' : textareaRef.current.style.height = '46px'
+      dimensions.width <= 576
+        ? (textareaRef.current.style.height = '60px')
+        : (textareaRef.current.style.height = '46px');
 
       newChatReq();
       if (!document.getElementById('ques_input') == null)
@@ -193,7 +193,7 @@ const MessageAdd = ({
 
       setMessages([...iMessages]);
     }
-    await getChats()
+    await getChats();
     const text1 = new TextDecoder('utf-8').decode(new Uint8Array(chunks.flat()));
   }
 
