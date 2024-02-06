@@ -185,7 +185,7 @@ const SideBarFolder = ({ folder, chat }) => {
       {deleteFolder2 && createPortal(<ModalDelete onChange={onClickFunc2} />, document.body)}
 
       {folder ? (
-        <li>
+        <li onClick={() => handleClick()}>
           <a ref={collapseParent}>
             <FolderIcon />
             <span className="input_sp">
@@ -200,7 +200,6 @@ const SideBarFolder = ({ folder, chat }) => {
                 onChange={(e) => setInputVal(e.target.value)}
               />
             </span>
-
             <div className="actions_sp three display-none" ref={collapseIcon}>
               <svg
                 onClick={() => stopEdit(true)}
@@ -239,7 +238,7 @@ const SideBarFolder = ({ folder, chat }) => {
               <img src={DeleteIcImg} alt="" onClick={() => setDeleteFolder(true)} />
             </div>
             {/*развернуть*/}
-            <div className="folder-arrow" onClick={() => handleClick()}>
+            <div className="folder-arrow">
               <FolderArrowIcon />
             </div>
           </a>
