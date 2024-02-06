@@ -10,13 +10,12 @@ import { setChats } from '../../redux/slices/chatSlice';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 export const Layout = ({ auth, getCookie }) => {
-
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const { data: chats, isSuccess, isError } = chatApi.useGetChatsQuery();
   const dispatch = useDispatch();
   const globalChats = useSelector((state) => state.chat);
-  const [myChats, setMyChats] = useState()
-  const [myFolders, setMyFolders] = useState()
+  const [myChats, setMyChats] = useState();
+  const [myFolders, setMyFolders] = useState();
   const notify = (message) => toast.error(message);
 
   useEffect(() => {
@@ -26,33 +25,28 @@ export const Layout = ({ auth, getCookie }) => {
   }, [isSuccess]);
 
   useEffect(() => {
-    if(isError) {
-      notify('Произошла ошибка, повторите запрос позже')
+    if (isError) {
+      notify('Произошла ошибка, повторите запрос позже');
     }
-  }, [isError])
+  }, [isError]);
 
   const clickHandler = () => {
     setIsOpenSidebar(!isOpenSidebar);
   };
 
   React.useEffect(() => {
-    setMyChats(globalChats.chats.sessions)
-    setMyFolders(globalChats.chats.folders)
+    setMyChats(globalChats.chats.sessions);
+    setMyFolders(globalChats.chats.folders);
     console.log('teststssts');
-  }, [globalChats.chats])
+  }, [globalChats.chats]);
   return (
     <div className={styles.main}>
       <div
         className={`${styles.sidebarMy} ${isOpenSidebar ? styles.sidebarActive : ''} ${
           !auth ? styles.auth : ''
         }`}>
-        {(auth && isSuccess && globalChats.chats.folders) ? (
-          <SideBar
-            folders={myFolders}
-            chats={myChats}
-            auth={auth}
-            getCookie={getCookie}
-          />
+        {auth && isSuccess && globalChats.chats.folders ? (
+          <SideBar folders={myFolders} chats={myChats} auth={auth} getCookie={getCookie} />
         ) : (
           <ClipLoader color="white" />
         )}

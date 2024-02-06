@@ -11,7 +11,7 @@ export const messagesApi = createApi({
   baseQuery: baseQuery,
   endpoints: (builder) => ({
     getMessages: builder.query({
-      query: ({id}) => ({
+      query: ({ id }) => ({
         url: `api/v1/messages/${id}`,
         method: 'GET'
       })
@@ -22,5 +22,11 @@ export const messagesApi = createApi({
         method: 'DELETE'
       })
     })
-  })
+  }),
+  onError: (error) => {
+    console.error('Произошла ошибка запроса:', error);
+    if (error.status === 401) {
+      window.location.href = '/login';
+    }
+  }
 });

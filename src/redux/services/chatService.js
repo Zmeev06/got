@@ -77,5 +77,11 @@ export const chatApi = createApi({
         method: 'GET'
       })
     })
-  })
+  }),
+  onError: (error) => {
+    console.error('Произошла ошибка запроса:', error);
+    if (error.status === 401) {
+      window.location.href = '/login';
+    }
+  }
 });
