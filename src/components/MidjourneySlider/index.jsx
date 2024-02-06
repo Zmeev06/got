@@ -4,6 +4,8 @@ import { MidjourneySliderItem } from '../MidjourneySliderItem';
 import { useWindowSize } from 'react-use';
 import { Swiper } from 'swiper/react';
 import { SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css/navigation';
 
 export const MidjourneySlider = ({ text, setText }) => {
   const sections = [
@@ -120,7 +122,7 @@ export const MidjourneySlider = ({ text, setText }) => {
             ))}
           </div>
           <div className={styles.images}>
-            <Swiper lidesPerView="auto" loop>
+            <Swiper lidesPerView="auto" modules={[Navigation]} navigation loop>
               {imageLists &&
                 imageLists[currentSection].map((item, index) => (
                   <SwiperSlide key={index}>
