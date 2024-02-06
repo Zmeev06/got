@@ -7,7 +7,9 @@ import Smm from '../../images/midjorney/smm.svg';
 import Idea from '../../images/midjorney/idea.svg';
 import Help from '../../images/midjorney/help.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
+import 'swiper/css/navigation';
 
 const Gpt = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -39,7 +41,7 @@ const Gpt = () => {
       </section>
 
       <section className="chatgpt_begin mob">
-        <Swiper slidesPerView="auto" loop>
+        <Swiper slidesPerView="auto" modules={[Navigation]} navigation loop>
           <SwiperSlide>
             <div style={{ width: 'fit-content' }}>
               <a href="#chatgpt_begin_text_one" className="chatgpt_begin_item">
