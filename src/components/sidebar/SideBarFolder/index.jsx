@@ -244,7 +244,7 @@ const SideBarFolder = ({ folder, chat }) => {
             </div>
           </a>
           <div className="collapse" id="sidebarEcommerce" ref={collapseChild}>
-            <SideBarSessionList sessions={folder.sessions} createChat={createChat} />
+            <SideBarSessionList chat={chat} sessions={folder.sessions} createChat={createChat} />
           </div>
         </li>
       ) : (

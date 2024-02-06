@@ -97,6 +97,7 @@ const MidjourneyPage = () => {
       setStatusMessage('');
     } else if (status.value === 'in_proсess') {
       setStatusMessage('Генерация...');
+      console.log('Генерация...');
     } else {
       setStatusMessage('В очереди');
     }
