@@ -34,7 +34,7 @@ html {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 100dvh;
   position: relative;
 }
 
@@ -7378,6 +7378,7 @@ textarea {
 @media (max-width: 767px) {
   .content-page {
     padding: 0;
+    height: 100%;
   }
 
   .content__chat {
